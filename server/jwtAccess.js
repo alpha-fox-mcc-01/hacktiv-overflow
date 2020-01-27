@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken')
 module.exports = {
-  sign (obj, secret) {
-    return jwt.sign(obj, secret)
+  sign (obj) {
+    return jwt.sign(obj, process.env.JWT_SECRET)
   },
   verify (token) {
-    return Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
         if(err) {
           reject({

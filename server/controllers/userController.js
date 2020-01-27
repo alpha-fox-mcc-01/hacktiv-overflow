@@ -26,13 +26,18 @@ module.exports = {
           })
         } else {
           if (bcrypt.compareSync(req.body.password, user.password)) {
-            let access_token = jwtAccess.sign({ _id: user._id }, process.env.JWT_SECRET)
+            let access_token = jwtAccess.sign({ _id: user._id })
             res.status(200).json({ access_token })
+          } else {
+            next({
+              status: 400,
+              name: 'Login Error',
+              message: 'Email/Password is wrong'
+            })
           }
         }
       })
       .catch(err => {
-        console.log(err)
         next(err)
       })
   }
