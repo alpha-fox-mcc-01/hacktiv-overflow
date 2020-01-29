@@ -2,7 +2,7 @@ const { Question } = require('../models');
 
 class QuestionController {
   static showAllQuestions(req, res, next) {
-    Question.find()
+    Question.find().populate('authorId')
       .then(questions => {
         res.status(200).json(questions);
       })
@@ -19,6 +19,7 @@ class QuestionController {
   }
 
   static addQuestion(req, res, next) {
+    console.log(req.currentUserId);
     const { title, content } = req.body;
     Question.create({
       title,
