@@ -5,12 +5,12 @@
         <mdb-modal-title tag="h4" bold class="w-100">Register</mdb-modal-title>
       </mdb-modal-header>
       <mdb-modal-body class="mx-3 grey-text text-left">
-        <mdb-input label="Your name" icon="user" class="mb-5"/>
-        <mdb-input label="Your email" icon="envelope" type="email" class="mb-5"/>
-        <mdb-input label="Your password" icon="lock" type="password"/>
+        <mdb-input v-model="name" label="Your name" icon="user" class="mb-5"/>
+        <mdb-input v-model="email" label="Your email" icon="envelope" type="email" class="mb-5"/>
+        <mdb-input v-model="password" label="Your password" icon="lock" type="password"/>
       </mdb-modal-body>
       <mdb-modal-footer center>
-        <mdb-btn @click.native="setRegister(false)" color="deep-orange">Register</mdb-btn>
+        <mdb-btn @click.native="toRegister" color="deep-orange">Register</mdb-btn>
       </mdb-modal-footer>
       <p class="font-small grey-text">Have an account? <a @click.prevent="toLogin" class="blue-text ml-1">Login</a> here</p>
     </mdb-modal>
@@ -18,9 +18,16 @@
 </template>
 
 <script>
-import { mdbContainer, mdbBtn, mdbModal, mdbModalHeader, mdbModalBody, mdbModalFooter, mdbInput } from 'mdbvue'
+import { mdbContainer, mdbBtn, mdbModal, mdbModalHeader, mdbModalBody, mdbModalFooter, mdbInput, mdbModalTitle } from 'mdbvue'
 export default {
   name: 'registerPage',
+  data () {
+    return {
+      name: '',
+      email: '',
+      password: ''
+    }
+  },
   components: {
     mdbContainer,
     mdbBtn,
@@ -28,7 +35,8 @@ export default {
     mdbModalHeader,
     mdbModalBody,
     mdbModalFooter,
-    mdbInput
+    mdbInput,
+    mdbModalTitle
   },
   computed: {
     register () {
@@ -36,6 +44,18 @@ export default {
     }
   },
   methods: {
+    toRegister () {
+      this.$store.dispatch('register', {
+        name: this.name,
+        email: this.email,
+        password: this.password
+      })
+      this.setRegister(false)
+      console.log('masuk ke register')
+      this.name = ''
+      this.email = ''
+      this.password = ''
+    },
     setLogin (status) {
       this.$store.commit('setLoginForm', status)
     },

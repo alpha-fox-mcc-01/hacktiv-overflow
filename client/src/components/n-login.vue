@@ -5,8 +5,8 @@
         <mdb-modal-title tag="h4" bold class="w-100">Login</mdb-modal-title>
       </mdb-modal-header>
       <mdb-modal-body class="mx-3 grey-text" style="text-align: left;">
-        <mdb-input label="Your email" icon="envelope" type="email" class="mb-5"/>
-        <mdb-input label="Your password" icon="lock" type="password"/>
+        <mdb-input label="Your email" v-model="email" icon="envelope" type="email" class="mb-5"/>
+        <mdb-input label="Your password" v-model="password" icon="lock" type="password"/>
       </mdb-modal-body>
       <mdb-modal-footer center>
         <mdb-btn @click.native="toLogin">Login</mdb-btn>
@@ -43,8 +43,14 @@ export default {
   },
   methods: {
     toLogin () {
+      this.$store.dispatch('login', {
+        email: this.email,
+        password: this.password
+      })
       this.setLogin(false)
       console.log('masuk ke login')
+      this.email = ''
+      this.password = ''
     },
     setLogin (status) {
       this.$store.commit('setLoginForm', status)
