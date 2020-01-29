@@ -1,7 +1,8 @@
 const { Question } = require('../models')
 module.exports = {
   getQuestions(req, res, next) {
-    Question.find().populate('answers')
+    if (!req.query.keyword) {
+      Question.find().populate('answers')
       .populate('questionedBy')
       .then(data => {
         res.status(200).json(data)
@@ -9,6 +10,16 @@ module.exports = {
       .catch(err => {
         next(err)
       })
+    } else {
+      Question.find({ title: {$regex: req.query.keyword, $options: 'i'}}).populate('answers')
+      .populate('questionedBy')
+      .then(data => {
+        res.status(200).json(data)
+      })
+      .catch(err => {
+        next(err)
+      })
+    }
   },
   getUserQuestions(req, res, next) {
     Question.find({questionedBy: req.currentUserId}).populate('answers')
