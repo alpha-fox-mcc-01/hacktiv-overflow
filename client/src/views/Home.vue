@@ -6,10 +6,12 @@
         content-class="mt-3"
         justified
       >
-        <b-tab title="Javascript">
+        <b-tab title="Back-End">
           <Content />
         </b-tab>
-        <b-tab title="Vue"><p>I'm the second tab</p></b-tab>
+        <b-tab title="Front-End">
+          <Content />
+        </b-tab>
         <b-tab title="New Post">
           <NewPost />
         </b-tab>

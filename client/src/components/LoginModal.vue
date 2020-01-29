@@ -18,18 +18,28 @@
       <b-col>
         <b-form style="padding-right: 15px">
           <b-row>
-            <b-label for="email" style="width: 100%">Email</b-label>
+            <label for="email" style="width: 100%">Email</label>
             <b-input type="email" id="email" />
           </b-row>
           <b-row class="margintop1">
-            <b-label style="width: 100%">Password</b-label>
+            <label style="width: 100%">Password</label>
             <b-input type="password" id="password" />
           </b-row>
           <b-row class="margintop2">
-            <b-button style="width: 100%" class="myButton">LOGIN</b-button>
-            <p style="font-size: 12px; margin-bottom: 0">
+            <b-button style="width: 100%" class="myButton" v-if="!this.isreg"
+              >LOGIN</b-button
+            >
+            <b-button style="width: 100%" class="myButton" v-if="this.isreg"
+              >REGISTER</b-button
+            >
+            <p style="font-size: 12px; margin-bottom: 0" v-if="!this.isreg">
               <span id="donthave">Don't have an account? </span>
-              <span id="here">Register here.</span>
+              <span
+                style="color: blue; font-weight: bold;"
+                id="here"
+                @click="emitProp(true)"
+                >Register here.</span
+              >
             </p>
           </b-row>
         </b-form>
@@ -39,7 +49,17 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    isreg: Boolean
+  },
+  methods: {
+    emitProp(value) {
+      console.log("value sebelum emit", value);
+      this.$emit("change-prop", value);
+    }
+  }
+};
 </script>
 
 <style>
