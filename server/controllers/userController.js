@@ -10,11 +10,13 @@ module.exports = {
       password
     })
       .then(user => {
+        const token = jwt.sign({ _id: user._id }, process.env.SECRET)
         res
           .status(201)
           .json({
             _id: user.id,
             email: user.email,
+            token
           })
       })
       .catch(err => next(err))

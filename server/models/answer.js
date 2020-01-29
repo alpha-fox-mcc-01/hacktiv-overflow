@@ -9,4 +9,4 @@ const answerSchema = new Schema({
   PostId: { type: Schema.Types.ObjectId, ref: 'Post' }
 })
 
-module.exports = model('Post', answerSchema)
+module.exports = model('Answer', answerSchema)
