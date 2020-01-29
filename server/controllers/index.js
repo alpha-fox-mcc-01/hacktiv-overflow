@@ -1,6 +1,8 @@
 const userController = require('./userController')
-const postController = require('./postController')
+const questionController = require('./questionController')
+const answerController = require('./answerController')
 module.exports = {
   userController,
-  postController
+  questionController,
+  answerController
 }

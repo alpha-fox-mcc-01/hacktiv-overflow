@@ -34,7 +34,6 @@ const userSchema = new Schema({
 }, { timestamps: true })
 
 userSchema.pre('save', function(next) {
-  console.log('masuk')
   let user = this;
   if (!user.isModified('password')) return next();
   bcrypt.genSalt(10, function(err, salt) {

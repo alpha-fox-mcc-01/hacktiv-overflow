@@ -1,9 +1,12 @@
 const userRoute = require('./userRoute')
-const postRoute = require('./postRoute')
+const questionRoute = require('./questionRoute')
+const answerRoute = require('./answerRoute')
 const express = require('express')
 const router = express.Router()
 
 router.use('/users', userRoute)
 
-router.use('/posts', postRoute)
+router.use('/questions', questionRoute)
+
+router.use('/answers', answerRoute)
 module.exports = router
