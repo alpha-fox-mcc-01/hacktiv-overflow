@@ -61,6 +61,20 @@ class QuestionController {
             })
   }
 
+  static voteQuestion(req, res, next){
+    let vote = {
+      userId: req.currentUserId,
+      value: req.body.value
+    }
+    Question.updateOne({_id: req.params.id},  { $push: { votes: vote } })
+            .then(result => {
+              res.status(200).json({message: 'Vote successfully added'})
+            })
+            .catch(err => {
+              next(err)
+            })
+  }
+
 
 }
 

@@ -7,7 +7,7 @@ router.get('/', questionController.fetchQuestions)
 router.use(authentication)
 router.post('/', questionController.postQuestion)
 router.get('/me', questionController.fetchMine)
-
+router.patch('/:id', questionController.voteQuestion)
 router.put('/:id', authorizationQuestion, questionController.editQuestion)
 router.delete('/:id', authorizationQuestion, questionController.deleteQuestion)
 
