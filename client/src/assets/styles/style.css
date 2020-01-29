@@ -1,0 +1,24 @@
+.usercontainer {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  width: 100vw;
+  height: 90vh;
+}
+
+.myButton {
+  background-color: coral;
+  font-weight: bold;
+}
+
+.myButton:focus {
+  background-color: coral;
+}
+
+.myButton:hover {
+  background-color: #e46128;
+}
+
+.ck-editor__editable {
+  min-height: 200px;
+}
