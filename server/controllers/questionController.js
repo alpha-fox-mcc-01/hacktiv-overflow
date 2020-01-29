@@ -74,6 +74,18 @@ class QuestionController {
               next(err)
             })
   }
+  static search(req, res, next) {
+    let keyword = req.params.keyword
+    Question.find({ 
+      $or: [ {title: {$regex : `${keyword}`, $options: 'gi'}}, 
+      {category: {$regex: `${keyword}`, $options: 'gi'}}]})
+            .then(result => {
+              res.status(200).send({result})
+            })
+            .catch(err => {
+              next(err)
+            })
+  }
 
 
 }
