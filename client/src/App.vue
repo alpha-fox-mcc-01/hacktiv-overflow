@@ -2,16 +2,22 @@
   <div id="app">
     <div id="nav">
       <n-navbar/>
+      <n-login/>
+      <n-register/>
     </div>
     <router-view/>
   </div>
 </template>
 
 <script>
+import nLogin from './components/n-login'
 import navbarVue from './components/n-navbar'
+import nRegister from './components/n-register'
 export default {
   components: {
-    'n-navbar': navbarVue
+    'n-navbar': navbarVue,
+    'n-login': nLogin,
+    'n-register': nRegister
   }
 }
 </script>
@@ -26,9 +32,9 @@ export default {
   color: #2c3e50;
 }
 
-#nav {
+/* #nav {
   padding: 30px;
-}
+} */
 
 #nav a {
   font-weight: bold;

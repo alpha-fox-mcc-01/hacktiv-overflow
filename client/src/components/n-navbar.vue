@@ -10,8 +10,8 @@
       </form>
         <mdb-nav-item to="/" href="#" active>Home</mdb-nav-item>
         <mdb-nav-item to="/about" href="#">About</mdb-nav-item>
-        <mdb-nav-item to="/about" v-if="!currentUser" href="#">Login</mdb-nav-item>
-        <mdb-nav-item to="/about" v-if="!currentUser" href="#">Register</mdb-nav-item>
+        <mdb-nav-item to="/about" v-if="!currentUser" @click="callLogin">Login</mdb-nav-item>
+        <mdb-nav-item to="/about" v-if="!currentUser" @click="callRegister">Register</mdb-nav-item>
         <mdb-dropdown tag="li" class="nav-item">
           <mdb-dropdown-toggle v-if="currentUser" tag="a" navLink color="warning" slot="toggle" waves-fixed>{{currentUser}}</mdb-dropdown-toggle>
           <mdb-dropdown-menu>
@@ -41,6 +41,12 @@ export default {
     },
     search () {
       console.log('search data')
+    },
+    callLogin () {
+      this.$store.commit('setLoginForm', true)
+    },
+    callRegister () {
+      this.$store.commit('setRegisterForm', true)
     }
   },
   components: {
