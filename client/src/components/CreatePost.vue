@@ -41,6 +41,11 @@ export default {
         ]
       }
     };
+  },
+  methods: {
+    addNewPost(data) {
+      this.$store.dispatch("AddPost", data);
+    }
   }
 };
 </script>

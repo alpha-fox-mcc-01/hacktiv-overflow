@@ -3,7 +3,11 @@
     <!-- ISINYA -->
     <div>
       <b-card class="contentCard">
-        <SinglePost />
+        <SinglePost
+          v-for="post in currentCategory"
+          :key="post._id"
+          :currentPost="post"
+        />
       </b-card>
     </div>
     <!-- ISINYA -->
@@ -15,6 +19,15 @@ import SinglePost from "@/components/SinglePost";
 export default {
   components: {
     SinglePost
+  },
+  props: {
+    backendPost: Array,
+    frontendPost: Array
+  },
+  computed: {
+    currentCategory() {
+      return this.backendPost || this.frontendPost;
+    }
   }
 };
 </script>

@@ -11,6 +11,16 @@ import NavBar from "@/components/NavBar";
 export default {
   components: {
     NavBar
+  },
+  created() {
+    const token = localStorage.getItem("access_token");
+    const activeUserId = localStorage.getItem("activeUserId");
+    if (token && activeUserId) {
+      this.$store.commit("SET_USER_CREDENTIALS", {
+        token,
+        activeUserId
+      });
+    }
   }
 };
 </script>

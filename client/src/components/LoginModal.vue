@@ -19,17 +19,25 @@
         <b-form style="padding-right: 15px">
           <b-row>
             <label for="email" style="width: 100%">Email</label>
-            <b-input type="email" id="email" />
+            <b-input type="email" id="email" v-model="email" />
           </b-row>
           <b-row class="margintop1">
             <label style="width: 100%">Password</label>
-            <b-input type="password" id="password" />
+            <b-input type="password" id="password" v-model="password" />
           </b-row>
           <b-row class="margintop2">
-            <b-button style="width: 100%" class="myButton" v-if="!this.isreg"
+            <b-button
+              style="width: 100%"
+              class="myButton"
+              v-if="!this.isreg"
+              @click="login"
               >LOGIN</b-button
             >
-            <b-button style="width: 100%" class="myButton" v-if="this.isreg"
+            <b-button
+              style="width: 100%"
+              class="myButton"
+              v-if="this.isreg"
+              @click="register"
               >REGISTER</b-button
             >
             <p style="font-size: 12px; margin-bottom: 0" v-if="!this.isreg">
@@ -53,10 +61,48 @@ export default {
   props: {
     isreg: Boolean
   },
+  data() {
+    return {
+      email: "",
+      password: ""
+    };
+  },
   methods: {
     emitProp(value) {
-      console.log("value sebelum emit", value);
       this.$emit("change-prop", value);
+    },
+    login() {
+      this.$store
+        .dispatch("loginUser", {
+          email: this.email,
+          password: this.password
+        })
+        .then(({ data }) => {
+          localStorage.setItem("access_token", data.token);
+          localStorage.setItem("activeUserId", data._id);
+          this.$store.commit("SET_USER_CREDENTIALS", {
+            token: data.token,
+            activeUserId: data._id
+          });
+          this.$bvModal.hide("LoginModal");
+        })
+        .catch(err => console.log(err));
+    },
+    register() {
+      this.$store
+        .dispatch("registerUser", {
+          email: this.email,
+          password: this.password
+        })
+        .then(({ data }) => {
+          localStorage.setItem("access_token", data.token);
+          localStorage.setItem("activeUserId", data._id);
+          this.$store.commit("SET_USER_CREDENTIALS", {
+            token: data.token,
+            activeUserId: data._id
+          });
+        })
+        .catch(err => console.log(err));
     }
   }
 };
