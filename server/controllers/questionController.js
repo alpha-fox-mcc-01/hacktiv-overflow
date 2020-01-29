@@ -1,9 +1,17 @@
 const { Question } = require('../models')
 module.exports = {
   getQuestions(req, res, next) {
-    Question.find()
-      .populate('upvotes')
-      .populate('downvotes')
+    Question.find().populate('answers')
+      .populate('questionedBy')
+      .then(data => {
+        res.status(200).json(data)
+      })
+      .catch(err => {
+        next(err)
+      })
+  },
+  getUserQuestions(req, res, next) {
+    Question.find({questionedBy: req.currentUserId}).populate('answers')
       .populate('questionedBy')
       .then(data => {
         res.status(200).json(data)
@@ -13,12 +21,16 @@ module.exports = {
       })
   },
   addQuestion(req, res, next) {
+    let tags = null
+    if (req.body.tags.length) {
+      tags = req.body.tags.split(',')
+    }
     Question.create({
       title: req.body.title,
       description: req.body.description,
       upvotes: [],
       downvotes: [],
-      tags: req.body.tags.split(','),
+      tags,
       questionedBy: req.currentUserId
     })
       .then(data => {
@@ -42,6 +54,22 @@ module.exports = {
   },
   deleteQuestion (req, res, next) {
     Question.findByIdAndDelete(req.params.id)
+      .then(data => {
+        res.status(200).json(data)
+      })
+      .catch(err => {
+        console.log(err)
+        next(err)
+      })
+  },
+  voteQuestion(req, res, next) {
+    let vote = {
+      user: req.currentUserId,
+      value: Number(req.body.value)
+    }
+    Question.findByIdAndUpdate(req.params.id, {
+      $push: { votes: vote }
+    }, { new: true })
       .then(data => {
         res.status(200).json(data)
       })

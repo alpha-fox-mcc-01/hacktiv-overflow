@@ -10,10 +10,9 @@ const questionSchema = new Schema({
     type: String,
     required: [true, 'Title cannot be empty'],
   },
-  upvotes: [{type: Schema.Types.ObjectId, ref:'User'}],
-  downvotes: [{type: Schema.Types.ObjectId, ref:'User'}],
+  votes: [{ user: {type: Schema.Types.ObjectId, ref: 'User'}, value: Number }],
   tags: Array,
-  questionedBy: {type: Schema.Types.ObjectId, ref: 'User'}
+  questionedBy: {type: Schema.Types.ObjectId, ref: 'User'},
 }, {timestamps: true})
 
 const Question = mongoose.model('Question', questionSchema)
