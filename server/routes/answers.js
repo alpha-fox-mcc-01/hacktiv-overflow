@@ -5,8 +5,9 @@ const authentication = require ('../middlewares/authentication')
 
 router.get('/', AnswerController.getAll)
 router.post('/', AnswerController.add)
-router.post('/upvote/:answerId', authentication, AnswerController.upvote)
-router.post('/downvote/:answerId', authentication, AnswerController.downvote)
-router.put('/:questionId', authentication, AnswerController.update)
+// router.post('/upvote/:answerId', authentication, AnswerController.upvote)
+// router.post('/downvote/:answerId', authentication, AnswerController.downvote)
+router.put('/:answerId', authentication, AnswerController.update)
+router.patch('/:answerId', authentication, AnswerController.vote)
 
 module.exports = router

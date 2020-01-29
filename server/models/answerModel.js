@@ -10,21 +10,13 @@ const answerSchema = new Schema({
       type: String,
       required: true
    },
-   upvote: [{
-      user: {
-         type: 'ObjectId',
-         ref: 'User'
-      }
+   votes: [{
+      userId: { type: Schema.Types.ObjectId, ref: 'User' },
+      vote: Number
    }],
-   downvote: [{
-      user: {
-         type: 'ObjectId',
-         ref: 'User'
-      }
-   }],
-   questionId : String,
-   userId : String,
-   time : { type : Date, default: Date.now }
+   questionId: String,
+   userId: String,
+   time: { type: Date, default: Date.now }
 })
 
 const Answer = mongoose.model('Answer', answerSchema)

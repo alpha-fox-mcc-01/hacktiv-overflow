@@ -44,94 +44,152 @@ class QuestionController {
          })
    }
 
-   static upvote(req, res, next) {
-      let newUpvote = {
-         user : req.currentUserId
-      }
-      Question.findOne({ _id: req.params.questionId }).populate('upvote.user')
-         .then(data => {            
-            if (data) {
-               let userSearch = data.upvote.filter (search => {
-                  return search.user._id = req.currentUserId
-               })
+   // static upvote(req, res, next) {
+   //    let newUpvote = {
+   //       user: req.currentUserId
+   //    }
+   //    Question.findOne({ _id: req.params.questionId }).populate('upvote.user')
+   //       .then(data => {
+   //          if (data) {
+   //             let userSearch = data.upvote.filter(search => {
+   //                return search.user._id = req.currentUserId
+   //             })
 
-               
-               if (userSearch.length < 1) {
-                  Question.updateOne({ _id: req.params.questionId }, { $push: { upvote: newUpvote} })
-                     .then(data => {
-                        res.status(200).json({data, msg : `upvoted`})                     
-                     })
-                     .catch(err => {
-                        next(err)
-                     })
-               }
-               else {
-                  res.status(400).json({msg : `you already upvoted it`})
-               }
+   //             if (userSearch.length < 1) {
+   //                Question.updateOne({ _id: req.params.questionId }, { $push: { upvote: newUpvote } })
+   //                   .then(data => {
+   //                      res.status(200).json({ data, msg: `upvoted` })
+   //                   })
+   //                   .catch(err => {
+   //                      next(err)
+   //                   })
+   //             }
+   //             else {
+   //                Question.updateOne({ _id: req.params.questionId }, { $pull: { upvote: newUpvote } })
+   //                   .then (data => {
+   //                      res.status(200).json({data, msg : `upvote back to 0`})
+   //                   })
+   //                   .catch (err => {
+   //                      next(err)
+   //                   })
+   //             }
 
-            }
-            else {
-               next({code: 404, msg: `data not found`})
-            }
-         })
-         .catch(err => {
-            next(err)
-         })
-   }
+   //          }
+   //          else {
+   //             next({ code: 404, msg: `data not found` })
+   //          }
+   //       })
+   //       .catch(err => {
+   //          next(err)
+   //       })
+   // }
 
-   static downvote(req, res, next) {
-      let newDownvote = {
-         user : req.currentUserId
-      }
-      Question.findOne({ _id: req.params.questionId }).populate('downvote.user')
-         .then(data => {            
-            if (data) {
-               let userSearch = data.downvote.filter (search => {
-                  return search.user._id = req.currentUserId
-               })
+   // static downvote(req, res, next) {
+   //    let newDownvote = {
+   //       user: req.currentUserId
+   //    }
+   //    Question.findOne({ _id: req.params.questionId }).populate('downvote.user')
+   //       .then(data => {
+   //          if (data) {
+   //             let userSearch = data.downvote.filter(search => {
+   //                return search.user._id = req.currentUserId
+   //             })
 
-               
-               if (userSearch.length < 1) {
-                  Question.updateOne({ _id: req.params.questionId }, { $push: { downvote: newDownvote} })
-                     .then(data => {
-                        res.status(200).json({data, msg : `downvoted`})                     
-                     })
-                     .catch(err => {
-                        next(err)
-                     })
-               }
-               else {
-                  res.status(400).json({msg : `you already downvoted it`})
-               }
 
-            }
-            else {
-               next({code: 404, msg: `data not found`})
-            }
-         })
-         .catch(err => {
-            next(err)
-         })
-   }
+   //             if (userSearch.length < 1) {
+   //                Question.updateOne({ _id: req.params.questionId }, { $push: { downvote: newDownvote } })
+   //                   .then(data => {
+   //                      res.status(200).json({ data, msg: `downvoted` })
+   //                   })
+   //                   .catch(err => {
+   //                      next(err)
+   //                   })
+   //             }
+   //             else {
+   //                Question.updateOne({ _id: req.params.questionId }, { $pull: { downvote: newDownvote } })
+   //                   .then (data => {
+   //                      res.status(200).json({data, msg : `downvote back to 0`})
+   //                   })
+   //                   .catch (err => {
+   //                      next(err)
+   //                   })
+   //             }
 
-   static update (req, res, next) {
+   //          }
+   //          else {
+   //             next({ code: 404, msg: `data not found` })
+   //          }
+   //       })
+   //       .catch(err => {
+   //          next(err)
+   //       })
+   // }
+
+   static update(req, res, next) {
       let updateData = {
-         title : req.body.title,
-         description : req.body.description
+         title: req.body.title,
+         description: req.body.description
       }
 
-      Question.findOneAndUpdate({_id : req.params.questionId}, updateData)
-         .then (data => {
+      Question.findOneAndUpdate({ _id: req.params.questionId }, updateData)
+         .then(data => {
             if (data) {
-               res.status(201).json({data, msg : `updated`})
+               res.status(201).json({ data, msg: `updated` })
             }
             else {
-               next({code : 404, msg : `data not found`})
+               next({ code: 404, msg: `data not found` })
             }
          })
-         .catch (err => {
-            next (err)
+         .catch(err => {
+            next(err)
          })
+   }
+
+   static vote(req, res, next) {
+      const newVote = {
+         vote: req.body.vote,
+         userId: req.currentUserId
+      };
+      Question.findOne({
+         _id: req.params.questionId,
+         'votes.userId': req.currentUserId
+      })
+         .then(question => {
+            if (question) {
+               if (question.votes[0].vote == req.body.vote) {
+                  return Question.findByIdAndUpdate(id, {
+                     $pull: {
+                        'votes': {
+                           userId: req.currentUserId
+                        }
+                     }
+                  });
+               } else {
+                  return Question.updateOne({
+                     _id: id,
+                     'votes.userId': req.currentUserId
+                  }, {
+                     '$set': {
+                        'votes.$.vote': req.body.vote
+                     }
+                  });
+               }
+            } else {
+               return Question.update({
+                  _id: id
+               }, {
+                  $push: {
+                     votes: newVote
+                  }
+               })
+            }
+         })
+         .then(question => {
+            res.status(201).json(question);
+         })
+         .catch(err => {
+            next(err)
+         });
    }
 }
 
