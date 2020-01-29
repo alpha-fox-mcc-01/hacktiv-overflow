@@ -132,7 +132,7 @@ class AnswerController {
          .then(answer => {
             if (answer) {
                if (answer.votes[0].vote == req.body.vote) {
-                  return Answer.findByIdAndUpdate(id, {
+                  return Answer.findOneAndUpdate({_id: req.params.answerId}, {
                      $pull: {
                         'votes': {
                            userId: req.currentUserId
@@ -141,7 +141,7 @@ class AnswerController {
                   });
                } else {
                   return Answer.updateOne({
-                     _id: id,
+                     _id: req.params.answerId,
                      'votes.userId': req.currentUserId
                   }, {
                      '$set': {

@@ -1,15 +1,18 @@
 <template>
   <div id="app">
-    <navbar />
+    <navbar style="position: fixed; top: 0px; width: 100%; z-index:1;"/>
     <router-view/>
+    <Footer />
   </div>
 </template>
 <script>
 import Navbar from "./components/Navbar"
+import Footer from './components/Footer'
 export default {
     name : `App`,
     components : {
-      Navbar
+      Navbar,
+      Footer
     }
   
 }
