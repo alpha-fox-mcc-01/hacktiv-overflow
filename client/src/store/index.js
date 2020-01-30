@@ -84,6 +84,43 @@ export default new Vuex.Store({
           console.log(err)
         })
     },
+    newAnswer (context, payload) {
+      return axios({
+        method: 'POST',
+        url: 'http://localhost:3000/answers/?questionId=' + payload._id,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        },
+        data: {
+          title: payload.title,
+          description: payload.description
+        }
+      })
+    },
+    voteQuestion (context, payload) {
+      return axios({
+        method: 'PATCH',
+        url: `http://localhost:3000/questions/${payload._id}/vote`,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        },
+        data: {
+          value: payload.value
+        }
+      })
+    },
+    voteAnswer (context, payload) {
+      return axios({
+        method: 'PATCH',
+        url: `http://localhost:3000/answers/${payload._id}/vote`,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        },
+        data: {
+          value: payload.value
+        }
+      })
+    },
     signUp (context, payload) {
       return axios({
         method: 'POST',

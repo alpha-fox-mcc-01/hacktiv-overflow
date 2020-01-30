@@ -4,14 +4,14 @@
       <div class='row'>
         <div class='col-md-1'>
           <b-card class='question-detail'>
-            <h1 style='margin-top: 1.5rem; margin-left: 0.5rem;'>{{ questionReputation }}</h1>
+            <img class='upvote-arrow' @click='vote(1)' src='../../public/arrow.png' width="40" height="40">
+            <hr>
+            <img class='downvote-arrow' @click='vote(-1)' src='../../public/arrow.png' style='transform: rotate(180deg)' width="40" height="40">
           </b-card>
         </div>
         <div class='col-md-1'>
           <b-card class='question-detail'>
-            <img src='../../public/arrow.png' width="40" height="40">
-            <hr>
-            <img src='../../public/arrow.png' style='transform: rotate(180deg)' width="40" height="40">
+            <h2 style='margin-top: 2rem; margin-left: 0.5rem;'>{{ reputation }}</h2>
           </b-card>
         </div>
         <div class='col-md-10'>
@@ -19,84 +19,104 @@
             <b-card-text>
               {{ question.description }}
             </b-card-text>
-            <b-button v-b-modal.modal-1>Reply</b-button>
-
-            <b-modal id="modal-1" title="BootstrapVue" hide-footer>
-                <b-form @submit.prevent="writeAnswer">
-                  <b-form-group
-                    id="input-group-1"
-                    label="Title:"
-                    label-for="input-1"
-                  >
-                    <b-form-input
-                      id="input-1"
-                      type="text"
-                      required
-                      placeholder="Enter title"
-                    ></b-form-input>
-                  </b-form-group>
-
-                  <b-form-group id="input-group-2" label="Description" label-for="input-2">
-                    <b-form-input
-                      id="input-2"
-                      required
-                      placeholder="Enter description"
-                    ></b-form-input>
-                  </b-form-group>
-                  <b-button type="submit" variant="primary">Submit</b-button>
-                </b-form>
-            </b-modal>
+            <b-card-text>
+                <p style='opacity: 0.7;'>Last Edited: {{ question.updatedAt }}</p>
+            </b-card-text>
           </b-card>
         </div>
       </div>
       <hr>
-      <h1>Replies</h1>
+      <h5 style='opacity: 0.5;'>Reply to this question...</h5>
+      <b-form-input v-model='title' size="sm" class="mr-sm-2" placeholder='title'></b-form-input>
+      <editor
+       v-model='description'
+       api-key="xz070feerzn7an1h8txc48y372qdauaphrppmw3h01y7k653"
+       initialValue="<p style='opacity: 0.5;'>elaborate</p>"
+       :init="{
+         height: 200,
+         menubar: false,
+         plugins: [
+           'advlist autolink lists link image charmap print preview anchor',
+           'searchreplace visualblocks code fullscreen',
+           'insertdatetime media table paste code help wordcount'
+         ],
+         toolbar:
+           'undo redo | formatselect | bold italic backcolor | \
+           alignleft aligncenter alignright alignjustify | \
+           bullist numlist outdent indent | removeformat | help'
+       }"
+       ></editor>
+       <br>
+       <b-button variant='light' @click='newAnswer'>Submit</b-button>
+       <br>
       <br>
-      <div class='row'>
-        <div class='answers' v-for='answer in answers' :key='answer._id'>
-          <div class='col-md-1'>
-            <b-card class='question-detail'>
-              <h1 style='margin-top: 1.5rem; margin-left: 0.5rem;'>2</h1>
-            </b-card>
-          </div>
-          <div class='col-md-1'>
-            <b-card class='question-detail'>
-              <img src='../../public/arrow.png' width="40" height="40">
-              <hr>
-              <img src='../../public/arrow.png' style='transform: rotate(180deg)' width="40" height="40">
-            </b-card>
-          </div>
-          <div class='col-md-10' v-if='answers.length > 0'>
-            <b-card class='question-detail' v-for='answer in answers' :key='answer._id' :title="answer.title" :sub-title="answer.answeredBy.username">
-              <b-card-text>
-                {{ answer.description }}
-              </b-card-text>
-            </b-card>
-          </div>
-        </div>
-      </div>
+      <h1>{{ answers.length }} &nbsp; <span v-if='answers.length>1 || answers.length===0'>Replies</span><span v-else>Reply</span></h1>
+      <hr>
+      <AnswerCard @get-answers="$store.dispatch('getQuestionAnswers', question._id)" v-for='answer in answers' :key='answer._id' :answer='answer'/>
     </div>
   </div>
 </template>
 
 <script>
+import Editor from '@tinymce/tinymce-vue'
+import AnswerCard from '@/components/AnswerCard.vue'
 export default {
-  name:'questionDetail',
+  name: 'questionDetail',
+  data () {
+    return {
+      title: '',
+      description: '',
+      reputation: 0
+    }
+  },
+  components: {
+    Editor,
+    AnswerCard
+  },
+  methods: {
+    newAnswer () {
+      this.$store.dispatch('newAnswer', {
+        title: this.title,
+        description: this.description,
+        _id: this.question._id
+      })
+        .then(({ data }) => {
+          this.$store.dispatch('getQuestionAnswers', this.$route.params.id)
+          console.log(data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    vote (value) {
+      this.$store.dispatch('voteQuestion', {
+        value,
+        _id: this.$route.params.id
+      })
+        .then(() => {
+          this.$store.dispatch('getQuestionDetail', this.$route.params.id)
+          this.getReputation()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    getReputation () {
+      let value = 0
+      if (this.question.votes.length) {
+        this.question.votes.forEach(vote => {
+          value += Number(vote.value)
+        })
+      }
+      this.reputation = value
+    }
+  },
   computed: {
     question () {
       return this.$store.state.questionDetail
     },
     answers () {
       return this.$store.state.answers
-    },
-    questionReputation () {
-      let vote = 0
-      if (this.question.votes) {
-        this.question.votes.forEach(vote => {
-          vote += vote.value
-        })
-      }
-      return vote
     }
   },
   created () {
@@ -116,5 +136,8 @@ export default {
 }
 .question-detail {
   min-height: 10rem;
+}
+.upvote-arrow, .downvote-arrow {
+  cursor: pointer;
 }
 </style>
