@@ -4,6 +4,9 @@
       <mdb-modal-header class="text-center">
         <mdb-modal-title tag="h4" bold class="w-100">Login</mdb-modal-title>
       </mdb-modal-header>
+      <mdb-alert color="danger">
+      {{alert}}
+    </mdb-alert>
       <mdb-modal-body class="mx-3 grey-text" style="text-align: left;">
         <mdb-input label="Your email" v-model="email" icon="envelope" type="email" class="mb-5"/>
         <mdb-input label="Your password" v-model="password" icon="lock" type="password"/>
@@ -23,7 +26,8 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      alert: ''
     }
   },
   components: {
@@ -47,10 +51,21 @@ export default {
         email: this.email,
         password: this.password
       })
-      this.setLogin(false)
-      console.log('masuk ke login')
-      this.email = ''
-      this.password = ''
+        .then(({ data }) => {
+          this.setLogin(false)
+          console.log('masuk ke login')
+          console.log(data)
+          this.$store.commit('setCurrentUser', data.name)
+          this.email = ''
+          this.password = ''
+        })
+        .catch(err => {
+          console.log(err.response)
+          this.alert = err.response.data.error
+          setTimeout(() => {
+            this.alert = ''
+          }, 3000)
+        })
     },
     setLogin (status) {
       this.$store.commit('setLoginForm', status)

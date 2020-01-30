@@ -6,6 +6,7 @@
       <n-register/>
     </div>
     <router-view/>
+    <n-footer/>
   </div>
 </template>
 
@@ -13,11 +14,13 @@
 import nLogin from './components/n-login'
 import navbarVue from './components/n-navbar'
 import nRegister from './components/n-register'
+import nFooter from './components/n-footer'
 export default {
   components: {
     'n-navbar': navbarVue,
     'n-login': nLogin,
-    'n-register': nRegister
+    'n-register': nRegister,
+    nFooter
   }
 }
 </script>
