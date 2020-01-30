@@ -22,10 +22,26 @@ class QuestionController {
   static getAllQuestion (req, res, next) {
     Question
       .find()
+      .populate('userId', 'username')
       .then(questions => {
         res.status(200).json(questions)
       })
       .catch(err =>{
+        next(err)
+      })
+  }
+
+  static getQuestionById (req, res, next) {
+    Question
+      .findById({
+        _id: req.params.id
+      })
+      .populate('userId', 'username')
+      .populate('answerId')
+      .then(question => {
+        res.status(200).json(question)
+      })
+      .catch(err => {
         next(err)
       })
   }

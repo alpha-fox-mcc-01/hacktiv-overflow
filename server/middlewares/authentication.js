@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 
 module.exports = (req, res, next) => {
   let token = req.headers.token
+  // console.log(token)
   if(token){
     const authenticated = jwt.verify(token, process.env.JWT_SECRET)
     // console.log(authenticated)

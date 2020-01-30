@@ -18,8 +18,10 @@
           <div class="card-text">
           {{ question.content }}
           </div>
-          <button class="btn-primary">See More</button>
+          <button class="btn-primary" @click="seeDetails(question._id)">See More</button>
         </div>
+        <small>Posted By: {{question.userId.username}}</small>
+        <small>Posted At: {{question.userId.username}}</small>
       </div>
     </div>
   </div>
@@ -30,6 +32,11 @@ export default {
   name: 'question-card',
   props: {
     question: Object
+  },
+  methods: {
+    seeDetails (id) {
+      this.$router.push(`/questions/${id}`)
+    }
   }
 }
 </script>

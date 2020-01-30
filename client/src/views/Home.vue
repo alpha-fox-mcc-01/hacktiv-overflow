@@ -7,6 +7,7 @@
     >
     <QuestionCard :question="question"/>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 
