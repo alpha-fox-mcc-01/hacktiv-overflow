@@ -39,7 +39,8 @@ class UserController {
               const access_token = jwt.sign({ _id: user._id }, process.env.SECRET);
               res.status(200).json({
                 access_token,
-                name: user.name
+                name: user.name,
+                userId: user._id
               });
             } else {
               next({

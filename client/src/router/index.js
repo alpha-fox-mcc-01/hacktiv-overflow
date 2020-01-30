@@ -21,9 +21,32 @@ const routes = [
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
   },
   {
-    path: '/post',
-    name: 'post',
-    component: () => import(/* webpackChunkName: "posts" */ '../views/Post.vue'),
+    path: '/myquestion',
+    name: 'myquestion',
+    component: () => import(/* webpackChunkName: "login" */ '../views/UserQuestion.vue'),
+    children: [
+      {
+        path: ':id',
+        component: () => import(/* webpackChunkName: "DetailQuestion" */ '../components/FormEdit.vue'),
+      },
+    ],
+  },
+  {
+    path: '/question',
+    name: 'question',
+    component: () => import(/* webpackChunkName: "question" */ '../views/Question.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import(/* webpackChunkName: "DetailQuestion" */ '../components/ListQuestion.vue'),
+      }, {
+        path: 'add',
+        component: () => import(/* webpackChunkName: "DetailQuestion" */ '../components/FormQuestion.vue'),
+      }, {
+        path: ':id',
+        component: () => import(/* webpackChunkName: "DetailQuestion" */ '../components/DetailQuestion.vue'),
+      },
+    ],
   },
 ];
 

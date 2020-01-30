@@ -64,8 +64,9 @@ export default {
         .then(({ data }) => {
           localStorage.setItem('access_token', data.access_token);
           localStorage.setItem('userName', data.name);
+          localStorage.setItem('userId', data.userId);
           this.$store.commit('SET_ISLOGIN', true);
-          this.$router.push('/post');
+          this.$router.push('/question');
         })
         .catch((err) => {
           Swal.fire({

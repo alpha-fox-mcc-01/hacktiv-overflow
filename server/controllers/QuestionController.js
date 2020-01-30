@@ -1,8 +1,8 @@
-const { Question } = require('../models');
+const { Question, Answer } = require('../models');
 
 class QuestionController {
   static showAllQuestions(req, res, next) {
-    Question.find().populate('authorId')
+    Question.find().populate('authorId').sort({ createdAt: -1 })
       .then(questions => {
         res.status(200).json(questions);
       })
@@ -11,15 +11,24 @@ class QuestionController {
 
   static showOneQuestion(req, res, next) {
     const { id } = req.params;
-    Question.findById(id)
+    Question.findById(id).populate('authorId')
       .then(question => {
         res.status(200).json(question);
       })
       .catch(next);
   }
 
+  static showUserQuestions(req, res, next) {
+    Question.find({
+      authorId: req.currentUserId
+    }).populate('authorId').sort({ createdAt: -1 })
+      .then(questions => {
+        res.status(200).json(questions);
+      })
+      .catch(next);
+  }
+
   static addQuestion(req, res, next) {
-    console.log(req.currentUserId);
     const { title, content } = req.body;
     Question.create({
       title,
@@ -50,7 +59,10 @@ class QuestionController {
     Question.findByIdAndDelete(id)
       .then(question => {
         if(question) {
-          res.status(200).json(question);
+          return Answer.deleteMany({
+            questionId: question._id
+          })
+
         } else {
           next({
             name: 'Not Found',
@@ -58,6 +70,11 @@ class QuestionController {
             errors: [ 'Question not found' ]
           })
         }
+      })
+      .then(_ => {
+        res.status(200).json({
+          message: 'Question deleted successfully'
+        });
       })
       .catch(next);
   }
@@ -74,7 +91,8 @@ class QuestionController {
     })
       .then(question => {
         if(question) {
-          if(question.votes[0].vote == req.body.vote) {
+          const indexOfUser = question.votes.findIndex(el => el.userId.toString() == req.currentUserId);
+          if(question.votes[indexOfUser].vote == req.body.vote) {
             return Question.findByIdAndUpdate(id, {
               $pull: {
                 'votes': {

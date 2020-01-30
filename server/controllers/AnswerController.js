@@ -1,14 +1,25 @@
 const { Answer } = require('../models');
 
 class AnswerController {
+  static showAnswers(req, res, next) {
+    const { questionId } = req.params;
+    Answer.find({
+      questionId
+    }).populate('authorId')
+      .then(answers => {
+        res.status(200).json(answers);
+      })
+      .catch(next);
+  }
+
   static addAnswer(req, res, next) {
     const { title, content } = req.body;
-    const { id } = req.params;
+    const { questionId } = req.params;
     Answer.create({
       title,
       content,
       authorId: req.currentUserId,
-      questionId: id
+      questionId
     })
       .then(question => {
         res.status(201).json(question);
@@ -29,19 +40,49 @@ class AnswerController {
       .catch(next);
   }
 
-  static deleteAnswer(req, res, next) {
+  static voteAnswer(req, res, next) {
+    const voteByUser = {
+      vote: req.body.vote,
+      userId: req.currentUserId
+    };
     const { id } = req.params;
-    Answer.findByIdAndDelete(id)
-      .then(question => {
-        if(question) {
-          res.status(200).json(question);
+    Answer.findOne({
+      _id: id,
+      'votes.userId': req.currentUserId
+    })
+      .then(answer => {
+        if(answer) {
+          const indexOfUser = answer.votes.findIndex(el => el.userId.toString() == req.currentUserId);
+          if(answer.votes[indexOfUser].vote == req.body.vote) {
+            return Answer.findByIdAndUpdate(id, {
+              $pull: {
+                'votes': {
+                  userId: req.currentUserId
+                }
+              }
+            });
+          } else {
+            return Answer.updateOne({
+              _id: id,
+              'votes.userId': req.currentUserId
+            }, {
+              '$set': {
+                'votes.$.vote': req.body.vote
+              }
+            });
+          }
         } else {
-          next({
-            name: 'Not Found',
-            status: 404,
-            errors: [ 'Question not found' ]
+          return Answer.update({
+            _id: id
+          }, {
+            $push: {
+              votes: voteByUser
+            }
           })
         }
+      })
+      .then(votedAnswer => {
+        res.status(201).json(votedAnswer);
       })
       .catch(next);
   }

@@ -5,7 +5,12 @@
         <router-link class="nav-link" to="/">
           <i class="fas fa-expand-arrows-alt pr-2"></i>Overflow
         </router-link>
-        <router-link class="nav-link" to="/post">Posts</router-link>
+        <router-link class="nav-link" to="/question">Questions</router-link>
+        <router-link
+        class="nav-link"
+        to="/myquestion"
+        v-if="isLogin"
+        >My Questions</router-link>
         <router-link
           class="nav-link ml-auto"
           to="/login"
