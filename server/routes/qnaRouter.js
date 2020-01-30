@@ -14,7 +14,7 @@ router
   .post(multer({ dest: 'temp/', limits: { fieldSize: 3 * 1024 * 1024 } }).single('imageUrl'), authentication, postController.addQuestion)
 router.post('/answer', authentication, postController.addAnswer)
 router.post('/vote', authentication, postController.addVote)
-// router.post('/canvote', postController.canVote)
+router.delete('/:id', authentication, authorization, postController.deletePost)
 
 
 module.exports = router

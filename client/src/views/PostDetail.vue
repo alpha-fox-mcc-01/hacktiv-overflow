@@ -30,6 +30,12 @@
         <a @click="addVote('downvote')" class="voteButton">
           <i class="fas fa-chevron-circle-down"></i>
         </a>
+        <b-button
+          size="sm"
+          style="position: absolute; right: 1rem;"
+          @click="deletePost"
+          >Delete</b-button
+        >
       </b-card>
       <!-- <p>{{ post.answers }}</p> -->
       <!-- <Answer /> -->
@@ -130,6 +136,15 @@ export default {
         })
         .then(success => {
           this.$router.go();
+        })
+        .catch(err => console.log(err));
+    },
+
+    deletePost() {
+      this.$store
+        .dispatch("deletePost", this.$route.params.id)
+        .then(success => {
+          this.$router.push("/home");
         })
         .catch(err => console.log(err));
     }

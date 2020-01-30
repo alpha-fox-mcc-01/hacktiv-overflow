@@ -148,6 +148,16 @@ export default new Vuex.Store({
           "access_token": this.state.access_token
         }
       })
+    },
+
+    deletePost(context, id) {
+      return axios({
+        method: 'delete',
+        url: process.env.VUE_APP_BASE_API_URL + 'qna/post/' + id,
+        headers: {
+          "access_token": this.state.access_token
+        }
+      })
     }
   },
   getters: {
