@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 export default {
   name: 'Navbar',
   computed: {
@@ -26,6 +27,7 @@ export default {
   methods: {
     signOut () {
       this.$store.dispatch('signOut')
+      Swal.fire('Ok..', 'Log out successful!', 'success')
     }
   }
 }
