@@ -10,7 +10,8 @@ export default new Vuex.Store({
     registerForm: false,
     loginForm: false,
     isLogin: false,
-    questions: []
+    questions: [],
+    oneQuestion: {}
   },
   mutations: {
     setCurrentUser (state, data) {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     setQuestions (state, data) {
       state.questions = data
+    },
+    setOneQuestion (state, data) {
+      state.oneQuestion = data
     }
   },
   actions: {
@@ -53,6 +57,18 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           context.commit('setQuestions', data)
+        })
+        .catch(({ response }) => {
+          console.log(response)
+        })
+    },
+    fetchOneQuestion (context, data) {
+      axios({
+        method: 'GET',
+        url: `http://localhost:3000/questions/${data}`
+      })
+        .then(({ data }) => {
+          context.commit('setOneQuestion', data)
         })
         .catch(({ response }) => {
           console.log(response)
