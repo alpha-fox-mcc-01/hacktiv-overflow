@@ -112,6 +112,10 @@ class PostController {
       })
   }
 
+  static likeComment (req, res, next) {
+  
+  }
+
   static getComment (req, res, next) {
     console.log(req.params.postId, 'get comment postId')
     Comment.find({postId: req.params.postId})
@@ -123,6 +127,45 @@ class PostController {
         next(err)
       })
   }
+
+  static votePost (req, res, next) {
+    console.log(req.body.postId)
+    console.log(req.authenticated_id)
+    console.log(req.body.point)
+    Post.findOne({
+      _id: req.body.postId,
+      'votes.voter': req.authenticated_id,
+      'votes.point': req.body.point
+    })
+      .then(result => {
+        if (result) {
+          console.log('pulling')
+          return Post.updateOne({_id:req.body.postId},
+            {
+              $pull: {votes: {
+                voter: req.authenticated_id
+              }}
+            },
+            {new: true})
+        } else {
+          return Post.updateOne({_id:req.body.postId},
+            {
+              votes: {
+                voter: req.authenticated_id,
+                point: req.body.point
+              }
+            },
+            {new: true})
+        }
+      })
+      .then(result => {
+        res.status(200).json(result)
+      })
+      .catch (err => {
+        throw err
+      })
+  }
+  
 }
 
 module.exports = PostController

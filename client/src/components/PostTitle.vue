@@ -2,9 +2,9 @@
   <div class="card col-lg-6 flex px-0">
     <div class="card-body d-flex align-items-center ">
       <div class="mr-2 d-flex flex-column justify-content-center align-items-center text-center">
-        <i class="fas fa-chevron-up fa-btn text-secondary"></i>
-        <div class="card p-1 m-1">12</div>
-        <i class="fas fa-chevron-down fa-btn text-secondary"></i>
+        <i @click="vote(1)" :class="{'text-warning': isLiked == 1 }" class="fas fa-chevron-up fa-btn text-secondary"></i>
+        <div class="card p-1 m-1">{{totalPoints}}</div>
+        <i @click="vote(-1)" :class="{'text-warning': isLiked == -1 }" class="fas fa-chevron-down fa-btn text-secondary"></i>
       </div>
 
       <div class="ml-2 d-flex flex-column flex-grow-1">
@@ -14,8 +14,8 @@
         <div class="d-flex align-items-center">
         </div>
         <div class="mt-2">
-          <span><i v-if="post.isResolved" class="ml-1 fas fa-check text-success"></i> </span>
-          <span class="ml-4 ">Posted at: {{post.createdAt}}</span>
+          <span><i v-if="post.isResolved" class="mr-2 fas fa-check text-success"></i> </span>
+          <span class="">Posted at: {{post.createdAt}}</span>
         </div>
         <span class="">Languages: <div class="badge badge-warning m-1" v-for="(lang,i) in post.language" :key="i">{{lang}}</div> </span>
       </div>
@@ -24,6 +24,12 @@
         <i @click="edit" v-if="!post.isResolved" class="far fa-btn fa-edit mb-2 text-dark"></i>
         <i @click="deletePost" class="far fa-btn text-danger fa-trash-alt"></i>
       </div>
+    </div>
+    <!-- DELETE CONFIRMATION -->
+    <div v-if="isDeleting" class="card-body d-flex flex-row-reverse">
+      <span @click="submitDeletePost" class="text-danger fa-btn ml-2"><u>yes</u></span>
+      <span @click="deletePost" class="ml-2 fa-btn">no</span>
+      <div class="">are you sure to delete this Post?</div>
     </div>
     <!-- EDIT FORM -->
     <div v-if="isEditing" class="card-body">
@@ -62,12 +68,7 @@
           <input type="submit" value="Submit" class="btn btn-warning btn-lg btn-block col-3">
         </form>
     </div>
-    <!-- DELETE CONFIRMATION -->
-    <div v-if="isDeleting" class="card-body d-flex flex-row-reverse">
-      <span @click="submitDeletePost" class="text-danger fa-btn ml-2"><u>yes</u></span>
-      <span @click="deletePost" class="ml-2 fa-btn">no</span>
-      <div class="">are you sure to delete this Post?</div>
-    </div>
+
   </div>
 </template>
 
@@ -79,9 +80,28 @@ export default {
   components: {
     Editor
   },
-  computed: mapState({
-    activeUser: 'activeUser'
-  }),
+  computed: {
+    totalPoints () {
+      let total = 0
+      this.post.votes.forEach(vote => {
+        total += vote.point
+      })
+      return total
+    },
+    isLiked () {
+      // 0 = netral, -1 disliked, 1 = liked
+      let liked = 0
+      this.post.votes.forEach(vote => {
+        if (vote.voter === this.activeUser._id) {
+          liked = vote.point
+        }
+      })
+      return liked
+    },
+    ...mapState({
+      activeUser: 'activeUser'
+    })
+  },
   data () {
     return {
       isEditing: false,
@@ -109,7 +129,6 @@ export default {
           return this.$store.dispatch('fetchMyPost')
         })
         .then(({ data }) => {
-          console.log(data, 'ini hasil dispatch fetchmypost')
           this.$store.commit('MAP_POSTS', data)
           this.edit()
         })
@@ -132,6 +151,25 @@ export default {
         })
         .catch(err => {
           console.log(err)
+        })
+    },
+    vote (point) {
+      const payload = {
+        type: 'post',
+        point,
+        postId: this.post._id
+      }
+      this.$store.dispatch('vote', payload)
+        .then(({ data }) => {
+          console.log(data)
+          return this.$store.dispatch('fetchAll')
+        })
+        .then(({ data }) => {
+          this.$store.commit('MAP_POSTS', data)
+        })
+        .catch(err => {
+          console.log(err.response.data)
+          throw err
         })
     }
   }

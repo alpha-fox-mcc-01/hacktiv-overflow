@@ -47,6 +47,24 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    vote (context, payload) {
+      console.log(payload)
+      if (payload.type === 'post') {
+        return axios({
+          method: 'PATCH',
+          url: '/post/vote',
+          data: {
+            point: payload.point,
+            postId: payload.postId
+          },
+          headers: {
+            'access_token': localStorage.getItem('access_token')
+          }
+        })
+      } else {
+        console.log('vote comment')
+      }
+    },
     registration (context, payload) {
       return axios({
         url: '/auth/signup',
