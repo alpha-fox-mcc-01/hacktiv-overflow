@@ -7,11 +7,9 @@
         justified
       >
         <b-tab title="Back-End">
-          {{ getBackEnd }}
           <Content :backendPost="getBackEnd" />
         </b-tab>
         <b-tab title="Front-End">
-          {{ getFrondEnd }}
           <Content :frontendPost="getFrondEnd" />
         </b-tab>
         <b-tab title="New Post" v-if="access_token">

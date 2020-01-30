@@ -26,7 +26,8 @@ export default {
   },
   computed: {
     currentCategory() {
-      return this.backendPost || this.frontendPost;
+      const post = this.backendPost || this.frontendPost;
+      return post.reverse();
     }
   }
 };

@@ -3,10 +3,12 @@
     <!-- ISINYA -->
     <div>
       <b-card class="contentCard">
-        <b>INI ANSWER</b><br />Lorem ipsum dolor sit amet consectetur
-        adipisicing elit. Voluptatibus ad deserunt ullam numquam aperiam illo
-        nostrum fugiat! Ea eveniet quidem pariatur tempora, beatae perspiciatis,
-        temporibus, est nulla ipsam blanditiis dolores.
+        <b-row>
+          <b-col cols="auto" class="mr-auto"> Replied: {{ getDate }}</b-col>
+          <b-col cols="auto">{{ this.email }}</b-col>
+        </b-row>
+        <hr />
+        <p v-html="answer.body"></p>
       </b-card>
     </div>
     <!-- ISINYA -->
@@ -15,7 +17,47 @@
 
 <script>
 export default {
-  name: "answer"
+  name: "answer",
+  props: {
+    answer: Object
+  },
+  data() {
+    return {
+      email: ""
+    };
+  },
+  methods: {
+    getUser() {
+      this.$store
+        .dispatch("findOneUser", this.answer.UserId)
+        .then(({ data }) => {
+          this.email = data.email;
+        })
+        .catch(err => console.log(err));
+    }
+  },
+  created() {
+    this.getUser();
+  },
+  computed: {
+    getDate() {
+      const today = new Date();
+      const postedDate = new Date(this.answer.created);
+      let when;
+      if ((today - postedDate) / 1000 <= 86400) {
+        when = "Today";
+      } else if (
+        (today - postedDate) / 1000 > 86400 &&
+        (today - postedDate) / 1000 <= 172800
+      ) {
+        when = "Yesterday";
+      } else {
+        const days = Math.floor((today - postedDate) / 86400);
+        when = `${days} days ago`;
+      }
+      return `${when} | ${postedDate.toLocaleString("id-ID")}`;
+    }
+  }
 };
 </script>
 <style scoped>

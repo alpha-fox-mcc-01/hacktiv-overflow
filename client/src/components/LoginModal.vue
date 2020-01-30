@@ -101,6 +101,7 @@ export default {
             token: data.token,
             activeUserId: data._id
           });
+          this.$bvModal.hide("LoginModal");
         })
         .catch(err => console.log(err));
     }

@@ -63,13 +63,76 @@ export default new Vuex.Store({
     },
 
     registerUser(context, user) {
-
       return axios({
         method: 'post',
         url: process.env.VUE_APP_BASE_API_URL + 'user/register',
         data: {
           email: user.email,
           password: user.password
+        }
+      })
+    },
+
+    addPost(context, formData) {
+      return axios
+        .post(process.env.VUE_APP_BASE_API_URL + "qna/post", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+    },
+
+    addPostWithoutPic(context, post) {
+      return axios({
+        method: 'post',
+        url: process.env.VUE_APP_BASE_API_URL + 'qna/post/wopic',
+        data: {
+          title: post.title,
+          body: post.body,
+          category: post.category,
+          UserId: post.UserId
+        }
+      })
+    },
+
+    addReply(context, reply) {
+      return axios({
+        method: 'post',
+        url: process.env.VUE_APP_BASE_API_URL + 'qna/answer',
+        data: {
+          body: reply.body,
+          UserId: reply.UserId,
+          PostId: reply.PostId
+        }
+      })
+    },
+
+    addAnswer(context, answer) {
+      return axios({
+        method: 'post',
+        url: process.env.VUE_APP_BASE_API_URL + 'qna/post/answer',
+        data: {
+          postId: answer.postId,
+          answerId: answer.answerId
+        }
+      })
+    },
+
+    findOneUser(context, id) {
+      return axios({
+        method: 'get',
+        url: process.env.VUE_APP_BASE_API_URL + 'user/' + id,
+      })
+    },
+
+    addVote(context, vote) {
+      return axios({
+        method: 'post',
+        url: process.env.VUE_APP_BASE_API_URL + 'qna/post/vote',
+        data: {
+          postId: vote.postId,
+          votersId: vote.votersId,
+          type: vote.type
         }
       })
     }
