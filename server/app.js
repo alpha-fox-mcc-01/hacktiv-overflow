@@ -4,6 +4,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const express = require('express')
 const app = express()
+const cors = require('cors')
 const routes = require('./routes/index')
 const errorHandler = require('./middlewares/errorHandler')
 var mongoose = require('mongoose')
@@ -14,7 +15,7 @@ db.on('error', console.error.bind(console, 'connection error:'))
 db.once('open', function() {
   console.log('database connected')
 })
-
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 app.use('/', routes)

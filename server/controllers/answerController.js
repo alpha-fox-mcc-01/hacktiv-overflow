@@ -76,6 +76,49 @@ class AnswerController {
             })
 	}
 
+	static voteAnswer(req, res, next){
+		let vote = {
+		  userId: req.currentUserId,
+		  value: req.body.value
+		}
+		Answer.findOne({_id: req.params.id, 'votes.userId': req.currentUserId })         .then(result => {
+			  if (!result) {
+				Answer.updateOne({_id: req.params.id},  { $push: { votes: vote } })
+				.then(_ => {
+				  res.status(200).json({message: 'Votes successfully updated'})
+				})
+				.catch(err => {
+				  next(err)
+				})
+			  } else {
+				for (let i = 0; i < result.votes.length; i++) {
+				  if (result.votes[i].userId == req.currentUserId.toString()) {
+					if (result.votes[i].value == req.body.value) {
+					  Answer.updateOne({_id: req.params.id},  { $pull: { votes: { userId: req.currentUserId }}})
+							  .then(result => {
+								res.status(200).json({message: 'Vote successfully updated'})
+							  })
+							  .catch(err => {
+								next(err)
+							  })
+					} else {
+					  Answer.findOneAndUpdate({_id: req.params.id, 'votes.userId': req.currentUserId},  { $set: { 'votes.$.value': req.body.value }})
+					  .then(result => {
+						res.status(200).json({message: 'Vote successfully updated'})
+					  })
+					  .catch(err => {
+						next(err)
+					  })
+					}
+				  }
+				}
+			  }
+			})
+			.catch(err => {
+			  next(err)
+			})
+	  }
+
 }
 
 
