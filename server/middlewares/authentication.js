@@ -2,12 +2,18 @@ const User = require('../models/User')
 const jwt = require('jsonwebtoken')
 
 module.exports = (req, res, next) => {
-  const decoded = jwt.verify(req.headers.token, 'Kucinglucu')
+  const decoded = jwt.verify(req.headers.token, process.env.SECRET)
   User.findById(decoded.id)
     .then(user => {
-      req.admin = user.adminRole
-      req.idUser = user._id
-      next()
+      if (user){
+        req.currentUserId = user._id
+        next()
+      } else {
+        next({
+          msg :'Not found',
+          error: `User with id ${decoded.id} not found`
+        })
+      }
     })
     .catch(err => {
       next(err)

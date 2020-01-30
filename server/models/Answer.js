@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const questionSchema = new Schema({
+const answerSchema = new Schema({
   title: {
     type: String,
     required: [true, 'Title is required']
@@ -15,11 +15,15 @@ const questionSchema = new Schema({
     vote: Number
   }],
   ownerId: { 
-    type: Schema.Types.ObjectId, 
+    type: Schema.Types.ObjectId,
     ref: 'User'
+  },
+  questionId: { 
+    type: Schema.Types.ObjectId,
+    ref: 'Question'
   }
 }, {timestamps: true})
 
-const Question = mongoose.model('Question', questionSchema)
+const Answer = mongoose.model('Answer', answerSchema)
 
-module.exports = Question
+module.exports = Answer

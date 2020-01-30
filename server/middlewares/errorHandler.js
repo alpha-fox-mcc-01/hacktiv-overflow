@@ -2,7 +2,6 @@ module.exports = (err, req, res, next) => {
   let status = 500
   let message = 'Internal Server Error'
   let errors 
-  // console.log(err, 'ini di error handler')
 
   if(err.name === 'ValidationError') {
     status = 400
@@ -44,9 +43,10 @@ module.exports = (err, req, res, next) => {
   } else if (err.name === 'JsonWebTokenError') {
     res.status(401).json({
       error: err.message,
-      msg: `Please input token to input product`
+      msg: `Please login first`
     })
   } else{
+    console.log(err, 'ini di error handler')
     res.status(status).json({
       msg: message
     })
