@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-primary bg-light shadow mb-3 p-1">
+  <nav class="navbar navbar-expand-lg navbar-primary bg-white shadow mb-3 p-1">
     <!-- <a class="navbar-brand" href="#">Navbar</a> -->
     <img
       src="https://developer.android.com/guide/practices/ui_guidelines/images/NB_Icon_Mask_Shapes_Ext_02.gif"
@@ -28,7 +28,7 @@
           <router-link class="nav-link" to="/publicquestions">Public questions</router-link>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">My questions</a>
+          <router-link class="nav-link" to="/myquestions">My questions</router-link>
         </li>
       </ul>
       <router-link
@@ -70,6 +70,11 @@ export default {
   computed: {
     isLogin() {
       return this.$store.state.isLogin;
+    }
+  },
+  created () {
+    if (localStorage.getItem(`token`)) {
+      this.$store.dispatch('isLoginAction', true)
     }
   }
 };

@@ -201,6 +201,22 @@ class QuestionController {
             next(err)
          })
    }
+
+   static getMyQuestions (req, res, next) {
+      console.log(req.currentUserId, `iniiiiiiii`);
+      
+      Question.find({userId: req.currentUserId})
+         .then(data => {
+            console.log(data);
+            
+            res.status(200).json(data)
+         })
+         .catch(err => {
+            console.log(err.message);
+            
+            next(err)
+         })
+   }
 }
 
 module.exports = QuestionController

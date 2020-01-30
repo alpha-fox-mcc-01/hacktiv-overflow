@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     isLogin : false,
     questions: [],
-    answers: []
+    answers: [],
+    myQuestions: []
   },
   mutations: {
     SET_IS_LOGIN(state, payload) {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     },
     SET_ANSWERS(state, items) {
       state.answers = items
+    },
+    SET_MY_QUESTIONS(state, items) {
+      state.myQuestions = items
     }
   },
   actions: {
@@ -50,6 +54,9 @@ export default new Vuex.Store({
         .catch (err => {
           console.log(err.message);
         })
+    },
+    fetchMyQuestions({commit}) {
+      
     }
   },
   modules: {
