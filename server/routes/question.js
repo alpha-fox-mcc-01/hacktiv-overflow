@@ -12,13 +12,14 @@ router.get('/:id', Question.getOneQuestion)
 router.put('/:id', authentication, authorization, Question.updateQuestion)
 
 router.delete('/:id', authentication, authorization, Question.deleteQuestion)
+
 // router.patch('/:id', authentication, authorization,(req, res, next)=>{
 //     const { stock } = req.body
-//     Product.findByIdAndUpdate(req.params.id, {
+//     Question.findByIdAndUpdate(req.params.id, {
 //         stock
 //     })
-//       .then(product=>{
-//           res.status(200).json({msg : `Product Stock with id ${product._id} updated successfully`})
+//       .then(question=>{
+//           res.status(200).json({msg : `Question vote with id ${question._id} updated successfully`})
 //       })
 //       .catch(err=>{
 //           next(err)

@@ -1,8 +1,31 @@
 const router = require('express').Router()
-const User = require('../models/User')
+const Answer = require('../controllers/Answer')
 const authentication = require('../middlewares/authentication')
+const authorization = require('../middlewares/authorization')
 
+router.post('/:idQuestion', authentication, Answer.create)
 
+router.get('/', Answer.getAnswers)
+
+router.get('/:id', Answer.getOneAnswer)
+
+router.put('/:id', authentication, authorization, Answer.updateAnswer)
+
+// router.patch('/:id', authentication, authorization,(req, res, next)=>{
+//     const { stock } = req.body
+//     Question.findByIdAndUpdate(req.params.id, {
+//         stock
+//     })
+//       .then(question=>{
+//           res.status(200).json({msg : `Question vote with id ${question._id} updated successfully`})
+//       })
+//       .catch(err=>{
+//           next(err)
+//       })
+// })
+
+module.exports = router
+/*
 router.post('/:id', authentication, (req, res, next) => {
   if (req.idUser == req.params.id) {
     User.findByIdAndUpdate(req.params.id, {
@@ -53,5 +76,4 @@ router.delete('/:id', authentication, (req, res, next) => {
   }
   
 })
-
-module.exports = router
+*/
