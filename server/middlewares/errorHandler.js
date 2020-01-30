@@ -45,6 +45,11 @@ module.exports = (err, req, res, next) => {
       error: err.message,
       msg: `Please login first`
     })
+  } else if (err.error === 'error in authorization') {
+    res.status(401).json({
+      error: err.error,
+      msg: err.msg
+    })
   } else{
     console.log(err, 'ini di error handler')
     res.status(status).json({
