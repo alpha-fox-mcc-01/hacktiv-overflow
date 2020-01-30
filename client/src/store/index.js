@@ -7,12 +7,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    isLoggedIn: ''
+    isLoggedIn: '',
+    questions: []
   },
   mutations: {
     SET_STATUS (state, payload) {
       state.isLoggedIn = payload
-    }
+    },
+    SET_QUESTIONS (state, payload) {
+      state.questions = payload
+    } 
   },
   actions: {
     userLogin (context, payload) {
@@ -35,6 +39,15 @@ export default new Vuex.Store({
         email: payload.email,
         password: payload.password
       })
+    },
+    fetchQuestions (context, payload) {
+      instance.get('/questions')
+          .then(({ data }) => {
+            context.commit('SET QUESTIONS', data.result)
+          })
+          .catch( err  => {
+            console.log(err)
+          })
     }
   },
   modules: {

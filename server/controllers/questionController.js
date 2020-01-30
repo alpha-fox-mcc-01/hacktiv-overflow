@@ -67,7 +67,8 @@ class QuestionController {
       userId: req.currentUserId,
       value: req.body.value
     }
-    Question.findOne({_id: req.params.id, 'votes.userId': req.currentUserId })         .then(result => {
+    Question.findOne({_id: req.params.id, 'votes.userId': req.currentUserId })      
+       .then(result => {
           if (!result) {
             Question.updateOne({_id: req.params.id},  { $push: { votes: vote } })
             .then(_ => {
@@ -103,15 +104,6 @@ class QuestionController {
         .catch(err => {
           next(err)
         })
-
-            
-    
-    //         .then(result => {
-    //           res.status(200).json({message: 'Vote successfully added'})
-    //         })
-    //         .catch(err => {
-    //           next(err)
-    //         })
   }
   static search(req, res, next) {
     let keyword = req.params.keyword

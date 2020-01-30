@@ -1,0 +1,18 @@
+<template>
+  <div class="bg-white shadow w-64 my-2">
+    <ul class="list-reset">
+      <li >
+        <a href="#" class="block p-4 text-grey-darker font-bold border-purple hover:bg-grey-lighter border-r-4">Home</a>
+      </li>
+      <li >
+        <a href="#" class="block p-4 text-grey-darker font-bold border-grey-lighter hover:border-purple-light hover:bg-grey-lighter border-r-4">About us</a>
+      </li>
+      <li >
+        <a href="#" class="block p-4 text-grey-darker font-bold border-grey-lighter hover:border-purple-light hover:bg-grey-lighter border-r-4">Services</a>
+      </li>
+      <li >
+        <a href="#" class="block p-4 text-grey-darker font-bold border-grey-lighter hover:border-purple-light hover:bg-grey-lighter border-r-4">Contact us</a>
+      </li>
+    </ul>
+  </div>
+</template>
