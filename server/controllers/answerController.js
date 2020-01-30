@@ -2,9 +2,11 @@ const Answer = require('../models/answer')
 
 module.exports = {
   addAnswer(req, res, next) {
-    const { body } = req.body;
+    const { body, UserId, PostId } = req.body;
     Answer.create({
-      body
+      body,
+      UserId,
+      PostId
     })
       .then(answer => {
         res

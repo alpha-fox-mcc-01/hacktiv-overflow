@@ -17,9 +17,10 @@ const postSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
+  imageUrl: String,
   upvoters: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   downvoters: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   answers: [{ type: Schema.Types.ObjectId, ref: 'Answer' }]
-})
+}, { timestamps: { createdAt: 'created', updatedAt: 'updated' } })
 
 module.exports = model('Post', postSchema)

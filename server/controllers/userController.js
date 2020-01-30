@@ -44,5 +44,16 @@ module.exports = {
         }
       })
       .catch(err => next(err))
+  },
+
+  findOne(req, res, next) {
+    const { id } = req.params
+    User.findById({ _id: id })
+      .then(user => {
+        res
+          .status(200)
+          .json(user)
+      })
+      .catch(err => res.send(err))
   }
 }

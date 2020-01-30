@@ -7,6 +7,6 @@ const answerSchema = new Schema({
   },
   UserId: { type: Schema.Types.ObjectId, ref: 'User' },
   PostId: { type: Schema.Types.ObjectId, ref: 'Post' }
-})
+}, { timestamps: { createdAt: 'created', updatedAt: 'updated' } })
 
 module.exports = model('Answer', answerSchema)
