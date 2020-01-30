@@ -1,26 +1,32 @@
 <template>
   <div class="card w-100">
     <div class="row container">
-      <div class="col-1 my-5">
-        <button>
+      <div class="col-1 my-5 mx-3">
+        <div class="row">
+          <button>
           <i class="fas fa-angle-up"></i>
         </button>
-        {{ answer.vote }}
-        <button>
-          <i class="fas fa-angle-down"></i>
-        </button>
+        </div>
+        <div class="row">
+          <h1>{{ answer.vote }}</h1>
+        </div>
+        <div class="row">
+          <button>
+            <i class="fas fa-angle-down"></i>
+          </button>
+        </div>
       </div>
       <div class="col">
         <div class="card-header bg-white">
-          {{ answer.title }}
+          <h5>{{ answer.title }}</h5>
+          <small>Posted By: {{username}}</small> <br>
+          <small>Posted At: {{answer.created_at}}</small>
         </div>
         <div class="card-body text-left">
           <div class="card-text">
           {{ answer.content }}
           </div>
         </div>
-        <small>Posted By: {{username}}</small> <br>
-        <small>Posted At: {{answer.created_at}}</small>
       </div>
     </div>
   </div>

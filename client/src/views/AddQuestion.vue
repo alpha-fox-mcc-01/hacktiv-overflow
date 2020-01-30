@@ -47,6 +47,14 @@ export default {
           console.log(err)
         })
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    let token = localStorage.getItem('token')
+    if (token) {
+      next()
+    } else {
+      next('/login')
+    }
   }
 }
 </script>

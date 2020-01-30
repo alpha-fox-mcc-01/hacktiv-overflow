@@ -69,6 +69,14 @@ export default {
     toRegister () {
       this.$router.push('/register')
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    let token = localStorage.getItem('token')
+    if (token) {
+      next('/')
+    } else {
+      next()
+    }
   }
 }
 </script>
