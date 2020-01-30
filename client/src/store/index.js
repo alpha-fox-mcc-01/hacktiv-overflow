@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isLogin : false,
-    questions: []
+    questions: [],
+    answers: []
   },
   mutations: {
     SET_IS_LOGIN(state, payload) {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     },
     SET_QUESTIONS(state, items) {
       state.questions = items
+    },
+    SET_ANSWERS(state, items) {
+      state.answers = items
     }
   },
   actions: {
@@ -32,6 +36,19 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err);
+        })
+    },
+    fetchAnswers ({commit}) {
+      axios({
+        method : `GET`,
+        url : `http://localhost:3000/answers`
+      })
+        .then(({data}) => {
+          console.log(data, `ini answeeeeeeeeersss`);
+          commit('SET_ANSWERS', data)
+        })
+        .catch (err => {
+          console.log(err.message);
         })
     }
   },

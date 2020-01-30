@@ -11,20 +11,22 @@
         <form class="mt-4" @submit.prevent="login">
           
           <input
-            type="text"
+            type="email"
             id="login"
             class="fadeIn second mb-3"
             name="login"
             placeholder="email"
             v-model="email"
+            required
           />
           <input
-            type="text"
+            type="password"
             id="password"
             class="fadeIn third mb-3"
             name="login"
             placeholder="password"
             v-model="password"
+            required
           />
           <input type="submit" class="fadeIn fourth" value="Log In" />
         </form>
@@ -199,7 +201,9 @@ input[type="reset"]:active {
   transform: scale(0.95);
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="password"],
+input[type="email"] {
   background-color: #f6f6f6;
   border: none;
   color: #0d0d0d;
@@ -220,12 +224,16 @@ input[type="text"] {
   border-radius: 5px 5px 5px 5px;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
   background-color: #fff;
   border-bottom: 2px solid #5fbae9;
 }
 
-input[type="text"]:placeholder {
+input[type="text"]:placeholder,
+input[type="submit"]:placeholder,
+input[type="reset"]:placeholder {
   color: #cccccc;
 }
 

@@ -1,29 +1,17 @@
 <template>
-  <div class="home" style=" padding-top: 80px;">
+  <div class="container-fluid" style=" padding-top: 40px; background-color: whitesmoke">
     <img
-      class="mb-1"
-      alt="disctractor"
-      src="https://gifimage.net/wp-content/uploads/2017/09/anime-chibi-gif-2.gif"
-      style="max-width: 250px"
+      src="https://66.media.tumblr.com/079d96a2d46ccda38c2d892b191ea482/tumblr_ocu6d9hxFK1s2kirpo3_640.gifv"
+      alt
+      style="width: 100%"
     />
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <h1 style="font-family: 'Patrick Hand SC', cursive">
-      <strong>Public questions</strong>
-    </h1>
-    <div class="container mt-4">
-      <PublicQuestionCard 
-      v-for="item in questions"
-      :key="item._id"
-      />
-
-    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import HelloWorld from "@/components/HelloWorld.vue";
-import PublicQuestionCard from '../components/PublicQuestionCard.vue'
+import PublicQuestionCard from "../components/PublicQuestionCard.vue";
 export default {
   name: "home",
   components: {
@@ -40,3 +28,9 @@ export default {
   }
 };
 </script>
+<style scoped>
+* {
+  margin: 0;
+  padding: 0
+}
+</style>

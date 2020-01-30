@@ -52,6 +52,19 @@ class UserController {
             next(err)
          })
    }
+
+   static getUser (req, res, next) {
+      console.log(`masuk sini lohhhhhhhhhhhhhhh`);
+      
+      User.find()
+         .then (data => {
+            console.log(data);
+            res.status(200).json(data)
+         })
+         .catch (err => {
+            next(err)
+         })
+   }
 }
 
 module.exports = UserController

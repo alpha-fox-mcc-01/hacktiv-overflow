@@ -1,13 +1,15 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-primary bg-white shadow mb-3 p-1">
+  <nav class="navbar navbar-expand-lg navbar-primary bg-light shadow mb-3 p-1">
     <!-- <a class="navbar-brand" href="#">Navbar</a> -->
     <img
       src="https://developer.android.com/guide/practices/ui_guidelines/images/NB_Icon_Mask_Shapes_Ext_02.gif"
       style="max-width: 50px"
     />
+    <router-link to="/" style="text-decoration: none">
     <h5 class="mt-2 mx-3">
       <strong>Hacktiv-Git</strong>
     </h5>
+    </router-link>
     <button
       class="navbar-toggler"
       type="button"
@@ -23,7 +25,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <router-link class="nav-link" to="/">Public questions</router-link>
+          <router-link class="nav-link" to="/publicquestions">Public questions</router-link>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">My questions</a>

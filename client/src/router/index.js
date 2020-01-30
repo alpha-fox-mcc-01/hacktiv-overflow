@@ -25,8 +25,23 @@ const routes = [
   },
   {
     path: '/register',
-    name: 'login',
+    name: 'register',
     component: () => import(/* webpackChunkName: "about" */ '../views/Register.vue')
+  },
+  {
+    path: '/publicquestions',
+    component: () => import(/* webpackChunkName: "about" */ '../views/PublicQuestions.vue'),
+    children : [
+      {
+        path:'',
+        name: 'publicquestions',
+        component: () => import(/* webpackChunkName: "about" */ '../components/AllPublic.vue'),
+      },
+      {
+        path:':questionId',
+        component: () => import(/* webpackChunkName: "about" */ '../components/QuestionDetail.vue'),        
+      }
+    ]
   }
 ]
 

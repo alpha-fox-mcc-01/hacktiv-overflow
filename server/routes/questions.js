@@ -5,6 +5,7 @@ const authentication = require ('../middlewares/authentication')
 const authorization = require ('../middlewares/authorization')
 
 router.get('/', QuestionController.getAll)
+router.get('/:questionId', QuestionController.getOne)
 router.post('/',authentication, QuestionController.add)
 router.delete('/:questionId',authentication, authorization, QuestionController.deleteQuestion)
 // router.post('/upvote/:questionId', authentication, QuestionController.upvote)

@@ -15,8 +15,9 @@ const questionSchema = new Schema({
       vote: Number
    }],
    userId: {
-      type: String,
-      required: true
+      type: `ObjectId`,
+      ref: `User`,
+      required: true,
    },
    time: { type: Date, default: Date.now }
 })

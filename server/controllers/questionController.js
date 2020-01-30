@@ -2,7 +2,7 @@ const Question = require('../models/questionModel')
 
 class QuestionController {
    static getAll(req, res, next) {
-      Question.find()
+      Question.find().populate('userId')
          .then(data => {
             res.status(200).json(data)
          })
@@ -190,6 +190,16 @@ class QuestionController {
          .catch(err => {
             next(err)
          });
+   }
+
+   static getOne (req, res, next) {
+      Question.findOne({_id: req.params.questionId})
+         .then(data=> {
+            res.status(200).json(data)
+         })
+         .catch(err => {
+            next(err)
+         })
    }
 }
 

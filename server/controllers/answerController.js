@@ -16,7 +16,7 @@ class AnswerController {
       let newQuestion = {
          title: req.body.title,
          description: req.body.description,
-         answerId: req.body.answerId,
+         questionId: req.body.questionId,
          userId: req.currentUserId
       }
 
