@@ -36,6 +36,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "post answer" */ '../components/PostAnswer.vue')
   },
   {
+    path: '/editanswer/:id',
+    name: 'edit answer',
+    component: () => import(/* webpackChunkName: "edit question" */ '../components/EditAnswer.vue')
+  },
+  {
     path: '/:id',
     name: 'question details',
     component: () => import(/* webpackChunkName: "register" */ '../views/QuestionPage.vue'),

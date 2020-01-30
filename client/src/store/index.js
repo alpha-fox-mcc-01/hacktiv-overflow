@@ -11,7 +11,8 @@ export default new Vuex.Store({
     questions: [],
     answers: [],
     myQuestions: [],
-    myAnswers: []
+    myAnswers: [],
+    preEditAnswer: {}
   },
   mutations: {
     SET_STATUS (state, payload) {
@@ -28,6 +29,9 @@ export default new Vuex.Store({
     },
     SET_MY_ANSWERS (state, payload) {
       state.myAnswers = payload
+    },
+    SET_PREEDITANSWER (state, payload) {
+      state.preEditAnswer = payload
     }
   },
   actions: {
@@ -144,6 +148,16 @@ export default new Vuex.Store({
     signOut (context, payload) {
       localStorage.removeItem('access_token')
       context.commit('SET_STATUS', false)
+    },
+    preEditAnswer (context, payload) {
+      context.commit('SET_PREEDITANSWER', payload)
+    },
+    editAnswer (context, payload) {
+      return instance.put('/answers/' + payload.id, {
+        title: payload.title,
+        content: payload.content
+      })
+
     }
   },
   modules: {
