@@ -1,18 +1,31 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="container">
+      <h1 style="text-align: left;" class="ml-2 mt-2">Top Question</h1>
+      <n-list-question v-for="question in questions" :key="question._id" :question="question"/>
+      <hr>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import nListQuestion from '../components/n-listQuestion'
 
 export default {
   name: 'home',
+  data () {
+    return {
+      question: ''
+    }
+  },
   components: {
-    HelloWorld
+    nListQuestion
+  },
+  computed: {
+    questions () {
+      return this.$store.state.questions
+    }
   }
 }
 </script>
