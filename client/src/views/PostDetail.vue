@@ -26,7 +26,7 @@
         <a @click="addVote('upvote')" class="voteButton">
           <i class="fas fa-chevron-circle-up"></i>
         </a>
-        <span style="margin: 0 1.25rem">0</span>
+        <span style="margin: 0 1.25rem">{{ getTotalVote }}</span>
         <a @click="addVote('downvote')" class="voteButton">
           <i class="fas fa-chevron-circle-down"></i>
         </a>
@@ -129,7 +129,7 @@ export default {
           type
         })
         .then(success => {
-          console.log("sukses", success);
+          this.$router.go();
         })
         .catch(err => console.log(err));
     }
@@ -151,10 +151,16 @@ export default {
       ) {
         when = "Yesterday";
       } else {
-        const days = Math.floor((today - postedDate) / 86400);
+        const days = Math.floor((today - postedDate) / 86400000);
         when = `${days} days ago`;
       }
       return `${when} | ${postedDate.toLocaleString("id-ID")}`;
+    },
+    getTotalVote() {
+      let counter = 0;
+      counter =
+        counter + this.post.upvoters.length - this.post.downvoters.length;
+      return counter;
     }
   }
 };

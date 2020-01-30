@@ -4,16 +4,17 @@
     <b-navbar class="bar">
       <b-navbar-nav>
         <b-nav-item to="/">Home</b-nav-item>
-        <b-nav-item to="/about">About</b-nav-item>
-        <b-nav-item to="/post/1">sample</b-nav-item>
+        <!-- <b-nav-item to="/about">About</b-nav-item> -->
       </b-navbar-nav>
 
-      <!-- Navbar dropdowns -->
       <b-navbar-nav class="ml-auto">
-        <b-nav-item-dropdown text="User" right v-if="access_token">
+        <!-- Navbar dropdowns -->
+        <!-- <b-nav-item-dropdown text="User" right v-if="access_token">
           <b-dropdown-item href="#">Account</b-dropdown-item>
           <b-dropdown-item href="#">Settings</b-dropdown-item>
-        </b-nav-item-dropdown>
+        </b-nav-item-dropdown> -->
+        <!-- End of navbar dropdowns -->
+
         <b-button
           class="myButton"
           v-b-modal.LoginModal

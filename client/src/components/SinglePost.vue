@@ -73,7 +73,7 @@ export default {
       ) {
         when = "Yesterday";
       } else {
-        const days = Math.floor((today - postedDate) / 86400);
+        const days = Math.floor((today - postedDate) / 86400000);
         when = `${days} days ago`;
       }
       return `${when} | ${postedDate.toLocaleString("id-ID")}`;

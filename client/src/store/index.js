@@ -77,7 +77,8 @@ export default new Vuex.Store({
       return axios
         .post(process.env.VUE_APP_BASE_API_URL + "qna/post", formData, {
           headers: {
-            "Content-Type": "multipart/form-data"
+            "Content-Type": "multipart/form-data",
+            "access_token": this.state.access_token
           }
         })
     },
@@ -91,6 +92,9 @@ export default new Vuex.Store({
           body: post.body,
           category: post.category,
           UserId: post.UserId
+        },
+        headers: {
+          "access_token": this.state.access_token
         }
       })
     },
@@ -103,6 +107,9 @@ export default new Vuex.Store({
           body: reply.body,
           UserId: reply.UserId,
           PostId: reply.PostId
+        },
+        headers: {
+          "access_token": this.state.access_token
         }
       })
     },
@@ -114,6 +121,9 @@ export default new Vuex.Store({
         data: {
           postId: answer.postId,
           answerId: answer.answerId
+        },
+        headers: {
+          "access_token": this.state.access_token
         }
       })
     },
@@ -133,6 +143,9 @@ export default new Vuex.Store({
           postId: vote.postId,
           votersId: vote.votersId,
           type: vote.type
+        },
+        headers: {
+          "access_token": this.state.access_token
         }
       })
     }

@@ -110,25 +110,6 @@ module.exports = {
       })
   },
 
-  // addVote(req, res, next) {
-  //   const { postId, votersId, type } = req.body
-  //   let voting;
-  //   if (type === "upvote") {
-  //     voting = Post.findOneAndUpdate({ _id: postId }, { $push: { upvoters: votersId } })
-  //   } else if (type === "downvote") {
-  //     voting = Post.findOneAndUpdate({ _id: postId }, { $push: { downvoters: votersId } })
-  //   }
-  //   voting
-  //     .then(success => {
-  //       res
-  //         .status(200)
-  //         .json(success)
-  //     })
-  //     .catch(err => {
-  //       next(err)
-  //     })
-  // },
-
   addVote(req, res, next) {
     const { postId, votersId, type } = req.body
     let voting;
@@ -180,43 +161,4 @@ module.exports = {
         }
       })
   }
-
-  // addVote(req, res, next) {
-  //   const { postId, votersId, type } = req.body
-  //   let voting;
-  //   if (type === "upvote") {
-  //     voting = Post.findOneAndUpdate({ _id: postId }, { $push: { upvoters: votersId } })
-  //   } else if (type === "downvote") {
-  //     voting = Post.findOneAndUpdate({ _id: postId }, { $push: { downvoters: votersId } })
-  //   }
-  //   voting
-  //     .then(success => {
-  //       res
-  //         .status(200)
-  //         .json(success)
-  //     })
-  //     .catch(err => {
-  //       next(err)
-  //     })
-  // },
-
-  // canVote(req, res, next) {
-  //   const { postId, votersId, type } = req.body
-  //   Post.findOne({ _id: postId })
-  //     .then(result => {
-  //       if (type === "upvote") {
-  //         if (result.upvoters.includes(votersId)) {
-  //           res.status(403).json({ msg: "You're already upvoted this post" })
-  //         } else {
-  //           res.status(200).json({ msg: "Success" })
-  //         }
-  //       } else if (type === "downvote") {
-  //         if (result.downvoters.includes(votersId)) {
-  //           res.status(403).json({ msg: "You're already downvoted this post" })
-  //         } else {
-  //           res.status(200).json({ msg: "Success" })
-  //         }
-  //       }
-  //     })
-  // }
 }
