@@ -42,7 +42,7 @@ export default {
             Swal.fire('Yay!!', 'Your answer has been posted!', 'success')
           })
           .catch(err => {
-            console.log(err)
+            Swal.fire('Oops...', 'You have to log in to post answers', 'error')
           }) 
     } 
   }

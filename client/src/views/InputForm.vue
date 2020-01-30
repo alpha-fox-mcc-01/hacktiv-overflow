@@ -41,7 +41,7 @@ export default {
               this.$router.push('/')
             })
             .catch(err => {
-              console.log(err)
+              Swal.fire('Oops...', 'You have to log in to post question', 'error')
             })
       }
     }
