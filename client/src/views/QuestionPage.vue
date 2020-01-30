@@ -3,11 +3,15 @@
 <div class="w-1/3">
 <Sidebar></Sidebar>
 </div> 
-<div class="w-2/3 sm:w-1/2 md:w-1/3">
+<div v-if="isAnswered === false" style="margin-top: 2em;">
+  <p>This question is still unanswered</p>
+</div>
+<PostAnswer></PostAnswer>
+<div v-if="isAnswered === true" class="w-2/3 sm:w-1/2 md:w-1/3">
 <h2>Question:</h2>
   <h3 class="font-sans font-thin mb-4">{{answers[0].questionId.title}}?</h3>
   <p class="text-grey mb-3">Tagged in #{{answers[0].questionId.category}}</p>
-  <p class="text-grey-darkest mb-6 leading-tight">{{answers[0].questionId.content}}</p>
+  <p v-html="answers[0].questionId.content" class="text-grey-darkest mb-6 leading-tight">{{answers[0].questionId.content}}</p>
     <button @click="vote(-1, answers[0].questionId._id)" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">
       <p class="text-xs ...">{{downvote}}</p>
      <i style="font-size:24px" class="fa">&#xf088;</i>
@@ -27,14 +31,26 @@
 <script>
 import Sidebar from '@/components/Sidebar.vue'
 import AnswerCard from '@/components/AnswerCard.vue'
+import PostAnswer from '@/components/PostAnswer.vue'
 export default {
   name: 'QuestionPage',
   created: function () {
     this.$store.dispatch('getDetails', this.$route.params.id)
+    if (this.answers.length === 0) {
+      this.isAnswered = false
+    } else {
+      this.isAnswered = true
+    }
+  },
+  data () {
+    return {
+      isAnswered: false
+    }
   },
   components: {
     Sidebar,
-    AnswerCard
+    AnswerCard,
+    PostAnswer
   },
   computed: {
     answers () {

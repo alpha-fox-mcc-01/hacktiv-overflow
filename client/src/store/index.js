@@ -9,7 +9,9 @@ export default new Vuex.Store({
   state: {
     isLoggedIn: '',
     questions: [],
-    answers: []
+    answers: [],
+    myQuestions: [],
+    myAnswers: []
   },
   mutations: {
     SET_STATUS (state, payload) {
@@ -20,7 +22,13 @@ export default new Vuex.Store({
     },
     SET_ANSWERS (state, payload) {
       state.answers = payload
-    } 
+    },
+    SET_MY_QUESTIONS (state, payload) {
+      state.myQuestions = payload
+    },
+    SET_MY_ANSWERS (state, payload) {
+      state.myAnswers = payload
+    }  
   },
   actions: {
     userLogin (context, payload) {
@@ -74,6 +82,40 @@ export default new Vuex.Store({
         value: payload.value
       })
     },
+    postQuestion (context, payload) {
+      return instance.post('/questions', {
+        title: payload.title,
+        content: payload.content
+      })
+    },
+    postAnswer (context, payload) {
+      return instance.post('/answers/' + payload.id , {
+        title: payload.title,
+        content: payload.content
+      })
+    },
+    fetchMyQuestions (context, payload) {
+      instance.get('/questions/me')
+              .then(({ data }) => {
+                context.commit('SET_MY_QUESTIONS', data.result)
+              })
+              .catch(err => {
+                console.log(err)
+              })
+    },
+    fetchMyAnswers (context, payload) {
+      instance.get('/answers/me')
+              .then(({ data }) => {
+                context.commit('SET_MY_ANSWERS', data.result)
+              })
+              .catch(err => {
+                console.log(err)
+              })
+    },
+    deleteAnswer (context, payload) {
+      return instance.delete('/answers/' + payload)
+              
+    }
   },
   modules: {
   }

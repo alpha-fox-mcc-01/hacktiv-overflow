@@ -1,7 +1,7 @@
 <template>
   <div class="max-w rounded overflow-hidden shadow-lg my-2">
   <div class="font-bold text-xl mb-2">{{answer.title}}</div>
-    <p class="text-grey-darker text-base">{{answer.content}}
+    <p v-html="answer.content" class="text-grey-darker text-base">{{answer.content}}
     </p>
     <div class="px-6 py-4">
         <span class="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">answered {{answer.created_at.slice(0,10)}} by {{answer.author.username}}</span>

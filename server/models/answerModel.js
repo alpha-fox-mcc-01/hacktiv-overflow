@@ -9,8 +9,7 @@ const answerSchema = new Schema({
         required: 'Title is required!'
     },
     content: {
-        type: String,
-        required: 'Content is required!'
+        type: String
     },
     votes: [{ userId: { type: Schema.Types.ObjectId, ref:'User'}, value: Number}]
 }, { timestamps: { createdAt: 'created_at' } })

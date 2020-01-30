@@ -2,6 +2,7 @@ const { Answer, Question } = require('../models/index')
 
 class AnswerController {
 	static postAnswer(req, res, next) {
+		console.log('masuk controller answer', req.currentUserId, req.params.id)
 		Answer.create({
 				title: req.body.title,
 				content: req.body.content,
@@ -9,6 +10,7 @@ class AnswerController {
 				author: req.currentUserId
 		})
 		.then(result => {
+			console.log(result, 'kelar')
 			res.status(200).json({message: 'Answer successfully posted!'})
 		})
 		.catch(err => {

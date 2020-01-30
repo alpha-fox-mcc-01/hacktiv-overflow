@@ -21,6 +21,16 @@ const routes = [
     component: () => import(/* webpackChunkName: "register" */ '../views/RegisterPage.vue')
   },
   {
+    path: '/addQuestion',
+    name: 'input question',
+    component: () => import(/* webpackChunkName: "input question" */ '../views/InputForm.vue')
+  },
+  {
+    path: '/profile',
+    name: 'my profile',
+    component: () => import(/* webpackChunkName: "my profile" */ '../views/MyProfile.vue')
+  },
+  {
     path: '/:id',
     name: 'question details',
     component: () => import(/* webpackChunkName: "register" */ '../views/QuestionPage.vue')
