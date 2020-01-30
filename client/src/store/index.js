@@ -10,7 +10,8 @@ export default new Vuex.Store({
     registerForm: false,
     loginForm: false,
     isLogin: false,
-    questions: []
+    questions: [],
+    oneQuestion: {}
   },
   mutations: {
     setCurrentUser (state, data) {
@@ -27,6 +28,9 @@ export default new Vuex.Store({
     },
     setQuestions (state, data) {
       state.questions = data
+    },
+    setOneQuestion (state, data) {
+      state.oneQuestion = data
     }
   },
   actions: {
@@ -34,7 +38,7 @@ export default new Vuex.Store({
       console.log('masuk ke act login')
       return axios({
         method: 'POST',
-        url: 'http://localhost:3000/user/login',
+        url: 'http://localhost:3001/user/login',
         data: data
       })
     },
@@ -42,17 +46,29 @@ export default new Vuex.Store({
       console.log('masuk ke act register')
       return axios({
         method: 'POST',
-        url: 'http://localhost:3000/user/register',
+        url: 'http://localhost:3001/user/register',
         data: data
       })
     },
     fetchQuestions (context) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/questions'
+        url: 'http://localhost:3001/questions'
       })
         .then(({ data }) => {
           context.commit('setQuestions', data)
+        })
+        .catch(({ response }) => {
+          console.log(response)
+        })
+    },
+    fetchOneQuestion (context, data) {
+      axios({
+        method: 'GET',
+        url: `http://localhost:3001/questions/${data}`
+      })
+        .then(({ data }) => {
+          context.commit('setOneQuestion', data)
         })
         .catch(({ response }) => {
           console.log(response)
@@ -62,7 +78,26 @@ export default new Vuex.Store({
       console.log(data, 'ini di dipatch')
       return axios({
         method: 'POST',
-        url: 'http://localhost:3000/questions',
+        url: 'http://localhost:3001/questions',
+        data,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+    },
+    fetchAnswers (context, data) {
+      console.log('masuk fetch act answers', data)
+      return axios({
+        method: 'GET',
+        url: 'http://localhost:3001/answers',
+        headers: { questionid: data }
+      })
+    },
+    postAnswer (context, { data, questionId }) {
+      console.log(data, 'ini di dispatch')
+      return axios({
+        method: 'POST',
+        url: 'http://localhost:3001/answers/' + questionId,
         data,
         headers: {
           token: localStorage.getItem('token')
