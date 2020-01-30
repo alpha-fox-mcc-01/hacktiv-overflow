@@ -16,11 +16,19 @@ import navbarVue from './components/n-navbar'
 import nRegister from './components/n-register'
 import nFooter from './components/n-footer'
 export default {
+  name: 'App',
   components: {
     'n-navbar': navbarVue,
     'n-login': nLogin,
     'n-register': nRegister,
     nFooter
+  },
+  created () {
+    if (localStorage.getItem('token') && localStorage.getItem('name')) {
+      this.$store.commit('setIsLogin', true)
+      this.$store.commit('setCurrentUser', localStorage.getItem('name'))
+    }
+    this.$store.dispatch('fetchQuestions')
   }
 }
 </script>

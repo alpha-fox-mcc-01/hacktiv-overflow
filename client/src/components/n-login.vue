@@ -4,7 +4,7 @@
       <mdb-modal-header class="text-center">
         <mdb-modal-title tag="h4" bold class="w-100">Login</mdb-modal-title>
       </mdb-modal-header>
-      <mdb-alert color="danger">
+      <mdb-alert color="danger" v-if="alert">
       {{alert}}
     </mdb-alert>
       <mdb-modal-body class="mx-3 grey-text" style="text-align: left;">
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mdbContainer, mdbBtn, mdbModal, mdbModalHeader, mdbModalBody, mdbModalFooter, mdbInput, mdbModalTitle } from 'mdbvue'
+import { mdbContainer, mdbBtn, mdbModal, mdbModalHeader, mdbModalBody, mdbModalFooter, mdbInput, mdbModalTitle, mdbAlert } from 'mdbvue'
 export default {
   name: 'loginPage',
   data () {
@@ -38,7 +38,8 @@ export default {
     mdbModalBody,
     mdbModalFooter,
     mdbInput,
-    mdbModalTitle
+    mdbModalTitle,
+    mdbAlert
   },
   computed: {
     login () {
@@ -55,6 +56,9 @@ export default {
           this.setLogin(false)
           console.log('masuk ke login')
           console.log(data)
+          localStorage.setItem('token', data.token)
+          localStorage.setItem('name', data.name)
+          this.$store.commit('setIsLogin', true)
           this.$store.commit('setCurrentUser', data.name)
           this.email = ''
           this.password = ''

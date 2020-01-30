@@ -8,7 +8,9 @@ export default new Vuex.Store({
   state: {
     currentUser: '',
     registerForm: false,
-    loginForm: false
+    loginForm: false,
+    isLogin: false,
+    questions: []
   },
   mutations: {
     setCurrentUser (state, data) {
@@ -19,6 +21,12 @@ export default new Vuex.Store({
     },
     setLoginForm (state, data) {
       state.loginForm = data
+    },
+    setIsLogin (state, data) {
+      state.isLogin = data
+    },
+    setQuestions (state, data) {
+      state.questions = data
     }
   },
   actions: {
@@ -31,12 +39,34 @@ export default new Vuex.Store({
       })
     },
     register (context, data) {
-      console.log('masuk ke register')
-      context.commit('setCurrentUser', data.name)
+      console.log('masuk ke act register')
       return axios({
         method: 'POST',
         url: 'http://localhost:3000/user/register',
         data: data
+      })
+    },
+    fetchQuestions (context) {
+      axios({
+        method: 'GET',
+        url: 'http://localhost:3000/questions'
+      })
+        .then(({ data }) => {
+          context.commit('setQuestions', data)
+        })
+        .catch(({ response }) => {
+          console.log(response)
+        })
+    },
+    postQuestion (context, data) {
+      console.log(data, 'ini di dipatch')
+      return axios({
+        method: 'POST',
+        url: 'http://localhost:3000/questions',
+        data,
+        headers: {
+          token: localStorage.getItem('token')
+        }
       })
     }
   },

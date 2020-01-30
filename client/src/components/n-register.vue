@@ -50,11 +50,21 @@ export default {
         email: this.email,
         password: this.password
       })
-      this.setRegister(false)
-      console.log('masuk ke register')
-      this.name = ''
-      this.email = ''
-      this.password = ''
+        .then(({ data }) => {
+          this.setRegister(false)
+          console.log('masuk ke register')
+          console.log(data)
+          localStorage.setItem('token', data.token)
+          localStorage.setItem('name', data.name)
+          this.$store.commit('setIsLogin', true)
+          this.$store.commit('setCurrentUser', data.name)
+          this.name = ''
+          this.email = ''
+          this.password = ''
+        })
+        .catch(({ response }) => {
+          console.log(response)
+        })
     },
     setLogin (status) {
       this.$store.commit('setLoginForm', status)

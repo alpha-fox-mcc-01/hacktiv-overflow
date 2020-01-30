@@ -37,6 +37,7 @@ export default {
     logout () {
       console.log('Log out success')
       this.$store.commit('setCurrentUser', '')
+      this.$store.commit('setIsLogin', '')
       localStorage.clear()
     },
     search () {
