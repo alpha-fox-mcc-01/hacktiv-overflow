@@ -160,18 +160,5 @@ module.exports = {
           }
         }
       })
-  },
-
-  deletePost(req, res, next) {
-    const { id } = req.params
-    Post.findByIdAndDelete({ _id: id })
-      .then(() => {
-        res
-          .status(200)
-          .json({ msg: "This post deleted successfully" })
-      })
-      .catch(err => {
-        next(err)
-      })
   }
 }
