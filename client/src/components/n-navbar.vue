@@ -10,12 +10,12 @@
       </form>
         <mdb-nav-item to="/" href="#" active>Home</mdb-nav-item>
         <mdb-nav-item to="/about" href="#">About</mdb-nav-item>
-        <mdb-nav-item to="/about" v-if="!currentUser" @click="callLogin">Login</mdb-nav-item>
-        <mdb-nav-item to="/about" v-if="!currentUser" @click="callRegister">Register</mdb-nav-item>
+        <mdb-nav-item v-if="!currentUser" @click="callLogin">Login</mdb-nav-item>
+        <mdb-nav-item v-if="!currentUser" @click="callRegister">Register</mdb-nav-item>
         <mdb-dropdown tag="li" class="nav-item">
           <mdb-dropdown-toggle v-if="currentUser" tag="a" navLink color="warning" slot="toggle" waves-fixed>{{currentUser}}</mdb-dropdown-toggle>
           <mdb-dropdown-menu>
-            <mdb-dropdown-item>Profile</mdb-dropdown-item>
+            <mdb-dropdown-item to="/question/addpost">Add Post</mdb-dropdown-item>
             <mdb-dropdown-item @click.prevent="logout">Logout</mdb-dropdown-item>
           </mdb-dropdown-menu>
         </mdb-dropdown>
