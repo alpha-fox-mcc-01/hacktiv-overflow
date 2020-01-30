@@ -4,9 +4,9 @@
       <router-link to="/">Home</router-link>
       <router-link v-if="!isLoggedIn" to="/login">Login</router-link>
       <button v-if="isLoggedIn" @click="signOut">Sign Out</button>
-      <div class="w-1/4 flex border-grey-light border">
+      <div id="search" class="w-1/4 flex border-grey-light border">
       <input v-model="keyword" class="w-full rounded ml-1" type="text" placeholder="Search...">
-      <button @click="searchItem" class="bg-grey-lightest border-grey border-l shadow hover:bg-grey-lightest">
+      <button class="bg-grey-lightest border-grey border-l shadow hover:bg-grey-lightest">
         <span class="w-auto flex justify-end items-center text-grey p-2 hover:text-grey-darkest">
           <i class="material-icons text-xs">search</i>
         </span>
@@ -47,6 +47,7 @@ a, h1 {
   font-family: 'Open Sans', sans-serif;
   font-weight: 300;
   font-size: 18px;
+  color: black;
 }
 a:hover {
   background-color: rgb(245, 227, 231);
@@ -57,5 +58,9 @@ li {
   flex-direction: row;
   justify-content: center;
   text-align: center;
+}
+
+#search {
+  margin-top: 1em;
 }
 </style>

@@ -1,9 +1,10 @@
 <template>
- <div class="w-1/3">
-  <blockquote class="flex flex-wrap flex-col bg-white text-indigo-700 border-l-8 italic border-gray-400 px-4 py-3">
-  <h3>Question?</h3>
-  Intro question
-    <span class="flex justify-end text-sm text-indigo-400 font-semibold pt-2 underline ">Author</span>
+ <div>
+  <blockquote class="flex flex-wrap flex-col bg-white text-black-700 border-l-8 italic border-gray-400 px-4 py-3">
+  <h3>{{question.title}}</h3>
+  {{question.content.slice(0, 45)}} . . .
+  <button @click="seeDetails(question._id)">Read More</button>
+    <span class="flex justify-end text-sm text-indigo-400 font-semibold pt-2"> asked on {{question.created_at.slice(0, 10)}} by {{question.author.username}} </span>
   </blockquote>
  </div>
 </template>
@@ -12,8 +13,17 @@
 <script>
 export default {
   name: 'QuestionCard',
-  created: function () {
-    this.$store.dispatch('fetchQuestions')
+  props: ['question'],
+  methods: {
+    seeDetails (id) {
+      this.$router.push(`/${id}`)
+    }
   }
 }
 </script>
+
+<style scoped>
+div {
+  flex-direction: row;
+}
+</style>

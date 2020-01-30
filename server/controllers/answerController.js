@@ -17,7 +17,7 @@ class AnswerController {
 			
 	}
 	static fetchAnswers(req, res, next) {
-		Answer.find({questionId: req.params.id})
+		Answer.find({questionId: req.params.id}).populate('questionId').populate('author')
 					.then(result => {
 						res.status(200).json({result})
 					})
@@ -62,27 +62,17 @@ class AnswerController {
 					})
 	}
 
-	static voteAnswer(req, res, next) {
-		let vote = {
-      userId: req.currentUserId,
-      value: req.body.value
-    }
-    Answer.updateOne({_id: req.params.id},  { $push: { votes: vote } })
-            .then(result => {
-              res.status(200).json({message: 'Vote successfully added'})
-            })
-            .catch(err => {
-              next(err)
-            })
-	}
-
 	static voteAnswer(req, res, next){
 		let vote = {
 		  userId: req.currentUserId,
 		  value: req.body.value
 		}
-		Answer.findOne({_id: req.params.id, 'votes.userId': req.currentUserId })         .then(result => {
+		console.log('masuk controller', req.currentUserId)
+		Answer.findOne({_id: req.params.id, 'votes.userId': req.currentUserId })         
+		.then(result => {
+			console.log(result, 'masuk di awal')
 			  if (!result) {
+				  console.log('masuk sini')
 				Answer.updateOne({_id: req.params.id},  { $push: { votes: vote } })
 				.then(_ => {
 				  res.status(200).json({message: 'Votes successfully updated'})
@@ -91,11 +81,15 @@ class AnswerController {
 				  next(err)
 				})
 			  } else {
+				  console.log('masuk ke else')
 				for (let i = 0; i < result.votes.length; i++) {
 				  if (result.votes[i].userId == req.currentUserId.toString()) {
+					  console.log(result.votes[i].value, 'ini value dr array')
+					  console.log(req.body.value, 'ini yg dikirim <><><><>')
 					if (result.votes[i].value == req.body.value) {
 					  Answer.updateOne({_id: req.params.id},  { $pull: { votes: { userId: req.currentUserId }}})
 							  .then(result => {
+								  console.log('masuk update')
 								res.status(200).json({message: 'Vote successfully updated'})
 							  })
 							  .catch(err => {

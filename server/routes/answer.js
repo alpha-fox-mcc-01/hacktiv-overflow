@@ -8,10 +8,10 @@ router.get('/me', authentication, answerController.fetchMyAnswers )
 router.get('/:id', answerController.fetchAnswers)
 
 router.use(authentication)
+router.patch('/:id', answerController.voteAnswer)
 
 // :id refers to answer id
 router.post('/:id',answerController.postAnswer)
 router.put('/:id', authorizationAnswer, answerController.editAnswer)
 router.delete('/:id', authorizationAnswer, answerController.deleteAnswer)
-router.patch('/:id', answerController.voteAnswer)
 module.exports = router

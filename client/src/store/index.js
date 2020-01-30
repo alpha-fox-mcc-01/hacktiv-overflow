@@ -8,7 +8,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isLoggedIn: '',
-    questions: []
+    questions: [],
+    answers: []
   },
   mutations: {
     SET_STATUS (state, payload) {
@@ -16,6 +17,9 @@ export default new Vuex.Store({
     },
     SET_QUESTIONS (state, payload) {
       state.questions = payload
+    },
+    SET_ANSWERS (state, payload) {
+      state.answers = payload
     } 
   },
   actions: {
@@ -37,17 +41,34 @@ export default new Vuex.Store({
     userRegister (context, payload) {
       return instance.post('/users/register', {
         email: payload.email,
-        password: payload.password
+        password: payload.password,
+        username: payload.username
       })
     },
     fetchQuestions (context, payload) {
       instance.get('/questions')
           .then(({ data }) => {
-            context.commit('SET QUESTIONS', data.result)
+            context.commit('SET_QUESTIONS', data.result)
           })
           .catch( err  => {
             console.log(err)
           })
+    },
+    getDetails (context, payload) {
+      console.log(payload, '<><><><>')
+      instance.get('/answers/' + payload)
+              .then(({ data }) => {
+                context.commit('SET_ANSWERS', data.result)
+              })
+              .catch(err => {
+                console.log(err)
+              })
+    },
+    voteAnswer (context, payload) {
+      return instance.patch('/answers/' + payload.id, {
+        value: payload.value
+      })
+
     }
   },
   modules: {

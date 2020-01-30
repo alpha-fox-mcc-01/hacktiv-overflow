@@ -6,7 +6,8 @@ class UserController {
   static register(req, res, next) {
     User.create({
         email: req.body.email,
-        password: req.body.password
+        password: req.body.password,
+        username: req.body.username
     })
       .then(result => {
         res.status(201).json({result: result.email})

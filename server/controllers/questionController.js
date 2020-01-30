@@ -1,4 +1,4 @@
-const { Question } = require('../models/index')
+const { Question, Answer } = require('../models/index')
 const ObjectID = require('mongoose').Types.ObjectId
 
 class QuestionController {
@@ -17,7 +17,7 @@ class QuestionController {
               })
   }
   static fetchQuestions(req, res, next) {
-    Question.find()
+    Question.find().populate('author')
             .then(result => {
               res.status(200).json({result: result})
             })
@@ -117,6 +117,15 @@ class QuestionController {
               next(err)
             })
   }
+
+  // static getQuestionAnswer(req, res, next) {
+  //   let question
+  //   Question.findOne({_id: req.params.id})
+  //           .then(result => {
+  //             question = result
+  //             return Answer.findOne({questionId: })
+  //           })
+  // }
 
 
 }

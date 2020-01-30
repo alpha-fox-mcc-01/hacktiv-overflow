@@ -4,6 +4,7 @@
     <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
       <h1 class="mb-8 text-3xl text-center">Sign up</h1>
       <form @submit.prevent="register">
+      <input type="text" class="block border border-grey-light w-full p-3 rounded mb-4" name="username" placeholder="Username" v-model="username" />
       <input type="text" class="block border border-grey-light w-full p-3 rounded mb-4" name="email" placeholder="Email" v-model="email" />
       <input type="password" class="block border border-grey-light w-full p-3 rounded mb-4" name="password" placeholder="Password" v-model="password" />
       <button type="submit" class="w-full text-center rounded bg-black text-white hover:bg-blue">Create Account</button>
@@ -32,7 +33,8 @@ export default {
     register () {
       let input = {
         email: this.email,
-        password: this.password
+        password: this.password,
+        username: this.username
       }
       this.$store.dispatch('userRegister', input)
         .then(({ data }) => {
