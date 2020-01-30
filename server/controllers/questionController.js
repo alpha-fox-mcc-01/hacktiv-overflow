@@ -1,4 +1,5 @@
 const { Question } = require('../models/index')
+const ObjectID = require('mongoose').Types.ObjectId
 
 class QuestionController {
   static postQuestion(req, res, next) {
@@ -66,13 +67,51 @@ class QuestionController {
       userId: req.currentUserId,
       value: req.body.value
     }
-    Question.updateOne({_id: req.params.id},  { $push: { votes: vote } })
-            .then(result => {
-              res.status(200).json({message: 'Vote successfully added'})
+    Question.findOne({_id: req.params.id, 'votes.userId': req.currentUserId })         .then(result => {
+          if (!result) {
+            Question.updateOne({_id: req.params.id},  { $push: { votes: vote } })
+            .then(_ => {
+              res.status(200).json({message: 'Votes successfully updated'})
             })
             .catch(err => {
               next(err)
             })
+          } else {
+            for (let i = 0; i < result.votes.length; i++) {
+              if (result.votes[i].userId == req.currentUserId.toString()) {
+                if (result.votes[i].value == req.body.value) {
+                  Question.updateOne({_id: req.params.id},  { $pull: { votes: { userId: req.currentUserId }}})
+                          .then(result => {
+                            res.status(200).json({message: 'Vote successfully updated'})
+                          })
+                          .catch(err => {
+                            next(err)
+                          })
+                } else {
+                  Question.findOneAndUpdate({_id: req.params.id, 'votes.userId': req.currentUserId},  { $set: { 'votes.$.value': req.body.value }})
+                  .then(result => {
+                    res.status(200).json({message: 'Vote successfully updated'})
+                  })
+                  .catch(err => {
+                    next(err)
+                  })
+                }
+              }
+            }
+          }
+        })
+        .catch(err => {
+          next(err)
+        })
+
+            
+    
+    //         .then(result => {
+    //           res.status(200).json({message: 'Vote successfully added'})
+    //         })
+    //         .catch(err => {
+    //           next(err)
+    //         })
   }
   static search(req, res, next) {
     let keyword = req.params.keyword

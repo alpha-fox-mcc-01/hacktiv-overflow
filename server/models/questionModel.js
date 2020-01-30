@@ -12,7 +12,7 @@ const questionSchema = new Schema({
         required: 'Content is required!'
     },
     category: String,
-    votes: [{userId: Schema.Types.ObjectId, value: Number}]
+    votes: [{userId: {type: Schema.Types.ObjectId, ref:'User'}, value: Number}]
 }, { timestamps: { createdAt: 'created_at' } })
 
 const Question = mongoose.model('Question', questionSchema)
