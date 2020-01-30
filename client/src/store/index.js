@@ -114,7 +114,9 @@ export default new Vuex.Store({
     },
     deleteAnswer (context, payload) {
       return instance.delete('/answers/' + payload)
-              
+    },
+    deleteQuestion (context, payload) {
+      return instance.delete('/questions/' + payload)
     }
   },
   modules: {

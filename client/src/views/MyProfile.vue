@@ -50,6 +50,16 @@ export default {
             .catch(err => {
               Swal.fire('Oops..', 'An error occured', 'error')
             })
+      },
+      deleteQuestion (id) {
+         this.$store.dispatch('deleteQuestion', id)
+            .then(({ data }) => {
+              this.$store.dispatch('fetchMyQuestions')
+              Swal.fire('Ok', 'Your question has been deleted', 'success')
+            })
+            .catch(err => {
+              Swal.fire('Oops..', 'An error occured', 'error')
+            })
       }
     }
 

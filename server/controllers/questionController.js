@@ -118,15 +118,6 @@ class QuestionController {
             })
   }
 
-  // static getQuestionAnswer(req, res, next) {
-  //   let question
-  //   Question.findOne({_id: req.params.id})
-  //           .then(result => {
-  //             question = result
-  //             return Answer.findOne({questionId: })
-  //           })
-  // }
-
 
 }
 
