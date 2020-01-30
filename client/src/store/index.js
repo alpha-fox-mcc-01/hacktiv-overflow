@@ -11,7 +11,7 @@ export default new Vuex.Store({
     questions: [],
     answers: [],
     myQuestions: [],
-    myAnswers: [],
+    myAnswers: []
   },
   mutations: {
     SET_STATUS (state, payload) {
@@ -54,63 +54,86 @@ export default new Vuex.Store({
       })
     },
     fetchQuestions (context, payload) {
+      if (localStorage.getItem('access_token')) {
+        context.commit('SET_STATUS', true)
+      }
       instance.get('/questions')
-          .then(({ data }) => {
-            context.commit('SET_QUESTIONS', data.result)
-          })
-          .catch( err  => {
-            console.log(err)
-          })
+        .then(({ data }) => {
+          context.commit('SET_QUESTIONS', data.result)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     getDetails (context, payload) {
-      console.log(payload, '<><><><>')
+      if (localStorage.getItem('access_token')) {
+        context.commit('SET_STATUS', true)
+      }
       instance.get('/answers/' + payload)
-              .then(({ data }) => {
-                context.commit('SET_ANSWERS', data.result)
-              })
-              .catch(err => {
-                console.log(err)
-              })
+        .then(({ data }) => {
+          context.commit('SET_ANSWERS', data.result)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     voteAnswer (context, payload) {
+      if (localStorage.getItem('access_token')) {
+        context.commit('SET_STATUS', true)
+      }
       return instance.patch('/answers/' + payload.id, {
         value: payload.value
       })
     },
     voteQuestion (context, payload) {
+      if (localStorage.getItem('access_token')) {
+        context.commit('SET_STATUS', true)
+      }
       return instance.patch('/questions/' + payload.id, {
         value: payload.value
       })
     },
     postQuestion (context, payload) {
+      if (localStorage.getItem('access_token')) {
+        context.commit('SET_STATUS', true)
+      }
       return instance.post('/questions', {
         title: payload.title,
         content: payload.content
       })
     },
     postAnswer (context, payload) {
-      return instance.post('/answers/' + payload.id , {
+      if (localStorage.getItem('access_token')) {
+        context.commit('SET_STATUS', true)
+      }
+      return instance.post('/answers/' + payload.id, {
         title: payload.title,
         content: payload.content
       })
     },
     fetchMyQuestions (context, payload) {
+      if (localStorage.getItem('access_token')) {
+        context.commit('SET_STATUS', true)
+      }
       instance.get('/questions/me')
-              .then(({ data }) => {
-                context.commit('SET_MY_QUESTIONS', data.result)
-              })
-              .catch(err => {
-                console.log(err)
-              })
+        .then(({ data }) => {
+          context.commit('SET_MY_QUESTIONS', data.result)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     fetchMyAnswers (context, payload) {
+      if (localStorage.getItem('access_token')) {
+        context.commit('SET_STATUS', true)
+      }
       instance.get('/answers/me')
-              .then(({ data }) => {
-                context.commit('SET_MY_ANSWERS', data.result)
-              })
-              .catch(err => {
-                console.log(err)
-              })
+        .then(({ data }) => {
+          context.commit('SET_MY_ANSWERS', data.result)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     deleteAnswer (context, payload) {
       return instance.delete('/answers/' + payload)

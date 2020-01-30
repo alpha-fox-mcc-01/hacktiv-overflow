@@ -6,7 +6,10 @@
 <div v-if="isAnswered === false" style="margin-top: 2em;">
   <p>This question is still unanswered</p>
 </div>
-<PostAnswer></PostAnswer>
+<div>
+  <button @click="postAnswer">Post an answer</button>
+  <router-view></router-view>
+</div>
 <div v-if="isAnswered === true" class="w-2/3 sm:w-1/2 md:w-1/3">
 <h2>Question:</h2>
   <h3 class="font-sans font-thin mb-4">{{answers[0].questionId.title}}?</h3>
@@ -91,6 +94,10 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    },
+    postAnswer () {
+      let id = this.$route.params.id
+      this.$router.push(`/answer/${id}`)
     }
   }
 }

@@ -1,27 +1,24 @@
 <template>
-  <div>
-    <b-button v-b-modal.modal-1>Post an answer</b-button>
-    <b-modal id="modal-1" title="Input your title">
+  <div class="flex mb-4">
+    <div class="w-1/3">
+    </div>
+    <div class="w-1/3">
       <form @submit.prevent="postAnswer">
-      <label>
-      Title
-      </label>
-      <input v-model="title" value="" placeholder="Your title goes here.........">
-      <tinymce v-model="content"></tinymce>
-      <input type="submit">
+        <label class="block text-gray-600 font-bold bg:grey mb-3 md:mb-0 pr-4" for="my-textfield">
+        Title
+        </label>
+        <input v-model="title" class="form-input block w-full focus:bg-gray-200" id="title" type="text" value="" placeholder="Your title goes here.........">
+        <tinymce id="d1" v-model="content"></tinymce>
+        <input type="submit" class="shadow bg-orange-700 hover:bg-orange-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
       </form>
-    </b-modal>
-  </div> 
+    </div>
+  </div>   
 </template>
 
 <script>
 import Swal from 'sweetalert2'
-import tinymce from 'vue-tinymce-editor'
 export default {
   name: 'PostAnswer',
-  components: {
-    tinymce
-  },
   data () {
     return {
       title: '',
@@ -37,14 +34,14 @@ export default {
         content: this.content
       }
       this.$store.dispatch('postAnswer', payload)
-          .then(({ data }) => {
-            this.$store.dispatch('getDetails', this.$route.params.id)
-            Swal.fire('Yay!!', 'Your answer has been posted!', 'success')
-          })
-          .catch(err => {
-            Swal.fire('Oops...', 'You have to log in to post answers', 'error')
-          }) 
-    } 
+        .then(({ data }) => {
+          Swal.fire('Yay!!', 'Your answer has been posted!', 'success')
+          this.$router.push({ path: `/${this.$route.params.id}` })
+        })
+        .catch(err => {
+          Swal.fire('Oops...', 'You have to log in to post answers', 'error')
+        })
+    }
   }
 }
 </script>

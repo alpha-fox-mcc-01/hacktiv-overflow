@@ -31,9 +31,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "my profile" */ '../views/MyProfile.vue')
   },
   {
+    path: '/answer/:id',
+    name: 'post answer',
+    component: () => import(/* webpackChunkName: "post answer" */ '../components/PostAnswer.vue')
+  },
+  {
     path: '/:id',
     name: 'question details',
-    component: () => import(/* webpackChunkName: "register" */ '../views/QuestionPage.vue')
+    component: () => import(/* webpackChunkName: "register" */ '../views/QuestionPage.vue'),
   }
 ]
 

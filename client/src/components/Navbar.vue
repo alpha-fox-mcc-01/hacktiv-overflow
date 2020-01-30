@@ -23,8 +23,10 @@ export default {
       return this.$store.state.isLoggedIn
     }
   },
-  signOut () {
-    this.$store.dispatch('signOut')
+  methods: {
+    signOut () {
+      this.$store.dispatch('signOut')
+    }
   }
 }
 </script>
