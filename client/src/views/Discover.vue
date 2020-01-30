@@ -3,16 +3,19 @@
     <div class='row'>
       <QuestionList v-if='!isViewing'/>
       <router-view />
+      <UserSection />
     </div>
   </div>
 </template>
 
 <script>
+import UserSection from '@/components/UserSection.vue'
 import QuestionList from '@/components/QuestionList.vue'
 export default {
   name: 'discover',
   components: {
-    QuestionList
+    QuestionList,
+    UserSection
   },
   computed: {
     isViewing () {

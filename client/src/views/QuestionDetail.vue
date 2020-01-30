@@ -1,6 +1,6 @@
 <template>
-  <div class='content'>
-    <div class='col-md-9'>
+  <div class='content row'>
+    <div class='col-md-8'>
       <div class='row'>
         <div class='col-md-1'>
           <b-card class='question-detail'>
@@ -16,7 +16,7 @@
         </div>
         <div class='col-md-10'>
           <b-card class='question-detail' :title="question.title" :sub-title="question.questionedBy.username">
-            <b-card-text>
+            <b-card-text v-html='question.description'>
               {{ question.description }}
             </b-card-text>
             <b-card-text>
@@ -27,67 +27,34 @@
       </div>
       <hr>
       <h5 style='opacity: 0.5;'>Reply to this question...</h5>
-      <b-form-input v-model='title' size="sm" class="mr-sm-2" placeholder='title'></b-form-input>
-      <editor
-       v-model='description'
-       api-key="xz070feerzn7an1h8txc48y372qdauaphrppmw3h01y7k653"
-       initialValue="<p style='opacity: 0.5;'>elaborate</p>"
-       :init="{
-         height: 200,
-         menubar: false,
-         plugins: [
-           'advlist autolink lists link image charmap print preview anchor',
-           'searchreplace visualblocks code fullscreen',
-           'insertdatetime media table paste code help wordcount'
-         ],
-         toolbar:
-           'undo redo | formatselect | bold italic backcolor | \
-           alignleft aligncenter alignright alignjustify | \
-           bullist numlist outdent indent | removeformat | help'
-       }"
-       ></editor>
-       <br>
-       <b-button variant='light' @click='newAnswer'>Submit</b-button>
-       <br>
+      <TextEditor :purpose="'newAnswer'"/>
+      <br>
       <br>
       <h1>{{ answers.length }} &nbsp; <span v-if='answers.length>1 || answers.length===0'>Replies</span><span v-else>Reply</span></h1>
       <hr>
       <AnswerCard @get-answers="$store.dispatch('getQuestionAnswers', question._id)" v-for='answer in answers' :key='answer._id' :answer='answer'/>
     </div>
+    <UserSection />
   </div>
 </template>
 
 <script>
-import Editor from '@tinymce/tinymce-vue'
+import UserSection from '@/components/UserSection.vue'
+import TextEditor from '@/components/Editor.vue'
 import AnswerCard from '@/components/AnswerCard.vue'
 export default {
   name: 'questionDetail',
   data () {
     return {
-      title: '',
-      description: '',
       reputation: 0
     }
   },
   components: {
-    Editor,
-    AnswerCard
+    AnswerCard,
+    TextEditor,
+    UserSection
   },
   methods: {
-    newAnswer () {
-      this.$store.dispatch('newAnswer', {
-        title: this.title,
-        description: this.description,
-        _id: this.question._id
-      })
-        .then(({ data }) => {
-          this.$store.dispatch('getQuestionAnswers', this.$route.params.id)
-          console.log(data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
     vote (value) {
       this.$store.dispatch('voteQuestion', {
         value,

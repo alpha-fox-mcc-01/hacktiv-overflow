@@ -8,7 +8,7 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item @click="$router.push('/')">&nbsp;Feed</b-nav-item>
-          <b-nav-item @click="$router.push('/discover')">Discover</b-nav-item>
+          <b-nav-item @click="discover()">Discover</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -54,9 +54,13 @@ export default {
     searchQuestions () {
       this.$store.dispatch('getQuestions', this.keyword)
     },
-    signOut() {
+    signOut () {
       this.$store.commit('SET_LOGIN', false)
       localStorage.removeItem('access_token')
+    },
+    discover () {
+      this.$store.commit('SET_VIEW', false)
+      this.$router.push('/discover')
     }
   },
   computed: {

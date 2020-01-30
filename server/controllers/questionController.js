@@ -65,7 +65,7 @@ module.exports = {
   },
   addQuestion(req, res, next) {
     let tags = null
-    if (req.body.tags.length) {
+    if (req.body.tags) {
       tags = req.body.tags.split(',')
     }
     Question.create({

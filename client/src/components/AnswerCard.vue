@@ -1,5 +1,5 @@
 <template>
-  <div class='row'>
+  <div class='row' style='margin-bottom: 2rem;'>
     <div class='col-md-1'>
       <b-card class='answer-detail'>
         <img class='upvote-arrow' @click='vote(1)' src='../../public/arrow.png' width="40" height="40">

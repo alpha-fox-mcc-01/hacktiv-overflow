@@ -11,7 +11,8 @@ export default new Vuex.Store({
     questionDetail: {},
     tags: [],
     isLogin: false,
-    isViewing: false
+    isViewing: false,
+    userQuestions: []
   },
   mutations: {
     SET_QUESTIONS (state, payload) {
@@ -31,6 +32,9 @@ export default new Vuex.Store({
     },
     SET_VIEW (state, payload) {
       state.isViewing = payload
+    },
+    SET_USER_QUESTIONS (state, payload) {
+      state.userQuestions = payload
     }
   },
   actions: {
@@ -71,6 +75,34 @@ export default new Vuex.Store({
         .catch(err => {
           console.log(err)
         })
+    },
+    getUserQuestions (context, payload) {
+      axios({
+        method: 'GET',
+        url: 'http://localhost:3000/questions/me',
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+        .then(({ data }) => {
+          context.commit('SET_USER_QUESTIONS', data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    newQuestion (context, payload) {
+      return axios({
+        method: 'POST',
+        url: 'http://localhost:3000/questions',
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        },
+        data: {
+          title: payload.title,
+          description: payload.description
+        }
+      })
     },
     getTags (context, payload) {
       axios({

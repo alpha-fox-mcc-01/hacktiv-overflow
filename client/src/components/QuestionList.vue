@@ -1,5 +1,5 @@
 <template>
-  <div id='question-list' class='col-md-9'>
+  <div id='question-list' class='col-md-8'>
     <Question v-for='question in questions' :key='question._id' :question='question' />
   </div>
 </template>
@@ -12,7 +12,7 @@ export default {
     Question
   },
   computed: {
-    questions() {
+    questions () {
       return this.$store.state.questions
     }
   },
