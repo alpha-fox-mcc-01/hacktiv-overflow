@@ -7,7 +7,7 @@
       Title
       </label>
       <input v-model="title" value="" placeholder="Your title goes here.........">
-      <tinymce id="d1" v-model="content"></tinymce>
+      <tinymce v-model="content"></tinymce>
       <input type="submit">
       </form>
     </b-modal>

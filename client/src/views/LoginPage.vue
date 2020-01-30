@@ -42,6 +42,7 @@ export default {
         password: this.password
       }
       this.$store.dispatch('userLogin', input)
+      this.$router.push('/')
     }
   },
   beforeRouteEnter (to, from, next) {

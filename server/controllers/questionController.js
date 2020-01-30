@@ -55,7 +55,13 @@ class QuestionController {
     console.log('masuk controller')
     Question.deleteOne({_id: req.params.id})
             .then(result => {
-              res.status(200).json({message: 'Delete successful'})
+              Answer.deleteMany({questionId: req.params.id})
+                    .then(result => {
+                      res.status(200).json({message: 'Delete successful'})
+                    })
+                    .catch(err => {
+                      next(err)
+                    })
             })
             .catch(err => {
               next(err)

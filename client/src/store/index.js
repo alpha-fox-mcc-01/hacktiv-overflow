@@ -7,11 +7,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    isLoggedIn: '',
+    isLoggedIn: false,
     questions: [],
     answers: [],
     myQuestions: [],
-    myAnswers: []
+    myAnswers: [],
   },
   mutations: {
     SET_STATUS (state, payload) {
@@ -28,7 +28,7 @@ export default new Vuex.Store({
     },
     SET_MY_ANSWERS (state, payload) {
       state.myAnswers = payload
-    }  
+    }
   },
   actions: {
     userLogin (context, payload) {
@@ -117,6 +117,10 @@ export default new Vuex.Store({
     },
     deleteQuestion (context, payload) {
       return instance.delete('/questions/' + payload)
+    },
+    signOut (context, payload) {
+      localStorage.removeItem('access_token')
+      context.commit('SET_STATUS', false)
     }
   },
   modules: {

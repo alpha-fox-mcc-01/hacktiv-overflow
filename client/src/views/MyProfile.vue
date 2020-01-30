@@ -55,13 +55,21 @@ export default {
          this.$store.dispatch('deleteQuestion', id)
             .then(({ data }) => {
               this.$store.dispatch('fetchMyQuestions')
+              this.$store.dispatch('fetchMyAnswers')
               Swal.fire('Ok', 'Your question has been deleted', 'success')
             })
             .catch(err => {
               Swal.fire('Oops..', 'An error occured', 'error')
             })
       }
+    },
+    beforeRouteEnter (to, from, next) {
+    if (localStorage.getItem('access_token')) {
+      next()
+    } else {
+      next('/login')
     }
+  }
 
 }
 </script>
