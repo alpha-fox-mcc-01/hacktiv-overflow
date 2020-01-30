@@ -2,9 +2,9 @@
   <div class="my-5 container">
     <div class="d-flex align-self-center">
       <div class="mr-2 d-flex flex-column justify-content-center align-items-center text-center">
-        <i class="fas fa-chevron-up fa-btn text-secondary"></i>
-        <div class="card p-1 m-1">12</div>
-        <i class="fas fa-chevron-down fa-btn text-secondary"></i>
+        <i @click="vote(1)" :class="{'text-warning': isLiked == 1 }" class="fas fa-chevron-up fa-btn text-secondary"></i>
+        <div class="card p-1 m-1">{{totalPoints}}</div>
+        <i @click="vote(-1)" :class="{'text-warning': isLiked == -1 }" class="fas fa-chevron-down fa-btn text-secondary"></i>
       </div>
 
       <div class="">
@@ -62,7 +62,7 @@
     <PostComment :comment="marked[0]"/>
     <hr class="my-3">
     <!-- COMMENT SECTION -->
-    <PostComment v-for="comment in comments" :key="comment._id" :comment="comment"/>
+    <PostComment v-for="comment in comments" :key="comment._id" :comment="comment" :postOwner="fetchedPost.owner"/>
   </div>
 </template>
 
@@ -78,6 +78,26 @@ export default {
   computed: {
     marked () {
       return this.comments.filter(row => row.markedAsAnswer)
+    },
+    totalPoints () {
+      let total = 0
+      if (this.fetchedPost.votes) {
+        this.fetchedPost.votes.forEach(row => {
+          total += row.point
+        })
+      }
+      return total
+    },
+    isLiked () {
+      let liked = 0
+      if (this.fetchedPost.votes) {
+        this.fetchedPost.votes.forEach(row => {
+          if (row.voter === this.activeUser._id) {
+            liked = row.point
+          }
+        })
+      }
+      return liked
     },
     ...mapState({
       activeUser: 'activeUser'
