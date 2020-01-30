@@ -20,7 +20,7 @@
                 <input type="password" id="inputPassword" class="form-control" placeholder="Password" required v-model="password">
                 <label for="inputPassword">Password</label>
               </div>
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign Up</button>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase mb-5" type="submit">Sign Up</button>
               <p>Already Have an Account ? click <a @click="toLogin">Here</a> to Sign In</p>
             </form>
           </div>
@@ -54,13 +54,14 @@ export default {
         }
       })
         .then(({ data }) => {
-          console.log(data, '<<<<<<<<< data')
+          // console.log(data, '<<<<<<<<< data')
           this.$router.push('/login')
         })
-        .catch(_ => {
+        .catch(err => {
+          console.log(err)
           Swal.fire({
             title: 'Error!',
-            text: 'Do you want to continue',
+            text: 'Email address already used !',
             icon: 'error',
             confirmButtonText: 'Yes'
           })

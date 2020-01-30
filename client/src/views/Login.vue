@@ -15,7 +15,7 @@
                 <input type="password" id="inputPassword" class="form-control" placeholder="Password" required v-model="password">
                 <label for="inputPassword">Password</label>
               </div>
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase mb-5" type="submit">Sign in</button>
               <p>Don't Have Account ? click <a @click="toRegister">Here</a> to Sign Up</p>
             </form>
           </div>

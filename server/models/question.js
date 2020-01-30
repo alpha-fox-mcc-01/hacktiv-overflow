@@ -21,8 +21,10 @@ const questionSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  vote: Number,
-  timestamps: { createdAt: 'created_at' }
+  vote: Number
+},
+{
+  timestamps: { createdAt: 'created_at'}
 });
 
 const Question = mongoose.model('Question', questionSchema)

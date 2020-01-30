@@ -1,12 +1,24 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <BaseNavbar />
+    <div class="mt-5 pt-3 container">
+      <router-view />
     </div>
-    <router-view/>
+    <BaseFooter />
   </div>
 </template>
+
+<script>
+import BaseNavbar from './components/BaseNavbar'
+import BaseFooter from './components/BaseFooter'
+export default {
+  name: 'App',
+  components: {
+    BaseNavbar,
+    BaseFooter
+  }
+}
+</script>
 
 <style>
 #app {
@@ -28,5 +40,9 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.mt-5 {
+  min-height: 100vh;
 }
 </style>

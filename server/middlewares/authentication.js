@@ -1,29 +1,29 @@
 const User = require('../models/user')
-const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 module.exports = (req, res, next) => {
-  User
-    .findOne({
-      email: req.body.email
-    })
-    .then(user => {
-      if(user){
-        const isValid = bcrypt.compareSync(req.body.password, user.password)
-        if(isValid){
-          req.currentUserId = user._id
+  let token = req.headers.token
+  if(token){
+    const authenticated = jwt.verify(token, process.env.JWT_SECRET)
+    // console.log(authenticated)
+    User
+      .findById({
+        _id: authenticated._id
+      })
+      .then(user => {
+        if(user) {
+          req.currentUserId = authenticated._id
           next()
-        } else {
-          res.status(400).json({
-            msg: 'Wrong Email/Password'
+        }else {
+          next({
+            name: 'Bad Request',
+            message: 'User Not Found',
+            status: 404
           })
         }
-      } else {
-        res.status(400).json({
-          msg: 'Wrong Email/Password'
-        })
-      }
-    })
-    .catch(err => {
-      next(err)
-    })
+      })
+      .catch(next)
+  } else {
+    next(err)
+  }
 }

@@ -15,10 +15,12 @@ const answerSchema = new Schema({
     ref: 'User' 
   },
   vote: Number,
-  timestamps: { createdAt: 'created_at' }
   // answer ga bisa di delete, kalau delete question answer juga ke delete
+},
+{
+  timestamps: { createdAt: 'created_at'}
 })
 
-const User = mongoose.model('User', answerSchema)
+const Answer = mongoose.model('Answer', answerSchema)
 
-module.exports = User
+module.exports = Answer
