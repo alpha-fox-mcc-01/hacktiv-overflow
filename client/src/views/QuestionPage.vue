@@ -8,10 +8,12 @@
   <h3 class="font-sans font-thin mb-4">{{answers[0].questionId.title}}?</h3>
   <p class="text-grey mb-3">Tagged in #{{answers[0].questionId.category}}</p>
   <p class="text-grey-darkest mb-6 leading-tight">{{answers[0].questionId.content}}</p>
-    <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">
+    <button @click="vote(-1, answers[0].questionId._id)" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l">
+      <p class="text-xs ...">{{downvote}}</p>
      <i style="font-size:24px" class="fa">&#xf088;</i>
     </button>
-    <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
+    <button @click="vote(1, answers[0].questionId._id)" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r">
+      <p class="text-xs ...">{{upvote}}</p>
       <i style="font-size:24px" class="fa">&#xf087;</i>
     </button>
   <div>
@@ -37,6 +39,42 @@ export default {
   computed: {
     answers () {
       return this.$store.state.answers
+    },
+      upvote () {
+      let count = 0
+      this.answers[0].questionId.votes.forEach( vote => {
+        console.log(vote, '<><><><>')
+        if (vote.value === 1) {
+          count += Number(vote.value)
+        }
+      })
+      return count
+    },
+    downvote () {
+      let count = 0
+      this.answers[0].questionId.votes.forEach( vote => {
+        console.log(vote, '<><><><>')
+        if (vote.value === -1) {
+          count += Number(vote.value)
+        }
+      })
+      return count
+    }
+  },
+  methods: {
+    vote (value, id) {
+       let newVote = {
+        value: value,
+        id: id
+      }
+      this.$store.dispatch('voteQuestion', newVote)
+        .then(({ data }) => {
+          this.$store.dispatch('getDetails', this.$route.params.id)
+                  
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }

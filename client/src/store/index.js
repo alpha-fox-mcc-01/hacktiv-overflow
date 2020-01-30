@@ -68,8 +68,12 @@ export default new Vuex.Store({
       return instance.patch('/answers/' + payload.id, {
         value: payload.value
       })
-
-    }
+    },
+    voteQuestion (context, payload) {
+      return instance.patch('/questions/' + payload.id, {
+        value: payload.value
+      })
+    },
   },
   modules: {
   }
