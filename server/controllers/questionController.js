@@ -140,35 +140,4 @@ module.exports = {
         }
       })
   }
-  // voteQuestion(req, res, next) {
-  //   let vote = {
-  //     user: req.currentUserId,
-  //     value: Number(req.body.value)
-  //   }
-    // Question.findByIdAndUpdate(req.params.id, {
-    //   $push: { votes: vote }
-    // }, { new: true })
-    //   .then(data => {
-    //     res.status(200).json(data)
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //     next(err)
-    //   })
-  // },
-  // unVoteQuestion(req, res, next) {
-    // let vote = {
-    //   user: req.currentUserId,
-    // }
-    // Question.findByIdAndUpdate(req.params.id, {
-    //   $pull: { votes: vote }
-    // }, { new: true })
-    //   .then(data => {
-    //     res.status(200).json(data)
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //     next(err)
-    //   })
-  // }
 }

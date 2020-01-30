@@ -64,11 +64,16 @@ module.exports = {
 				next(err)
 			})
 	},
-    voteAnswer (req, res, next) {
-      Answer.findOne({ _id: req.params.id, 'votes.user': req.currentUserId})
+  voteAnswer (req, res, next) {
+    let vote = {
+      user: req.currentUserId,
+      value: req.body.value
+    }
+    Answer.findOne({ _id: req.params.id, 'votes.user': req.currentUserId})
       .then(data => {
         if (data) {
-          if(data.votes[0].value === req.body.value) {
+          let voteData = data.votes.filter(vote => vote.user == req.currentUserId.toString())
+          if(voteData[0].value == req.body.value) {
             Answer.findOneAndUpdate({ _id: req.params.id, 'votes.user': req.currentUserId }, {
             $pull: { votes: { user: req.currentUserId} }
           }, { new: true })
@@ -83,6 +88,13 @@ module.exports = {
             Answer.findOneAndUpdate({ _id: req.params.id, 'votes.user': req.currentUserId }, {
               $set: { 'votes.$.value': req.body.value}
             }, { new: true })
+              .then(data => {
+                res.status(200).json(data)
+              })
+              .catch(err => {
+                console.log(err)
+                next(err)
+              })
           }
         } else {
           Answer.findByIdAndUpdate(req.params.id, {
