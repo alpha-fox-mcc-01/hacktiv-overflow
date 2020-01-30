@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100%">
     <div class="d-flex justify-content-between">
-      <h3 class="mb-2 ml-3" ><strong>{{ data.title }}</strong></h3>
+      <h5 class="mb-2 ml-3" bold>{{ data.title }}</h5>
       <hr />
       <small>{{ data.createdAt }}</small>
     </div>
@@ -17,13 +17,14 @@
         </div>
       </div>
     </blockquote>
+    <hr>
   </div>
 </template>
 
 <script>
 import { mdbIcon } from 'mdbvue'
 export default {
-  name: 'n-card-details',
+  name: 'details-answers',
   components: {
     mdbIcon
   },
