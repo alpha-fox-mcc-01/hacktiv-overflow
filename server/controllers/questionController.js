@@ -126,6 +126,8 @@ class QuestionController {
    // }
 
    static update(req, res, next) {
+      console.log(`masuk siniiiii`);
+      
       let updateData = {
          title: req.body.title,
          description: req.body.description
@@ -156,7 +158,8 @@ class QuestionController {
       })
          .then(question => {
             if (question) {
-               if (question.votes[0].vote == req.body.vote) {
+               const indexOfUser = question.votes.findIndex(el => el.userId.toString() == req.currentUserId)
+               if (question.votes[indexOfUser].vote == req.body.vote) {
                   return Question.findOneAndUpdate({_id: req.params.questionId}, {
                      $pull: {
                         'votes': {
@@ -176,7 +179,7 @@ class QuestionController {
                }
             } else {
                return Question.update({
-                  _id: id
+                  _id: req.params.questionId
                }, {
                   $push: {
                      votes: newVote
@@ -203,17 +206,17 @@ class QuestionController {
    }
 
    static getMyQuestions (req, res, next) {
+      console.log(`jalan lhooooooo`);
+      
       console.log(req.currentUserId, `iniiiiiiii`);
       
       Question.find({userId: req.currentUserId})
          .then(data => {
-            console.log(data);
-            
+            console.log(data);         
             res.status(200).json(data)
          })
          .catch(err => {
-            console.log(err.message);
-            
+            console.log(err.message)          
             next(err)
          })
    }

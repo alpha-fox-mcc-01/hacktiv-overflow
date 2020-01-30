@@ -6,7 +6,7 @@
       style="max-width: 50px"
     />
     <router-link to="/" style="text-decoration: none">
-    <h5 class="mt-2 mx-3">
+    <h5 class="mt-2 mr-3">
       <strong>Hacktiv-Git</strong>
     </h5>
     </router-link>
@@ -58,6 +58,7 @@ export default {
         localStorage.removeItem(`token`);
         Swal.fire("logout successfully", "", "success");
         this.$store.dispatch("isLoginAction", false);
+        this.$router.push('/')
       } else {
         Swal.fire({
           icon: "error",

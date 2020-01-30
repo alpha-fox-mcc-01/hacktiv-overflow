@@ -9,7 +9,7 @@ export default new Vuex.Store({
     isLogin : false,
     questions: [],
     answers: [],
-    myQuestions: []
+    myQuestions: [],
   },
   mutations: {
     SET_IS_LOGIN(state, payload) {
@@ -23,7 +23,7 @@ export default new Vuex.Store({
     },
     SET_MY_QUESTIONS(state, items) {
       state.myQuestions = items
-    }
+    },
   },
   actions: {
     isLoginAction(context, payload) {
@@ -56,7 +56,24 @@ export default new Vuex.Store({
         })
     },
     fetchMyQuestions({commit}) {
-      
+      console.log('jalan nih bos');  
+      axios({
+        method : `GET`,
+        url: `http://localhost:3000/questions/myquestions`,
+        headers : {
+          token : localStorage.getItem(`token`)
+        }
+      })
+        .then(({data}) => {
+          console.log(data, `nih datanyaaa`);
+          
+          commit('SET_MY_QUESTIONS', data)
+        })
+        .catch(err => {
+          console.log(`lho errorrrrrrrr`);
+          
+          console.log(err.message);         
+        })
     }
   },
   modules: {

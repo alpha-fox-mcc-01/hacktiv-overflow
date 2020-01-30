@@ -151,7 +151,7 @@ class AnswerController {
                }
             } else {
                return Answer.update({
-                  _id: id
+                  _id: req.params.answerId
                }, {
                   $push: {
                      votes: newVote

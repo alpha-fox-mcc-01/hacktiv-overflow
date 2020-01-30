@@ -6,9 +6,9 @@
           <h6 class="card-header text-right"></h6>
           <div class="card-body">
             <h5 class="card-title">
-              <strong>{{title}}</strong>
+              <strong>{{question.title}}</strong>
             </h5>
-            <p class="card-text">{{description}}</p>
+            <p class="card-text">{{question.description}}</p>
             <button
               type="button"
               class="btn btn-primary"
@@ -17,14 +17,14 @@
             >Reply</button>
 
             <!-- <button class="btn btn-primary" @click="seeThread(item._id)">Answer</button> -->
-            <a href="#" class="btn btn-success ml-3 btn-sm">
+            <a href="#" class="btn btn-success ml-3 btn-sm" @click.prevent="upvote(question._id)">
               <i class="fas fa-chevron-up"></i>
             </a>
-            <a href="#" class="btn btn-danger ml-2 btn-sm">
+            <a href="#" class="btn btn-danger ml-2 btn-sm" @click.prevent="downvote(question._id)">
               <i class="fas fa-chevron-down"></i>
             </a>
             <p class="text-right p-0 m-0">
-              <strong>total upvotes: 10</strong>
+              <strong>total upvotes: {{totalVotes}}</strong>
             </p>
           </div>
         </div>
@@ -52,18 +52,16 @@
         <div class="modal-content">
           <div class="mx-4 my-3">
             <form>
-              <label>Title</label>
               <input
                 type="text"
-                class="form-control"
+                class="form-control my-4"
                 placeholder="Enter title"
                 v-model="answerTitle"
               />
-              <label>Description</label>
               <input
                 type="text"
-                class="form-control"
-                placeholder="Enter title"
+                class="form-control my-4"
+                placeholder="Enter your answer"
                 v-model="answerDescription"
               />
               <button
@@ -92,9 +90,7 @@ export default {
   },
   data() {
     return {
-      title: "",
-      description: "",
-      votes: [],
+      question: [],
       answerTitle: "",
       answerDescription: ""
     };
@@ -106,16 +102,21 @@ export default {
         url: `http://localhost:3000/questions/${this.$route.params.questionId}`
       })
         .then(({ data }) => {
-          console.log(data, `ini getOne question`);
-          this.title = data.title;
-          this.description = data.description;
-          this.votes = data.votes;
+          this.question = data
         })
         .catch(err => {
           console.log(err.message);
         });
     },
     addAnswer() {
+      if (this.answerTitle.length < 1 || this.answerDescription.length < 1) {
+        Swal.fire({
+          icon: "error",
+          title: "Kurang lengkap nih isiannya",
+          text: "isi kolom title dan jawabannya dong bos",
+        })
+      }
+      else
       if (!localStorage.getItem(`token`)) {
         Swal.fire({
           icon: "error",
@@ -135,7 +136,6 @@ export default {
           }
         })
           .then(({ data }) => {
-            console.log(data, `yay berhasil addddddddddddddd answer`);
             (this.answerTitle = ""), (this.answerDescription = "");
             const Toast = Swal.mixin({
               toast: true,
@@ -152,13 +152,49 @@ export default {
             Toast.fire({
               icon: "success",
               title: "reply has been sent!"
-            })
-            this.$store.dispatch('fetchAnswers')
+            });
+            this.$store.dispatch("fetchAnswers");
           })
           .catch(err => {
             console.log(err);
           });
       }
+    },
+    upvote (questionId) {
+      axios({
+        method : `PATCH`,
+        url: `http://localhost:3000/questions/${questionId}`,
+        data : {
+          vote : 1
+        },
+        headers: {
+          token : localStorage.getItem(`token`)
+        }
+      })
+        .then(_ => {
+          this.getQuestion()
+        })
+        .catch (err => {
+          console.log(err.message);          
+        })
+    },
+    downvote (questionId) {
+      axios({
+        method : `PATCH`,
+        url: `http://localhost:3000/questions/${questionId}`,
+        data : {
+          vote : -1
+        },
+        headers: {
+          token : localStorage.getItem(`token`)
+        }
+      })
+        .then(_ => {
+          this.getQuestion()
+        })
+        .catch (err => {
+          console.log(err.message);          
+        })
     }
   },
   computed: {
@@ -166,16 +202,22 @@ export default {
       let arr = [];
       let answers = this.$store.state.answers;
       for (let i = 0; i <= answers.length - 1; i++) {
-        console.log(answers[i].questionId);
-
         if (answers[i].questionId == this.$route.params.questionId) {
           arr.push(answers[i]);
         }
       }
       return arr;
+    },
+    totalVotes () {
+      let total = 0
+      for (let i=0; i<=this.question.votes.length-1; i++) {
+        total += this.question.votes[i].vote
+      }
+      return total
     }
   },
   created() {
+    this.$store.dispatch('detailAnswer')
     this.getQuestion();
   }
 };

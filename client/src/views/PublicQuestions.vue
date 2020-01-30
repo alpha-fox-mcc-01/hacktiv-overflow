@@ -3,7 +3,7 @@
     <img
       class="mb-1"
       alt="disctractor"
-      src="https://gifimage.net/wp-content/uploads/2017/09/anime-chibi-gif-2.gif"
+      src="../assets/anime-chibi-gif-2.gif"
       style="max-width: 250px"
     />
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
