@@ -19,7 +19,33 @@
             <b-card-text>
               {{ question.description }}
             </b-card-text>
-            <b-button>Reply</b-button>
+            <b-button v-b-modal.modal-1>Reply</b-button>
+
+            <b-modal id="modal-1" title="BootstrapVue" hide-footer>
+                <b-form @submit.prevent="writeAnswer">
+                  <b-form-group
+                    id="input-group-1"
+                    label="Title:"
+                    label-for="input-1"
+                  >
+                    <b-form-input
+                      id="input-1"
+                      type="text"
+                      required
+                      placeholder="Enter title"
+                    ></b-form-input>
+                  </b-form-group>
+
+                  <b-form-group id="input-group-2" label="Description" label-for="input-2">
+                    <b-form-input
+                      id="input-2"
+                      required
+                      placeholder="Enter description"
+                    ></b-form-input>
+                  </b-form-group>
+                  <b-button type="submit" variant="primary">Submit</b-button>
+                </b-form>
+            </b-modal>
           </b-card>
         </div>
       </div>
@@ -40,8 +66,8 @@
               <img src='../../public/arrow.png' style='transform: rotate(180deg)' width="40" height="40">
             </b-card>
           </div>
-          <div class='col-md-10'>
-            <b-card class='question-detail' :title="answer.title" :sub-title="answer.answeredBy.username">
+          <div class='col-md-10' v-if='answers.length > 0'>
+            <b-card class='question-detail' v-for='answer in answers' :key='answer._id' :title="answer.title" :sub-title="answer.answeredBy.username">
               <b-card-text>
                 {{ answer.description }}
               </b-card-text>
@@ -73,9 +99,7 @@ export default {
       return vote
     }
   },
-    created () {
-    console.log('masuk')
-    console.log(this.$route.params.id)
+  created () {
     this.$store.dispatch('getQuestionDetail', this.$route.params.id)
     this.$store.dispatch('getQuestionAnswers', this.$route.params.id)
   }

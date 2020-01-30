@@ -24,6 +24,9 @@ export default {
 </script>
 
 <style>
+h5 {
+  cursor: pointer;
+}
 .content {
   margin-bottom: 0.5rem;
 }
