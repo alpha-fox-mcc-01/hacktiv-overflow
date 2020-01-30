@@ -1,8 +1,18 @@
 const { Question } = require('../models')
+const { Answer } = require('../models')
 module.exports = {
+  getTags (req, res, next) {
+    Question.find().distinct('tags')
+      .then(data => {
+        res.status(200).json(data)
+      })
+      .catch(err => {
+        next(err)
+      })
+  },
   getQuestions(req, res, next) {
     if (!req.query.keyword) {
-      Question.find().populate('answers')
+      Question.find().populate('answers').sort('-createdAt')
       .populate('questionedBy')
       .then(data => {
         res.status(200).json(data)
@@ -11,8 +21,9 @@ module.exports = {
         next(err)
       })
     } else {
-      Question.find({ title: {$regex: req.query.keyword, $options: 'i'}}).populate('answers')
-      .populate('questionedBy')
+      Question.find({ title: {$regex: req.query.keyword, $options: 'i'}})
+      .populate('answers')
+      .populate('questionedBy').sort('-createdAt')
       .then(data => {
         res.status(200).json(data)
       })
@@ -86,6 +97,9 @@ module.exports = {
   },
   deleteQuestion (req, res, next) {
     Question.findByIdAndDelete(req.params.id)
+      .then(data => {
+        return Answer.deleteMany({ question: data._id })
+      })
       .then(data => {
         res.status(200).json(data)
       })

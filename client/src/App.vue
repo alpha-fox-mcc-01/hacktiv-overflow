@@ -19,6 +19,10 @@ export default {
 }
 </script>
 <style>
+@import url('https://fonts.googleapis.com/css?family=Rubik&display=swap');
+#app {
+  font-family: 'Rubik', sans-serif;
+}
 /* #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

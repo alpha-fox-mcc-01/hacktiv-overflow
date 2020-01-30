@@ -2,7 +2,7 @@ const { Answer } = require('../models')
 const ObjectID = require('mongoose').Types.ObjectId
 module.exports = {
 	getAnswers (req, res, next) {
-    Answer.find({'question': ObjectID(req.query.questionId)})
+    Answer.find({'question': ObjectID(req.query.questionId)}).sort('-createdAt')
       .populate('answeredBy')
       .populate('question')
       .then(data => {
