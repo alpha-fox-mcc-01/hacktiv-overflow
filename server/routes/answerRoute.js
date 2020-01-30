@@ -9,6 +9,8 @@ router.get('/me', answerController.getUserAnswers)
 
 router.post('/', answerController.writeAnswer)
 
+router.get('/:id', answerController.getOneAnswer)
+
 router.put('/:id', answerAuthorization, answerController.editAnswer)
 
 router.patch('/:id/vote', answerController.voteAnswer)

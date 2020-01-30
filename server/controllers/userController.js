@@ -9,7 +9,11 @@ module.exports = {
       password: req.body.password
     })
       .then(data => {
-        res.status(201).json(data)
+        res.status(201).json({
+          username: data.username,
+          email: data.email,
+          password: data.password
+        })
       })
       .catch(err => {
         next(err)

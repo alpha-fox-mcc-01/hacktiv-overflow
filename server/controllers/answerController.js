@@ -2,8 +2,9 @@ const { Answer } = require('../models')
 const ObjectID = require('mongoose').Types.ObjectId
 module.exports = {
 	getAnswers (req, res, next) {
-		Answer.find({'question': ObjectID(req.query.questionId)}).populate('question')
+    Answer.find({'question': ObjectID(req.query.questionId)})
       .populate('answeredBy')
+      .populate('question')
       .then(data => {
         res.status(200).json(data)
       })
@@ -11,7 +12,18 @@ module.exports = {
         console.log(err.message)
         next(err)
       })
-	},
+  },
+  getOneAnswer(req, res, next) {
+    Answer.findById(req.params.id)
+      .populate('answeredBy')
+      .populate('question')
+      .then(data => {
+        res.status(200).json(data)
+      })
+      .catch(err => {
+        next(err)
+      })
+  },
 	getUserAnswers(req, res, next) {
 		Answer.find({questionedBy: req.currentUserId}).populate('question')
 		  .populate('questionedBy')
@@ -53,19 +65,37 @@ module.exports = {
 			})
 	},
     voteAnswer (req, res, next) {
-    let vote = {
-      user: req.currentUserId,
-      value: Number(req.body.value)
-    }
-    Answer.findByIdAndUpdate(req.params.id, {
-      $push: { votes: vote }
-    }, { new: true })
+      Answer.findOne({ _id: req.params.id, 'votes.user': req.currentUserId})
       .then(data => {
-        res.status(200).json(data)
-      })
-      .catch(err => {
-        console.log(err)
-        next(err)
+        if (data) {
+          if(data.votes[0].value === req.body.value) {
+            Answer.findOneAndUpdate({ _id: req.params.id, 'votes.user': req.currentUserId }, {
+            $pull: { votes: { user: req.currentUserId} }
+          }, { new: true })
+            .then(data => {
+              res.status(200).json(data)
+            })
+            .catch(err => {
+              console.log(err)
+              next(err)
+            })
+          } else {
+            Answer.findOneAndUpdate({ _id: req.params.id, 'votes.user': req.currentUserId }, {
+              $set: { 'votes.$.value': req.body.value}
+            }, { new: true })
+          }
+        } else {
+          Answer.findByIdAndUpdate(req.params.id, {
+            $push: { votes: vote }
+          }, { new: true })
+            .then(data => {
+              res.status(200).json(data)
+            })
+            .catch(err => {
+              console.log(err)
+              next(err)
+            })
+        }
       })
   }
 }

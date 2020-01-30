@@ -22,8 +22,29 @@ module.exports = {
     }
   },
   getUserQuestions(req, res, next) {
-    Question.find({questionedBy: req.currentUserId}).populate('answers')
+    Question.find({questionedBy: req.currentUserId})
+      .populate('answers')
       .populate('questionedBy')
+      .then(data => {
+        res.status(200).json(data)
+      })
+      .catch(err => {
+        next(err)
+      })
+  },
+  getOneQuestion(req, res, next) {
+    Question.findById(req.params.id)
+      .populate('questionedBy')
+      .populate('answers')
+      .then(data => {
+        res.status(200).json(data)
+      })
+      .catch(err => {
+        next(err)
+      })
+  },
+  getTagQuestions(req, res, next) {
+    Question.find({ tags: req.params.tag }).populate('answers').populate('questionedBy')
       .then(data => {
         res.status(200).json(data)
       })
@@ -73,20 +94,81 @@ module.exports = {
         next(err)
       })
   },
-  voteQuestion(req, res, next) {
+  voteQuestion (req, res, next) {
     let vote = {
       user: req.currentUserId,
-      value: Number(req.body.value)
+      value: req.body.value
     }
-    Question.findByIdAndUpdate(req.params.id, {
-      $push: { votes: vote }
-    }, { new: true })
+    Question.findOne({ _id: req.params.id, 'votes.user': req.currentUserId})
       .then(data => {
-        res.status(200).json(data)
-      })
-      .catch(err => {
-        console.log(err)
-        next(err)
+        if (data) {
+          let voteData = data.votes.filter(vote => vote.user == req.currentUserId.toString())
+          if(voteData[0].value == req.body.value) {
+            Question.findOneAndUpdate({ _id: req.params.id, 'votes.user': req.currentUserId }, {
+            $pull: { votes: { user: req.currentUserId} }
+          }, { new: true })
+            .then(data => {
+              res.status(200).json(data)
+            })
+            .catch(err => {
+              console.log(err)
+              next(err)
+            })
+          } else {
+            Question.findOneAndUpdate({ _id: req.params.id, 'votes.user': req.currentUserId }, {
+              $set: { 'votes.$.value': req.body.value}
+            }, { new: true })
+              .then(data => {
+                res.status(200).json(data)
+              })
+              .catch(err => {
+                console.log(err)
+                next(err)
+              })
+          }
+        } else {
+          Question.findByIdAndUpdate(req.params.id, {
+            $push: { votes: vote }
+          }, { new: true })
+            .then(data => {
+              res.status(200).json(data)
+            })
+            .catch(err => {
+              console.log(err)
+              next(err)
+            })
+        }
       })
   }
+  // voteQuestion(req, res, next) {
+  //   let vote = {
+  //     user: req.currentUserId,
+  //     value: Number(req.body.value)
+  //   }
+    // Question.findByIdAndUpdate(req.params.id, {
+    //   $push: { votes: vote }
+    // }, { new: true })
+    //   .then(data => {
+    //     res.status(200).json(data)
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //     next(err)
+    //   })
+  // },
+  // unVoteQuestion(req, res, next) {
+    // let vote = {
+    //   user: req.currentUserId,
+    // }
+    // Question.findByIdAndUpdate(req.params.id, {
+    //   $pull: { votes: vote }
+    // }, { new: true })
+    //   .then(data => {
+    //     res.status(200).json(data)
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //     next(err)
+    //   })
+  // }
 }
