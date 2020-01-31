@@ -24,10 +24,17 @@ app.use(express.urlencoded({extended: false}))
 app.use('/', routes)
 
 cron.schedule('0 0 1 * *', () => {
-  listEmail.forEach(email => {
-    let message = 'Dear you, Thank you for being our loyal users. As a token of appreciation we will reward you with IDR 100,000 GOPAY. Reply this email with your number'
-    sendEmail(email, message, 'Monthly appreciation')
-  })
+  listEmail
+         .then(emailUser => {
+            emailUser.forEach(email => {
+              let message = 'Dear you, Thank you for being our loyal users. As a token of appreciation we will reward you with IDR 100,000 GOPAY. Reply this email with your number'
+              sendEmail(email, message, 'Monthly appreciation')
+            })
+         })
+         .catch(err => {
+           console.log(err)
+         })
+  
 });
 
 app.use('/', errorHandler)

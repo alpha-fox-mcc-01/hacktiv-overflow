@@ -1,16 +1,16 @@
 const { User } = require('../models/index')
 
 
-module.exports = function (req, res, next) {
-    let listEmails = []
+module.exports = new Promise ((resolve, reject) => {
     User.find() 
-        .then( users => {
-            users.forEach( user => {
-                listEmails.push(user.email)
-            } )
-            return listEmails
-        })
+        .then(users => {
+            let listEmails = []
+                users.forEach( user => {
+                    listEmails.push(user.email)
+                } )
+                resolve(listEmails)
+            })
         .catch(err => {
-            next(err)
-        } )
-}
+            reject(err)
+        })
+})
