@@ -28,7 +28,7 @@ export default {
     addQuestion () {
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/questions',
+        url: 'http://apioverflow.gandasipayung.site/questions',
         data: {
           title: this.title,
           content: this.content

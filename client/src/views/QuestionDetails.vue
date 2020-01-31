@@ -76,21 +76,20 @@ export default {
     getQuestion () {
       axios({
         method: 'GET',
-        url: `http://localhost:3000/questions/${this.$route.params.id}`
+        url: `http://apioverflow.gandasipayung.site/questions/${this.$route.params.id}`
       })
         .then(({ data }) => {
           this.question = data
           this.username = this.question.userId.username
           this.answers = data.answerId
         })
-        .catch(err => {
-          console.log(err)
+        .catch(_ => {
         })
     },
     addAnswer () {
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/answers',
+        url: 'http://apioverflow.gandasipayung.site/answers',
         headers: {
           token: localStorage.getItem('token')
         },
@@ -101,13 +100,11 @@ export default {
         }
       })
         .then(({ data }) => {
-          // console.log(data)
           this.getQuestion()
           this.title = ''
           this.content = ''
         })
-        .catch(err => {
-          console.log(err)
+        .catch(_ => {
         })
     },
     vote (num, id) {

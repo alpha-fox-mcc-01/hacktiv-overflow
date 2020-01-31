@@ -46,7 +46,7 @@ export default {
     Register () {
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/users/register',
+        url: 'http://apioverflow.gandasipayung.site/users/register',
         data: {
           username: this.username,
           email: this.email,
@@ -56,8 +56,7 @@ export default {
         .then(({ data }) => {
           this.$router.push('/login')
         })
-        .catch(err => {
-          console.log(err)
+        .catch(_ => {
           Swal.fire({
             title: 'Error!',
             text: 'Email address already used !',

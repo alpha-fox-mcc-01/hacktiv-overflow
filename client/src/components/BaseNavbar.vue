@@ -2,7 +2,7 @@
   <div id="nav">
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div class="container">
-        Logo Here
+        Hacktiv-Overflow
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <router-link to="/">Home</router-link>

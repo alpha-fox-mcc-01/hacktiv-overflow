@@ -40,7 +40,7 @@ export default {
     login () {
       axios({
         method: 'POST',
-        url: 'http://localhost:3000/users/login',
+        url: 'http://apioverflow.gandasipayung.site/users/login',
         data: {
           email: this.email,
           password: this.password

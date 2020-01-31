@@ -25,13 +25,12 @@ export default new Vuex.Store({
     fetchQuestion (context) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/questions'
+        url: 'http://apioverflow.gandasipayung.site/questions'
       })
         .then(({ data }) => {
           context.commit('FETCH_QUESTION', data)
         })
-        .catch(err => {
-          console.log(err)
+        .catch(_ => {
         })
     },
     isLoginNav (context, payload) {
@@ -39,22 +38,6 @@ export default new Vuex.Store({
     },
     loginUser (context, payload) {
       context.commit('SET_USER_LOGIN', payload)
-    },
-    vote (context, payload) {
-      console.log(payload)
-      axios({
-        method: 'PATCH',
-        url: `http://localhost:3000/questions/${payload.id}`,
-        data: {
-          vote: payload.num
-        }
-      })
-        .then(({ data }) => {
-          console.log(data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
     }
   },
   modules: {

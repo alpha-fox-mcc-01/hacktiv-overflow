@@ -48,7 +48,7 @@ export default {
     getName () {
       axios({
         method: 'GET',
-        url: `http://localhost:3000/answers/${this.answer._id}`
+        url: `http://apioverflow.gandasipayung.site/answers/${this.answer._id}`
       })
         .then(({ data }) => {
           this.username = data.userId.username
