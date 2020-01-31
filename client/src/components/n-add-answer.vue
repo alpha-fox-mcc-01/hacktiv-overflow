@@ -32,7 +32,6 @@ export default {
   props: ['idQuestion'],
   methods: {
     addPost () {
-      console.log(this.answer)
       this.$store.dispatch('postAnswer', {
         data: {
           title: this.title,
@@ -41,14 +40,11 @@ export default {
         questionId: this.idQuestion
       })
         .then(({ data }) => {
-          console.log(data, 'ini di post')
-          console.log('berhasil post answer')
           this.$emit('fetch-answers')
           this.answer = ''
           this.title = ''
         })
         .catch(err => {
-          console.log(err.response, 'ini error')
           this.alert = err.response.data.msg
           this.answer = ''
           this.title = ''

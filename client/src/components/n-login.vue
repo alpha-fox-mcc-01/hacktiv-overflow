@@ -54,8 +54,6 @@ export default {
       })
         .then(({ data }) => {
           this.setLogin(false)
-          console.log('masuk ke login')
-          console.log(data)
           localStorage.setItem('token', data.token)
           localStorage.setItem('name', data.name)
           localStorage.setItem('userId', data._id)

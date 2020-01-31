@@ -35,14 +35,13 @@ export default {
   },
   methods: {
     logout () {
-      console.log('Log out success')
       this.$store.commit('currentUserLogout')
       this.$store.commit('setIsLogin', '')
       localStorage.clear()
     },
-    search () {
-      console.log('search data')
-    },
+    // search () {
+    //   console.log('search data')
+    // },
     callLogin () {
       this.$store.commit('setLoginForm', true)
     },
