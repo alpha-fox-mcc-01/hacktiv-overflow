@@ -38,7 +38,6 @@ export default {
         }
       })
         .then(({ data }) => {
-          console.log(data)
           this.title = ''
           this.content = ''
           this.$router.push('/')

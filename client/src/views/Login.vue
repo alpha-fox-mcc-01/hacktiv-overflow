@@ -4,7 +4,7 @@
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
         <div class="card card-signin my-5">
           <div class="card-body">
-            <h5 class="card-title text-center">Sign In</h5>
+            <h5 class="card-title text-center">Log In</h5>
             <form class="form-signin" @submit.prevent="login">
               <div class="form-label-group">
                 <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus v-model="email">
@@ -15,8 +15,8 @@
                 <input type="password" id="inputPassword" class="form-control" placeholder="Password" required v-model="password">
                 <label for="inputPassword">Password</label>
               </div>
-              <button class="btn btn-lg btn-primary btn-block text-uppercase mb-5" type="submit">Sign in</button>
-              <p>Don't Have Account ? click <a @click="toRegister">Here</a> to Sign Up</p>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase mb-5" type="submit">Log In</button>
+              <p>Don't Have Account ? click <a @click="toRegister">Here</a> to Register</p>
             </form>
           </div>
         </div>
@@ -47,14 +47,15 @@ export default {
         }
       })
         .then(({ data }) => {
-          // console.log(data, '<<<<<<<<< data')
-          localStorage.setItem('token', data.token)
           Swal.fire({
             title: `Welcome Back ${data.username}!`,
             text: 'Do you want to continue',
             icon: 'success',
             confirmButtonText: 'Yes'
           })
+          localStorage.setItem('token', data.token)
+          this.$store.dispatch('isLoginNav', true)
+          this.$store.dispatch('loginUser', data.username)
           this.$router.push('/')
         })
         .catch(_ => {
@@ -185,6 +186,7 @@ export default {
 
 a {
   cursor: pointer;
+  color: blue;
 }
 
 </style>

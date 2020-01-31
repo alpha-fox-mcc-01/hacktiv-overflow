@@ -3,15 +3,15 @@
     <div class="row">
       <div class="col-1 my-5 mx-3">
         <div class="row">
-          <button>
-          <i class="fas fa-angle-up"></i>
-        </button>
+          <button @click="vote(1, question._id)">
+            <i class="fas fa-angle-up"></i>
+          </button>
         </div>
         <div class="row">
           <h1>{{ question.vote }}</h1>
         </div>
         <div class="row">
-          <button>
+          <button @click="vote(-1, question._id)">
             <i class="fas fa-angle-down"></i>
           </button>
         </div>
@@ -19,7 +19,7 @@
       <div class="col">
         <div class="card-header bg-white">
           <h4>Question Title : {{ question.title }}</h4>
-          <small>Posted By: {{question.userId.username}}</small><br>
+          <small>Posted By: {{username}}</small><br>
           <small>Posted At: {{question.created_at}}</small>
         </div>
         <div class="card-body text-left">
@@ -39,9 +39,9 @@
     </div>
     <div class="row">
       <div class="col">
+      <h3>Post an Answer Here</h3>
         <form @submit.prevent="addAnswer">
           <div class="form-group">
-            <label for="title">Answer Title</label>
             <input type="text" class="form-control" id="title" placeholder="Answer title" v-model="title" required>
           </div>
           <div class="form-group">
@@ -65,7 +65,8 @@ export default {
       question: {},
       title: '',
       content: '',
-      answers: []
+      answers: [],
+      username: ''
     }
   },
   components: {
@@ -78,9 +79,8 @@ export default {
         url: `http://localhost:3000/questions/${this.$route.params.id}`
       })
         .then(({ data }) => {
-          // console.log(data)
           this.question = data
-          console.log(this.question)
+          this.username = this.question.userId.username
           this.answers = data.answerId
         })
         .catch(err => {
@@ -109,6 +109,9 @@ export default {
         .catch(err => {
           console.log(err)
         })
+    },
+    vote (num, id) {
+      this.$store.dispatch('vote', { num, id })
     }
   },
   created () {

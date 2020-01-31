@@ -20,8 +20,8 @@
                 <input type="password" id="inputPassword" class="form-control" placeholder="Password" required v-model="password">
                 <label for="inputPassword">Password</label>
               </div>
-              <button class="btn btn-lg btn-primary btn-block text-uppercase mb-5" type="submit">Sign Up</button>
-              <p>Already Have an Account ? click <a @click="toLogin">Here</a> to Sign In</p>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase mb-5" type="submit">Register</button>
+              <p>Already Have an Account ? click <a @click="toLogin">Here</a> to Log In</p>
             </form>
           </div>
         </div>
@@ -54,7 +54,6 @@ export default {
         }
       })
         .then(({ data }) => {
-          // console.log(data, '<<<<<<<<< data')
           this.$router.push('/login')
         })
         .catch(err => {
@@ -178,6 +177,7 @@ export default {
 
 a {
   cursor: pointer;
+  color: blue;
 }
 
 </style>

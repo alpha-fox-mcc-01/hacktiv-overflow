@@ -52,6 +52,7 @@ export default {
       })
         .then(({ data }) => {
           this.username = data.userId.username
+          this.$store.dispatch('isLoginNav', true)
         })
         .catch(err => {
           console.log(err)

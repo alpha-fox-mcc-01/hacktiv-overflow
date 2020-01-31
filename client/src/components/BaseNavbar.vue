@@ -3,20 +3,27 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div class="container">
         Logo Here
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <router-link to="/">Home</router-link>
           </li>
           <li class="nav-item">
             <router-link to="/add">Add Question</router-link>
           </li>
-          <li class="nav-item">
-            <router-link to="/login">Sign In</router-link>
-          </li>
-          <li class="nav-item">
-            <p @click="logout">Logout</p>
-          </li>
         </ul>
+        <div v-if="!isLogin">
+          <router-link
+          class="btn btn-outline-primary mx-4 my-2 my-sm-0"
+          to="/login"
+        >Log In</router-link>
+        </div>
+        <div v-else>
+          <a>Login as : {{userLogin}}</a>
+          <button
+            class="btn btn-outline-danger mx-4 my-2 my-sm-0"
+            @click="logout"
+          >Log Out</button>
+        </div>
       </div>
     </nav>
   </div>
@@ -25,15 +32,24 @@
 <script>
 export default {
   name: 'base-navbar',
-  data () {
-    return {
-      isLogin: false
+  computed: {
+    isLogin () {
+      return this.$store.state.isLogin
+    },
+    userLogin () {
+      return this.$store.state.user
     }
   },
   methods: {
     logout () {
       localStorage.removeItem('token')
+      this.$store.dispatch('isLoginNav', false)
       this.$router.push('/login')
+    }
+  },
+  created () {
+    if (localStorage.getItem('token')) {
+      this.$store.dispatch('isLoginNav', true)
     }
   }
 }
