@@ -3,15 +3,7 @@
       <b-form @submit.prevent="addQuestion">
           <b-row>
               <b-col cols="3">
-                <h5>Title :</h5>
-              </b-col>
-              <b-col cols="6">
-                  <b-input type="text" v-model="title"/>
-              </b-col>
-          </b-row>
-          <b-row>
-              <b-col cols="3">
-                <h5>Question :</h5>
+                <h5>Answer :</h5>
               </b-col>
               <b-col cols="6">
                   <b-form-textarea type="text" rows="5" v-model="question"/>
@@ -62,7 +54,3 @@ export default {
   }
 }
 </script>
-
-<style>
-
-</style>

@@ -5,7 +5,7 @@ A platform to ask and answer questions
 | Route | HTTP | Request | Response | Description|
 | ----------- | ----------- |----------- |----------- | ----------- |
 | /users/register | POST |email, username, password|201(Created), 500(Internal Server Error)|Register|
-| /users/login | POST |username,  password|200(Created), 500(Internal Server Error)|Login|
+| /users/login | POST |username,  password|200(OK), 500(Internal Server Error)|Login|
 
 # Question Routes
 | Route | HTTP | Request | Response | Description|

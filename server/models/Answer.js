@@ -6,7 +6,7 @@ const answerSchema = new mongoose.Schema({
         required: true
     },
     username: {
-        required: [true, 'User is required'],
+        required: [true, 'Username is required'],
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
