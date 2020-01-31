@@ -22,7 +22,7 @@
             <b-input type="email" id="email" v-model="email" />
           </b-row>
           <b-row class="margintop1">
-            <label style="width: 100%">Password</label>
+            <label for="password" style="width: 100%">Password</label>
             <b-input type="password" id="password" v-model="password" />
           </b-row>
           <b-row class="margintop2">
