@@ -8,8 +8,9 @@ const cors = require('cors')
 const cron = require('node-cron');
 const routes = require('./routes/index')
 const errorHandler = require('./middlewares/errorHandler')
+const MONGO_ATLAS = 'mongodb+srv://vaniairnanda:vaniairnanda@cluster0-snvnr.gcp.mongodb.net/overflow?retryWrites=true&w=majority'
 var mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/overflow', {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+mongoose.connect(MONGO_ATLAS, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
 const sendEmail = require('./helpers/emailUsers')
 const listEmail = require('./helpers/fetchEmails')
 
