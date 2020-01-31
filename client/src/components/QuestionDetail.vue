@@ -99,7 +99,7 @@ export default {
     getQuestion() {
       axios({
         method: `GET`,
-        url: `http://localhost:3000/questions/${this.$route.params.questionId}`
+        url: `http://apihacktiv-overflow.atticusg.xyz/questions/${this.$route.params.questionId}`
       })
         .then(({ data }) => {
           this.question = data
@@ -128,7 +128,7 @@ export default {
       } else {
         axios({
           method: `POST`,
-          url: `http://localhost:3000/answers`,
+          url: `http://apihacktiv-overflow.atticusg.xyz/answers`,
           data: {
             title: this.answerTitle,
             description: this.answerDescription,
@@ -163,7 +163,7 @@ export default {
     upvote (questionId) {
       axios({
         method : `PATCH`,
-        url: `http://localhost:3000/questions/${questionId}`,
+        url: `http://apihacktiv-overflow.atticusg.xyz/questions/${questionId}`,
         data : {
           vote : 1
         },
@@ -181,7 +181,7 @@ export default {
     downvote (questionId) {
       axios({
         method : `PATCH`,
-        url: `http://localhost:3000/questions/${questionId}`,
+        url: `http://apihacktiv-overflow.atticusg.xyz/questions/${questionId}`,
         data : {
           vote : -1
         },

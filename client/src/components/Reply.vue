@@ -30,7 +30,7 @@ export default {
      upvote (questionId) {
       axios({
         method : `PATCH`,
-        url: `http://localhost:3000/questions/${questionId}`,
+        url: `http://apihacktiv-overflow.atticusg.xyz/questions/${questionId}`,
         data : {
           vote : 1
         },
@@ -49,7 +49,7 @@ export default {
     downvote (questionId) {
       axios({
         method : `PATCH`,
-        url: `http://localhost:3000/questions/${questionId}`,
+        url: `http://apihacktiv-overflow.atticusg.xyz/questions/${questionId}`,
         data : {
           vote : -1
         },

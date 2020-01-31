@@ -75,7 +75,7 @@ export default {
     deleteQuestion(questionId) {
       axios({
         method: `DELETE`,
-        url: `http://localhost:3000/questions/${questionId}`,
+        url: `http://apihacktiv-overflow.atticusg.xyz/questions/${questionId}`,
         headers: {
           token: localStorage.getItem(`token`)
         }
@@ -117,7 +117,7 @@ export default {
       } else {
         axios({
           method: `PUT`,
-          url: `http://localhost:3000/questions/${questionId}`,
+          url: `http://apihacktiv-overflow.atticusg.xyz/questions/${questionId}`,
           data: {
             title: this.title,
             description: this.description

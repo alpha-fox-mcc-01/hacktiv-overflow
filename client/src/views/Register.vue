@@ -66,7 +66,7 @@ export default {
     register() {
       axios({
         method: `POST`,
-        url: `http://localhost:3000/users/register`,
+        url: `http://apihacktiv-overflow.atticusg.xyz/users/register`,
         data: {
           name: this.registerName,
           email: this.email,

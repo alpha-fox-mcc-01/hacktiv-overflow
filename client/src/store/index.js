@@ -32,7 +32,7 @@ export default new Vuex.Store({
     fetchQuestions({commit}) {
       axios({
         method : `GET`,
-        url : `http://localhost:3000/questions`
+        url : `http://apihacktiv-overflow.atticusg.xyz/questions`
       })
         .then(({data}) => {
           console.log(data, `ini fetch baru om`);
@@ -45,7 +45,7 @@ export default new Vuex.Store({
     fetchAnswers ({commit}) {
       axios({
         method : `GET`,
-        url : `http://localhost:3000/answers`
+        url : `http://apihacktiv-overflow.atticusg.xyz/answers`
       })
         .then(({data}) => {
           console.log(data, `ini answeeeeeeeeersss`);
@@ -59,7 +59,7 @@ export default new Vuex.Store({
       console.log('jalan nih bos');  
       axios({
         method : `GET`,
-        url: `http://localhost:3000/questions/myquestions`,
+        url: `http://apihacktiv-overflow.atticusg.xyz/questions/myquestions`,
         headers : {
           token : localStorage.getItem(`token`)
         }

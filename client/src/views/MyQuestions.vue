@@ -89,7 +89,7 @@ export default {
       } else {
         axios({
           method: `POST`,
-          url: `http://localhost:3000/questions`,
+          url: `http://apihacktiv-overflow.atticusg.xyz/questions`,
           data: {
             title: this.title,
             description: this.description
