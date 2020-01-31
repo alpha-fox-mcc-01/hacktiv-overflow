@@ -52,8 +52,6 @@ export default {
       })
         .then(({ data }) => {
           this.setRegister(false)
-          console.log('masuk ke register')
-          console.log(data)
           localStorage.setItem('token', data.token)
           localStorage.setItem('name', data.name)
           localStorage.setItem('userId', data._id)

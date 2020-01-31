@@ -48,23 +48,21 @@ export default {
     findOwnerName () {
       axios({
         method: 'get',
-        url: 'http://localhost:3001/user/' + this.question.ownerId
+        url: 'http://api-hacktiv-overflow.nafies.tech/user/' + this.question.ownerId
       })
         .then(({ data }) => {
-          // console.log(data)
           this.questionOwner = data.name
         })
         .catch(err => {
-          console.log(err, 'ini err list question')
-          console.log(err.response)
+          console.log(err)
         })
-    },
-    updateQue () {
-      console.log('update que')
-    },
-    deleteQue () {
-      console.log('delete que')
     }
+    // updateQue () {
+    //   console.log('update que')
+    // },
+    // deleteQue () {
+    //   console.log('delete que')
+    // }
   },
   computed: {
     currentUserId () {

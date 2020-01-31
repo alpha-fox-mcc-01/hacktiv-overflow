@@ -41,25 +41,23 @@ export default new Vuex.Store({
   },
   actions: {
     login (context, data) {
-      console.log('masuk ke act login')
       return axios({
         method: 'POST',
-        url: 'http://localhost:3001/user/login',
+        url: 'http://api-hacktiv-overflow.nafies.tech/user/login',
         data: data
       })
     },
     register (context, data) {
-      console.log('masuk ke act register')
       return axios({
         method: 'POST',
-        url: 'http://localhost:3001/user/register',
+        url: 'http://api-hacktiv-overflow.nafies.tech/user/register',
         data: data
       })
     },
     fetchQuestions (context) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3001/questions'
+        url: 'http://api-hacktiv-overflow.nafies.tech/questions'
       })
         .then(({ data }) => {
           context.commit('setQuestions', data)
@@ -71,7 +69,7 @@ export default new Vuex.Store({
     fetchOneQuestion (context, data) {
       axios({
         method: 'GET',
-        url: `http://localhost:3001/questions/${data}`
+        url: `http://api-hacktiv-overflow.nafies.tech/questions/${data}`
       })
         .then(({ data }) => {
           context.commit('setOneQuestion', data)
@@ -81,10 +79,9 @@ export default new Vuex.Store({
         })
     },
     postQuestion (context, data) {
-      console.log(data, 'ini di dipatch')
       return axios({
         method: 'POST',
-        url: 'http://localhost:3001/questions',
+        url: 'http://api-hacktiv-overflow.nafies.tech/questions',
         data,
         headers: {
           token: localStorage.getItem('token')
@@ -92,18 +89,16 @@ export default new Vuex.Store({
       })
     },
     fetchAnswers (context, data) {
-      console.log('masuk fetch act answers', data)
       return axios({
         method: 'GET',
-        url: 'http://localhost:3001/answers',
+        url: 'http://api-hacktiv-overflow.nafies.tech/answers',
         headers: { questionid: data }
       })
     },
     postAnswer (context, { data, questionId }) {
-      console.log(data, 'ini di dispatch')
       return axios({
         method: 'POST',
-        url: 'http://localhost:3001/answers/' + questionId,
+        url: 'http://api-hacktiv-overflow.nafies.tech/answers/' + questionId,
         data,
         headers: {
           token: localStorage.getItem('token')
