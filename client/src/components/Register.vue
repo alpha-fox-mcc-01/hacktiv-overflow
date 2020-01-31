@@ -62,7 +62,9 @@ export default {
           this.$swal('Register success!')
         })
         .catch(err => {
-          console.log(err)
+          for (let key in err.response.data.message) {
+            this.$swal(err.response.data.message[key].message)
+          }
         })
     }
   }
