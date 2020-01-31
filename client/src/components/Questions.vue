@@ -21,8 +21,8 @@ export default {
         url: 'http://localhost:3000/questions'
       })
         .then(({ data }) => {
-          console.log(data)
           this.questions = data
+          console.log(data)
         })
         .catch(err => {
           console.log(err)

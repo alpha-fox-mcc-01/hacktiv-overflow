@@ -52,8 +52,8 @@ export default {
         }
       })
         .then(({ data }) => {
-          console.log(data)
           this.$router.push('/questions')
+          this.$swal('Question added!')
         })
         .catch(err => {
           console.log(err)

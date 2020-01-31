@@ -33,8 +33,8 @@ export default {
         url: 'http://localhost:3000/questions/' + id
       })
         .then(({ data }) => {
-          console.log(data)
           this.$router.go()
+          console.log(data)
         })
         .catch(err => {
           console.log(err)

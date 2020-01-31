@@ -50,9 +50,9 @@ export default {
         }
       })
         .then(user => {
-          console.log(user)
           localStorage.setItem('token', user.data.token)
           this.$router.push('/questions')
+          this.$swal('Login success!')
         })
         .catch(err => {
           console.log(err)

@@ -59,7 +59,7 @@ export default {
         }
       })
         .then(({ data }) => {
-          console.log(data)
+          this.$swal('Register success!')
         })
         .catch(err => {
           console.log(err)
