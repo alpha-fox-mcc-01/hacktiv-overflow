@@ -13,7 +13,7 @@
 export default {
   computed: {
     tags () {
-      return this.$store.state.tags
+      return this.$store.state.tags.filter(tag => tag != null)
     }
   },
   created () {

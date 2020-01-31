@@ -35,17 +35,21 @@ export default {
   },
   methods: {
     vote (value) {
-      this.$store.dispatch('voteAnswer', {
-        value,
-        _id: this.answer._id
-      })
-        .then(() => {
-          this.$emit('get-answers')
-          this.getReputation()
+      if (localStorage.getItem('access_token')) {
+        this.$store.dispatch('voteAnswer', {
+          value,
+          _id: this.answer._id
         })
-        .catch(err => {
-          console.log(err)
-        })
+          .then(() => {
+            this.$emit('get-answers')
+            this.getReputation()
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      } else {
+        this.$router.push('/signup')
+      }
     },
     getReputation () {
       let value = 0

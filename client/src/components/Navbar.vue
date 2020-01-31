@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 export default {
   name: 'navbar',
   data () {
@@ -57,6 +58,7 @@ export default {
     signOut () {
       this.$store.commit('SET_LOGIN', false)
       localStorage.removeItem('access_token')
+      Swal.fire('Success', 'You have logged out successfully', 'success')
     },
     discover () {
       this.$store.commit('SET_VIEW', false)

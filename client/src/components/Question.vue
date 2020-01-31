@@ -1,8 +1,11 @@
 <template>
   <div>
-    <b-card @click='viewDetail(question._id)' :title="question.title" :sub-title="question.questionedBy.username">
-      <b-card-text>
+    <b-card class='question-card' @click='viewDetail(question._id)' :title="question.title" :sub-title="question.questionedBy.username">
+      <b-card-text v-html='question.description'>
         {{ question.description }}
+      </b-card-text>
+      <b-card-text style='color: rgb(132, 0, 255);'>
+        Tags: {{ question.tags.join(',') }}
       </b-card-text>
     </b-card>
   </div>
@@ -24,5 +27,10 @@ export default {
 </script>
 
 <style scoped>
-
+.question-card {
+  cursor: pointer;
+}
+.question-card:hover {
+  opacity: 0.7;
+}
 </style>

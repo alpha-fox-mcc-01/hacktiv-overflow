@@ -19,6 +19,9 @@
             <b-card-text v-html='question.description'>
               {{ question.description }}
             </b-card-text>
+            <b-card-text style='color: rgb(132, 0, 255);'>
+              Tags: {{ question.tags.join(',') }}
+            </b-card-text>
             <b-card-text>
                 <p style='opacity: 0.7;'>Last Edited: {{ question.updatedAt }}</p>
             </b-card-text>
@@ -56,6 +59,7 @@ export default {
   },
   methods: {
     vote (value) {
+      if (localStorage.getItem('access_token')) {
       this.$store.dispatch('voteQuestion', {
         value,
         _id: this.$route.params.id
@@ -67,6 +71,9 @@ export default {
         .catch(err => {
           console.log(err)
         })
+      } else {
+        this.$router.push('/signup')
+      }
     },
     getReputation () {
       let value = 0

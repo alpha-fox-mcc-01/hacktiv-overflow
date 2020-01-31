@@ -5,8 +5,12 @@
     <TextEditor :purpose="'newQuestion'"/>
     <hr>
     <h4 style='color: rgb(132, 0, 255);'>Your recent questions</h4>
-    <div id='content'>
+    <div id='content' v-if='isLogin'>
       <MinifiedQuestion v-for='question in userQuestions' :key='question._id' :question='question'/>
+    </div>
+    <div v-else style='margin-top: 5rem;'>
+      <center><img src='../../public/people.png' width=200 height=150>
+      <h3 style='margin-top: 3rem; opacity: 0.7;'>Sign in now to get access to full features!</h3></center>
     </div>
   </div>
 </template>
@@ -23,6 +27,9 @@ export default {
   computed: {
     userQuestions () {
       return this.$store.state.userQuestions.slice(0, 5)
+    },
+    isLogin () {
+      return this.$store.state.isLogin
     }
   },
   created () {

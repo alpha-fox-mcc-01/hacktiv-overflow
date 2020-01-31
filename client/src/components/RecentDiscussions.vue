@@ -1,7 +1,7 @@
 <template>
   <div class='col-md-8'>
     <div class='row'>
-      <h1>Discussions &amp; Articles</h1><b-button id='create-post-btn' pill>Create New Post</b-button>
+      <h1>Discussions &amp; Articles</h1><b-button id='create-post-btn' @click="goDiscover" pill>Create New Post</b-button>
     </div>
     <div class='row'>
       <p id='view-all'>View all {{ numberOfQuestions }} discussions</p>
@@ -13,9 +13,19 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
 import MinifiedQuestion from '@/components/MinifiedQuestion.vue'
 export default {
   name: 'RecentDiscussions',
+  methods: {
+    goDiscover () {
+      if (localStorage.getItem('access_token')) {
+        this.$router.push('/discover')
+      } else {
+        this.$router.push('/signup')
+      }
+    }
+  },
   computed: {
     numberOfQuestions () {
       return this.$store.state.questions.length

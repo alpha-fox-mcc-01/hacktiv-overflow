@@ -41,6 +41,7 @@ export default {
   },
   methods: {
     newText () {
+      if (localStorage.getItem('access_token')) {
       this.$store.dispatch(this.purpose, {
         title: this.title,
         description: this.description,
@@ -60,6 +61,9 @@ export default {
         .catch(err => {
           console.log(err)
         })
+      } else {
+        this.$router.push('/signup')
+      }
     }
   },
   components: {
