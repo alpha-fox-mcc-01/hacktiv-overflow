@@ -1,0 +1,49 @@
+{
+  "questions": [
+    { "id": 1, 
+      "title": "how to compute", 
+      "author": "nafies", 
+      "description": "", 
+      "upvotes": 2, 
+      "downvotes": 1},
+    { "id": 1, 
+      "title": "json-server error", 
+      "author": "dino", 
+      "description": "mantul", 
+      "upvotes": 2, 
+      "downvotes": 1},
+    { "id": 1, 
+      "title": "json-server --watch", 
+      "author": "ahmad", 
+      "description": "mantul", 
+      "upvotes": 2, 
+      "downvotes": 1}
+  ],
+  "answers": [
+    { "id": 1, 
+      "title": "how to compute", 
+      "author": "nafies", 
+      "description": "", 
+      "upvotes": 2, 
+      "downvotes": 1},
+    { "id": 1, 
+      "title": "json-server error", 
+      "author": "dino", 
+      "description": "mantul", 
+      "upvotes": 2, 
+      "downvotes": 1},
+    { "id": 1, 
+      "title": "json-server --watch", 
+      "author": "ahmad", 
+      "description": "mantul", 
+      "upvotes": 2, 
+      "downvotes": 1
+    }
+    ],
+  "users": [
+    { "id": 1, "name": "json", "email": "typicode@tip.id", "password": "pass"},
+    { "id": 1, "name": "json", "email": "typicode@tip.id", "password": "pass"},
+    { "id": 1, "name": "json", "email": "typicode@tip.id", "password": "pass"},
+    { "id": 1, "name": "json", "email": "typicode@tip.id", "password": "pass"}
+  ]
+}
