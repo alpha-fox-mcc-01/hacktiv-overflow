@@ -58,8 +58,9 @@ export default {
           console.log(data)
           localStorage.setItem('token', data.token)
           localStorage.setItem('name', data.name)
+          localStorage.setItem('userId', data._id)
           this.$store.commit('setIsLogin', true)
-          this.$store.commit('setCurrentUser', data.name)
+          this.$store.commit('setCurrentUser')
           this.email = ''
           this.password = ''
         })

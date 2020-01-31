@@ -14,7 +14,14 @@
               </router-link>
               <small>3 days ago</small>
             </div>
-            <div style="text-align: left;">by {{ questionOwner }}</div>
+            <div class="d-flex justify-content-between">
+              <div style="text-align: left;">by {{ questionOwner }}</div>
+              <div v-if="currentUserId == question.ownerId">
+                <small @click="updateQue" style="cursor: pointer;">Update</small>
+                <span>  |  </span>
+                <small @click="deleteQue" style="cursor: pointer;">Delete</small>
+              </div>
+            </div>
           </div>
       </div>
      </div>
@@ -51,6 +58,17 @@ export default {
           console.log(err, 'ini err list question')
           console.log(err.response)
         })
+    },
+    updateQue () {
+      console.log('update que')
+    },
+    deleteQue () {
+      console.log('delete que')
+    }
+  },
+  computed: {
+    currentUserId () {
+      return this.$store.state.currentUserId
     }
   },
   created () {

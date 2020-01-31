@@ -26,7 +26,7 @@ export default {
   created () {
     if (localStorage.getItem('token') && localStorage.getItem('name')) {
       this.$store.commit('setIsLogin', true)
-      this.$store.commit('setCurrentUser', localStorage.getItem('name'))
+      this.$store.commit('setCurrentUser')
     }
     this.$store.dispatch('fetchQuestions')
   }

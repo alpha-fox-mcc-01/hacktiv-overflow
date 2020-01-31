@@ -3,6 +3,7 @@ const express = require('express')
 const app = express()
 const routes = require('./routes')
 const cors = require('cors')
+const task = require('./helpers/cron')
 const errorHandler = require('./middlewares/errorHandler')
 const mongoose = require('mongoose')
 mongoose.connect(`mongodb://localhost:27017/hacktiv-overflow`, {useNewUrlParser: true, useUnifiedTopology: true}, (err) => {
@@ -12,6 +13,8 @@ mongoose.connect(`mongodb://localhost:27017/hacktiv-overflow`, {useNewUrlParser:
     console.log('connected to mongodb')
   }
 })
+
+// task.start()
 
 app.use(cors())
 app.use(express.json())
