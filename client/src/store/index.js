@@ -7,6 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     currentUser: '',
+    currentUserId: '',
     registerForm: false,
     loginForm: false,
     isLogin: false,
@@ -14,8 +15,13 @@ export default new Vuex.Store({
     oneQuestion: {}
   },
   mutations: {
-    setCurrentUser (state, data) {
-      state.currentUser = data
+    setCurrentUser (state) {
+      state.currentUser = localStorage.getItem('name')
+      state.currentUserId = localStorage.getItem('userId')
+    },
+    currentUserLogout (state) {
+      state.currentUser = ''
+      state.currentUserId = ''
     },
     setRegisterForm (state, data) {
       state.registerForm = data

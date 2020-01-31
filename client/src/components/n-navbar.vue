@@ -36,7 +36,7 @@ export default {
   methods: {
     logout () {
       console.log('Log out success')
-      this.$store.commit('setCurrentUser', '')
+      this.$store.commit('currentUserLogout')
       this.$store.commit('setIsLogin', '')
       localStorage.clear()
     },
