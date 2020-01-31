@@ -32,6 +32,7 @@ export default {
   },
   methods: {
     fetchOneQuestion() {
+      console.log(this.$store.state.questionDetail);
       this.$store.dispatch('fetchOneQuestion', { questionId: this.$route.params.id });
       this.title = this.$store.state.questionDetail.title;
       this.content = this.$store.state.questionDetail.content;

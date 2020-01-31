@@ -17,12 +17,7 @@
           v-if="!isLogin"
         >Sign In</router-link>
         <span
-          class="nav-link ml-auto"
-          v-if="isLogin"
-        >Hello, {{ userName }}
-        </span>
-        <span
-          class="nav-link pointer span-hover"
+          class="nav-link pointer span-hover ml-auto"
           v-if="isLogin"
           @click="logOut"
         >Sign Out</span>
@@ -37,9 +32,6 @@ export default {
   computed: {
     isLogin() {
       return this.$store.state.isLogin;
-    },
-    userName() {
-      return localStorage.getItem('userName');
     },
   },
   methods: {

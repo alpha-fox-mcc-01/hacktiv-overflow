@@ -5,6 +5,8 @@ const port = process.env.PORT;
 const router = require('./routes');
 const errorHandler = require('./middlewares/errorHandler');
 const cors = require('cors');
+const cron = require('./helper/deleteAnswer');
+cron();
 
 const db = require('./config/db');
 db();
