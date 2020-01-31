@@ -85,8 +85,20 @@ export default {
             activeUserId: data._id
           });
           this.$bvModal.hide("LoginModal");
+          this.$swal({
+            icon: "success",
+            title: "Welcome, " + data.email,
+            showConfirmButton: false,
+            timer: 1500
+          });
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          this.$swal({
+            icon: "error",
+            title: "Oops...",
+            text: err.response.data.msg
+          });
+        });
     },
     register() {
       this.$store
@@ -102,8 +114,20 @@ export default {
             activeUserId: data._id
           });
           this.$bvModal.hide("LoginModal");
+          this.$swal({
+            icon: "success",
+            title: "Email, " + data.email + " registered successfully",
+            showConfirmButton: false,
+            timer: 1500
+          });
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          this.$swal({
+            icon: "error",
+            title: "Oops...",
+            text: err.response.data.msg
+          });
+        });
     }
   }
 };
@@ -112,14 +136,14 @@ export default {
 <style>
 .margintop1,
 .margintop2 {
-  margin: 12px;
+  margin-top: 12px;
   border: none;
 }
 
 @media screen and (max-width: 600px) {
   .margintop1,
   .margintop2 {
-    margin: 10px;
+    margin-top: 10px;
     border: none;
   }
 }

@@ -45,7 +45,6 @@ export default {
   },
   methods: {
     changeProp(value) {
-      console.log("udah masuk sini");
       this.isreg = value;
     },
     logoutUser() {
@@ -54,6 +53,10 @@ export default {
       this.$store.commit("SET_USER_CREDENTIALS", {
         token: "",
         activeUserId: ""
+      });
+      this.$swal({
+        icon: "info",
+        title: "you've been logged out successfully."
       });
       if (this.$router.currentRoute.fullPath !== "/home") {
         this.$router.push("/home");

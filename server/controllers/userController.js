@@ -26,7 +26,11 @@ module.exports = {
     const { email, password } = req.body
     User.findOne({ email })
       .then(user => {
-        if (!user) res.send('user tidak terdaftar')
+        if (!user) {
+          res
+            .status(404)
+            .json({ msg: "User not found" })
+        }
         else {
           const valid = bcrypt.compareSync(password, user.password)
           if (valid) {
@@ -39,7 +43,9 @@ module.exports = {
                 token
               })
           } else {
-            res.send('password salahs')
+            res
+              .status(403)
+              .json({ msg: "Password invalid" })
           }
         }
       })
@@ -54,6 +60,6 @@ module.exports = {
           .status(200)
           .json(user)
       })
-      .catch(err => res.send(err))
+      .catch(err => next(err))
   }
 }

@@ -82,9 +82,21 @@ export default {
             this.title = "";
             this.editorData = "";
             this.imageUrl = [];
+            this.$swal({
+              icon: "success",
+              title: "You've successfully post a question",
+              showConfirmButton: false,
+              timer: 1500
+            });
             this.$router.push("/post/" + data._id);
           })
-          .catch(err => console.log(err));
+          .catch(err => {
+            this.$swal({
+              icon: "error",
+              title: "Oops...",
+              text: err.response.data.msg
+            });
+          });
       } else {
         this.$store
           .dispatch("addPostWithoutPic", {
@@ -98,9 +110,21 @@ export default {
             this.title = "";
             this.editorData = "";
             this.imageUrl = [];
+            this.$swal({
+              icon: "success",
+              title: "You've successfully post a question",
+              showConfirmButton: false,
+              timer: 1500
+            });
             this.$router.push("/post/" + data._id);
           })
-          .catch(err => console.log(err));
+          .catch(err => {
+            this.$swal({
+              icon: "error",
+              title: "Oops...",
+              text: err.response.data.msg
+            });
+          });
       }
     }
   },

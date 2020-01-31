@@ -115,9 +115,21 @@ export default {
           console.log(data);
           this.addAnswer(data._id);
           this.editorData = "";
+          this.$swal({
+            icon: "success",
+            title: "Success",
+            showConfirmButton: false,
+            timer: 1500
+          });
           this.$router.go();
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          this.$swal({
+            icon: "error",
+            title: "Oops...",
+            text: err.response.data.msg
+          });
+        });
     },
 
     addAnswer(answerId) {
@@ -135,18 +147,42 @@ export default {
           type
         })
         .then(success => {
+          this.$swal({
+            icon: "success",
+            title: "Success",
+            showConfirmButton: false,
+            timer: 1500
+          });
           this.$router.go();
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          this.$swal({
+            icon: "error",
+            title: "Oops...",
+            text: err.response.data.msg
+          });
+        });
     },
 
     deletePost() {
       this.$store
         .dispatch("deletePost", this.$route.params.id)
         .then(success => {
+          this.$swal({
+            icon: "success",
+            title: "Success",
+            showConfirmButton: false,
+            timer: 1500
+          });
           this.$router.push("/home");
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          this.$swal({
+            icon: "error",
+            title: "Oops...",
+            text: err.response.data.msg
+          });
+        });
     }
   },
   created() {
