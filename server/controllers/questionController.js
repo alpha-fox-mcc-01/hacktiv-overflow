@@ -64,6 +64,7 @@ module.exports = {
       })
   },
   addQuestion(req, res, next) {
+    console.log(req.body)
     let tags = null
     if (req.body.tags) {
       tags = req.body.tags.split(',')

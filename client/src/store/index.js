@@ -39,7 +39,7 @@ export default new Vuex.Store({
   },
   actions: {
     getQuestions (context, payload) {
-      let url = 'http://localhost:3000/questions'
+      let url = 'http://18.140.57.120/questions'
       if (payload) url += `/?keyword=${payload}`
       axios({
         method: 'GET',
@@ -55,7 +55,7 @@ export default new Vuex.Store({
     getQuestionAnswers (context, payload) {
       axios({
         method: 'GET',
-        url: `http://localhost:3000/answers/?questionId=${payload}`
+        url: `http://18.140.57.120/answers/?questionId=${payload}`
       })
         .then(({ data }) => {
           context.commit('SET_ANSWERS', data)
@@ -67,7 +67,7 @@ export default new Vuex.Store({
     getQuestionDetail (context, payload) {
       axios({
         method: 'GET',
-        url: `http://localhost:3000/questions/${payload}`
+        url: `http://18.140.57.120/questions/${payload}`
       })
         .then(({ data }) => {
           context.commit('SET_QUESTION_DETAIL', data)
@@ -79,7 +79,7 @@ export default new Vuex.Store({
     getUserQuestions (context, payload) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/questions/me',
+        url: 'http://18.140.57.120/questions/me',
         headers: {
           access_token: localStorage.getItem('access_token')
         }
@@ -94,20 +94,21 @@ export default new Vuex.Store({
     newQuestion (context, payload) {
       return axios({
         method: 'POST',
-        url: 'http://localhost:3000/questions',
+        url: 'http://18.140.57.120/questions',
         headers: {
           access_token: localStorage.getItem('access_token')
         },
         data: {
           title: payload.title,
-          description: payload.description
+          description: payload.description,
+          tags: payload.tags
         }
       })
     },
     deleteQuestion (context, payload) {
       return axios({
         method: 'DELETE',
-        url: 'http://localhost:3000/questions/' + payload,
+        url: 'http://18.140.57.120/questions/' + payload,
         headers: {
           access_token: localStorage.getItem('access_token')
         }
@@ -116,7 +117,7 @@ export default new Vuex.Store({
     getTags (context, payload) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3000/questions/tags'
+        url: 'http://18.140.57.120/questions/tags'
       })
         .then(({ data }) => {
           context.commit('SET_TAGS', data)
@@ -128,7 +129,7 @@ export default new Vuex.Store({
     newAnswer (context, payload) {
       return axios({
         method: 'POST',
-        url: 'http://localhost:3000/answers/?questionId=' + payload._id,
+        url: 'http://18.140.57.120/answers/?questionId=' + payload._id,
         headers: {
           access_token: localStorage.getItem('access_token')
         },
@@ -141,7 +142,7 @@ export default new Vuex.Store({
     voteQuestion (context, payload) {
       return axios({
         method: 'PATCH',
-        url: `http://localhost:3000/questions/${payload._id}/vote`,
+        url: `http://18.140.57.120/questions/${payload._id}/vote`,
         headers: {
           access_token: localStorage.getItem('access_token')
         },
@@ -153,7 +154,7 @@ export default new Vuex.Store({
     voteAnswer (context, payload) {
       return axios({
         method: 'PATCH',
-        url: `http://localhost:3000/answers/${payload._id}/vote`,
+        url: `http://18.140.57.120/answers/${payload._id}/vote`,
         headers: {
           access_token: localStorage.getItem('access_token')
         },
@@ -165,14 +166,14 @@ export default new Vuex.Store({
     signUp (context, payload) {
       return axios({
         method: 'POST',
-        url: 'http://localhost:3000/users/signup',
+        url: 'http://18.140.57.120/users/signup',
         data: payload
       })
     },
     signIn (context, payload) {
       return axios({
         method: 'POST',
-        url: 'http://localhost:3000/users/signin',
+        url: 'http://18.140.57.120/users/signin',
         data: payload
       })
     }

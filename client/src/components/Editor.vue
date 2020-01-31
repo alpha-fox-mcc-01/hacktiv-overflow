@@ -45,12 +45,13 @@ export default {
       this.$store.dispatch(this.purpose, {
         title: this.title,
         description: this.description,
+        tags: this.tags,
         _id: this.$route.params.id,
-        tags: this.tags
       })
         .then(({ data }) => {
           this.title = ''
           this.description = ''
+          this.tags = ''
           if (this.purpose === 'newAnswer') {
             this.$store.dispatch('getQuestionAnswers', this.$route.params.id)
           } else {
