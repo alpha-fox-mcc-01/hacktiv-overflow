@@ -6,7 +6,7 @@
     <hr>
     <h4 style='color: rgb(132, 0, 255);'>Your recent questions</h4>
     <div id='content' v-if='isLogin'>
-      <MinifiedQuestion v-for='question in userQuestions' :key='question._id' :question='question'/>
+      <MinifiedQuestion :isUser='true' v-for='question in userQuestions' :key='question._id' :question='question'/>
     </div>
     <div v-else style='margin-top: 5rem;'>
       <center><img src='../../public/people.png' width=200 height=150>

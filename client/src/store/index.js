@@ -104,6 +104,15 @@ export default new Vuex.Store({
         }
       })
     },
+    deleteQuestion (context, payload) {
+      return axios({
+        method: 'DELETE',
+        url: 'http://localhost:3000/questions/' + payload,
+        headers: {
+          access_token: localStorage.getItem('access_token')
+        }
+      })
+    },
     getTags (context, payload) {
       axios({
         method: 'GET',
